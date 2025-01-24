@@ -1,6 +1,6 @@
 "use client";
 
-// import { registerUser } from "@/app/actions/authActions";
+import { registerUser } from "@/app/actions/authActions";
 import {
   //   profileSchema,
   registerSchema,
@@ -27,10 +27,10 @@ export default function RegisterForm() {
   //   const currentValidationSchema = stepSchemas[activeStep];
 
   const registerFormMethods = useForm<RegisterSchema>({
-    resolver: zodResolver(
-      registerSchema
-      // currentValidationSchema
-    ),
+    // resolver: zodResolver(
+    //   registerSchema
+    // currentValidationSchema
+    // ),
     mode: "onTouched",
   });
 
@@ -44,14 +44,14 @@ export default function RegisterForm() {
 
   const router = useRouter();
 
-  const onSubmit = (data: RegisterSchema) => {
-    console.log(data);
-    // const result = await registerUser(getValues());
-    // if (result.status === "success") {
-    //   router.push("/register/success");
-    // } else {
-    //   handleFormServerErrors(result, setError);
-    // }
+  const onSubmit = async (data: RegisterSchema) => {
+    // console.log(data);
+    const result = await registerUser(getValues());
+    if (result.status === "success") {
+      router.push("/register/success");
+    } else {
+      handleFormServerErrors(result, setError);
+    }
   };
 
   //   const getStepContent = (step: number) => {
@@ -90,6 +90,17 @@ export default function RegisterForm() {
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
+            <Input
+              defaultValue=""
+              placeholder="Name"
+              {...register("name", { required: "Name is required" })}
+              //   isInvalid=
+              //   {!!errors.Email}
+              // errorMessage={errors.email?.message as string}
+            />
+            {errors.name && (
+              <p className="text-red-500">{errors.name?.message as string}</p>
+            )}
             <Input
               defaultValue=""
               placeholder="Email"
