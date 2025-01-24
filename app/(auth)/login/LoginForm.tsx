@@ -8,9 +8,9 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { loginSchema } from "@/lib/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { signInUser } from "@/app/actions/authActions";
-// import { useRouter } from "next/navigation";
-// import { toast } from "react-toastify";
+import { signInUser } from "@/app/actions/authActions";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import Link from "next/link";
 import { LoginSchema } from "@/lib/schemas/LoginSchema";
 // import SocialLogin from "./SocialLogin";
@@ -25,19 +25,22 @@ export default function LoginForm() {
     mode: "onTouched",
   });
 
-  //   const router = useRouter();
+  const router = useRouter();
 
-  const onSubmit = (data: LoginSchema) => console.log(data);
+  const onSubmit =
+    // (data: LoginSchema)
+    //  =>
+    //  console.log(data);
 
-  // async (data: LoginSchema) => {
-  //     const result = await signInUser(data);
-  //     if (result.status === "success") {
-  //       router.push("/");
-  //       router.refresh();
-  //     } else {
-  //       toast.error(result.error as string);
-  //     }
-  //   };
+    async (data: LoginSchema) => {
+      const result = await signInUser(data);
+      if (result.status === "success") {
+        router.push("/");
+        router.refresh();
+      } else {
+        toast.error(result.error as string);
+      }
+    };
 
   return (
     <Card className="w-3/5 mx-auto">
