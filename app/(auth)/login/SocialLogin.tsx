@@ -1,7 +1,6 @@
+import { socialSignIn } from "@/app/actions/authActions";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { signIn } from "next-auth/react";
-import { Button } from "@/components/ui/button";
 
 export default function SocialLogin() {
   const providers = [
@@ -17,23 +16,21 @@ export default function SocialLogin() {
     },
   ];
 
-  const onClick = (provider: "google" | "github") => {
-    signIn(provider, {
-      callbackUrl: "/",
-    });
+  const handleSignIn = async (provider: "google" | "github") => {
+    await socialSignIn(provider);
   };
 
   return (
-    <div className="flex items-center w-full gap-2">
+    <div className="flex flex-col gap-2">
       {providers.map((provider) => (
-        <Button
+        <button
           key={provider.name}
-          size="lg"
-          className="w-full"
-          onClick={() => onClick(provider.name as "google" | "github")}
+          className="flex items-center gap-2 justify-center w-full px-4 py-2 bg-gray-100 rounded-md text-sm font-medium shadow-sm hover:bg-gray-200"
+          onClick={() => handleSignIn(provider.name as "google" | "github")}
         >
           {provider.icon}
-        </Button>
+          {provider.text}
+        </button>
       ))}
     </div>
   );

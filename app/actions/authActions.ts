@@ -19,6 +19,12 @@ import {
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 
+export async function socialSignIn(provider: "google" | "github") {
+  return signIn(provider, {
+    callbackUrl: "/",
+  });
+}
+
 export async function signInUser(
   data: LoginSchema
 ): Promise<ActionResult<string>> {
