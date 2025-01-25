@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { LoginSchema } from "@/lib/schemas/LoginSchema";
-// import SocialLogin from "./SocialLogin";
+import SocialLogin from "./SocialLogin";
 
 export default function LoginForm() {
   const {
@@ -87,7 +87,7 @@ export default function LoginForm() {
             >
               Login
             </Button>
-            {/* <SocialLogin /> */}
+            <SocialLogin />
             <div className="flex justify-center hover:underline text-sm">
               <Link href="/forgot-password">Forgot password?</Link>
             </div>
