@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { DashboardNavigation } from "../components/dashboard/DashboardNavigation";
-
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { CircleUser, MenuIcon } from "lucide-react";
@@ -12,26 +11,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
-// import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import { unstable_noStore as noStore } from "next/cache";
+import { auth } from "@/auth";
+import { signOutUser } from "../actions/authActions";
+import LogoutButton from "../components/AuthButtons";
 
 export default async function DashboardLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  //   noStore();
-  //   const { getUser } = getKindeServerSession();
-  //   const user = await getUser();
+  const session = await auth();
 
-  //   if (!user || user.email !== "ragerage333@gmail.com") {
-  //     return redirect("/");
-  //   }
+  if (!session?.user || session.user.email !== "sarah@test.com") {
+    return redirect("/");
+  }
+
   return (
     <div className="flex w-full flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      kkk
       <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-white">
         <nav className="hidden font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <DashboardNavigation />
@@ -63,8 +60,9 @@ export default async function DashboardLayout({
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
+
             <DropdownMenuItem asChild>
-              {/* <LogoutLink>Logout</LogoutLink> */}
+              <LogoutButton />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
