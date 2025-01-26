@@ -47,104 +47,103 @@ export async function createProduct(prevState: unknown, formData: FormData) {
   redirect("/dashboard/products");
 }
 
-// export async function editProduct(prevState: any, formData: FormData) {
-//   const { getUser } = getKindeServerSession();
-//   const user = await getUser();
+export async function editProduct(prevState: any, formData: FormData) {
+  // const { getUser } = getKindeServerSession();
+  const session = await auth();
 
-//   if (!user || user.email !== "jan@alenix.de") {
-//     return redirect("/");
-//   }
+  if (!session?.user || session.user.email !== "sarah@test.com") {
+    return redirect("/");
+  }
+  const submission = parseWithZod(formData, {
+    schema: productSchema,
+  });
 
-//   const submission = parseWithZod(formData, {
-//     schema: productSchema,
-//   });
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
 
-//   if (submission.status !== "success") {
-//     return submission.reply();
-//   }
+  const flattenUrls = submission.value.images.flatMap((urlString) =>
+    urlString.split(",").map((url) => url.trim())
+  );
 
-//   const flattenUrls = submission.value.images.flatMap((urlString) =>
-//     urlString.split(",").map((url) => url.trim())
-//   );
+  const productId = formData.get("productId") as string;
+  await prisma.product.update({
+    where: {
+      id: productId,
+    },
+    data: {
+      name: submission.value.name,
+      description: submission.value.description,
+      category: submission.value.category,
+      price: submission.value.price,
+      isFeatured: submission.value.isFeatured === true ? true : false,
+      status: submission.value.status,
+      images: flattenUrls,
+    },
+  });
 
-//   const productId = formData.get("productId") as string;
-//   await prisma.product.update({
-//     where: {
-//       id: productId,
-//     },
-//     data: {
-//       name: submission.value.name,
-//       description: submission.value.description,
-//       category: submission.value.category,
-//       price: submission.value.price,
-//       isFeatured: submission.value.isFeatured === true ? true : false,
-//       status: submission.value.status,
-//       images: flattenUrls,
-//     },
-//   });
+  redirect("/dashboard/products");
+}
 
-//   redirect("/dashboard/products");
-// }
+export async function deleteProduct(formData: FormData) {
+  // const { getUser } = getKindeServerSession();
+  const session = await auth();
 
-// export async function deleteProduct(formData: FormData) {
-//   const { getUser } = getKindeServerSession();
-//   const user = await getUser();
+  if (!session?.user || session.user.email !== "sarah@test.com") {
+    return redirect("/");
+  }
 
-//   if (!user || user.email !== "jan@alenix.de") {
-//     return redirect("/");
-//   }
+  await prisma.product.delete({
+    where: {
+      id: formData.get("productId") as string,
+    },
+  });
 
-//   await prisma.product.delete({
-//     where: {
-//       id: formData.get("productId") as string,
-//     },
-//   });
+  redirect("/dashboard/products");
+}
 
-//   redirect("/dashboard/products");
-// }
+export async function createBanner(prevState: any, formData: FormData) {
+  // const { getUser } = getKindeServerSession();
+  const session = await auth();
 
-// export async function createBanner(prevState: any, formData: FormData) {
-//   const { getUser } = getKindeServerSession();
-//   const user = await getUser();
+  if (!session?.user || session.user.email !== "sarah@test.com") {
+    return redirect("/");
+  }
 
-//   if (!user || user.email !== "jan@alenix.de") {
-//     return redirect("/");
-//   }
+  const submission = parseWithZod(formData, {
+    schema: bannerSchema,
+  });
 
-//   const submission = parseWithZod(formData, {
-//     schema: bannerSchema,
-//   });
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
 
-//   if (submission.status !== "success") {
-//     return submission.reply();
-//   }
+  await prisma.banner.create({
+    data: {
+      title: submission.value.title,
+      imageString: submission.value.imageString,
+    },
+  });
 
-//   await prisma.banner.create({
-//     data: {
-//       title: submission.value.title,
-//       imageString: submission.value.imageString,
-//     },
-//   });
+  redirect("/dashboard/banner");
+}
 
-//   redirect("/dashboard/banner");
-// }
+export async function deleteBanner(formData: FormData) {
+  // const { getUser } = getKindeServerSession();
+  const session = await auth();
 
-// export async function deleteBanner(formData: FormData) {
-//   const { getUser } = getKindeServerSession();
-//   const user = await getUser();
+  if (!session?.user || session.user.email !== "sarah@test.com") {
+    return redirect("/");
+  }
 
-//   if (!user || user.email !== "jan@alenix.de") {
-//     return redirect("/");
-//   }
+  await prisma.banner.delete({
+    where: {
+      id: formData.get("bannerId") as string,
+    },
+  });
 
-//   await prisma.banner.delete({
-//     where: {
-//       id: formData.get("bannerId") as string,
-//     },
-//   });
-
-//   redirect("/dashboard/banner");
-// }
+  redirect("/dashboard/banner");
+}
 
 // export async function addItem(productId: string) {
 //   const { getUser } = getKindeServerSession();
