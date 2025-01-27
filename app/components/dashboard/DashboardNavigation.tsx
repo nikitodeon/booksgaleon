@@ -21,10 +21,10 @@ const links = [
     name: "Banner Picture",
     href: "/dashboard/banner",
   },
-  // {
-  //   name: "Categories",
-  //   href: "/dashboard/categories",
-  // },
+  {
+    name: "Categories",
+    href: "/dashboard/categories",
+  },
 ];
 
 export function DashboardNavigation() {

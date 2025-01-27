@@ -28,13 +28,16 @@ import { useActionState } from "react";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { productSchema } from "@/app/lib/zodSchemas";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Image from "next/image";
-import { categories } from "@/app/lib/categories";
+// import { categories } from "@/app/lib/categories";
 import { SubmitButton } from "@/app/components/SubmitButtons";
+import { Category } from "@prisma/client";
 
 export default function ProductCreateRoute() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<string[]>([]);
   const [lastResult, action] = useActionState(createProduct, undefined);
   const [form, fields] = useForm({
@@ -47,6 +50,22 @@ export default function ProductCreateRoute() {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch("/api/categories");
+        if (!response.ok) throw new Error("Ошибка загрузки категорий");
+        const data: Category[] = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCategories();
+  }, []);
 
   const handleDelete = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
@@ -149,7 +168,7 @@ export default function ProductCreateRoute() {
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.name}>
+                    <SelectItem key={category.id} value={category.id}>
                       {category.title}
                     </SelectItem>
                   ))}

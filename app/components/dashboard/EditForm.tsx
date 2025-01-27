@@ -25,14 +25,14 @@ import { SubmitButton } from "../SubmitButtons";
 import { Switch } from "@/components/ui/switch";
 import Image from "next/image";
 import { UploadDropzone } from "@/app/lib/uploadthing";
-import { categories } from "@/app/lib/categories";
-import { useState } from "react";
+// import { categories } from "@/app/lib/categories";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { createProduct, editProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { productSchema } from "@/app/lib/zodSchemas";
-import { type $Enums } from "@prisma/client";
+import { Category, type $Enums } from "@prisma/client";
 
 interface iAppProps {
   data: {
@@ -42,12 +42,14 @@ interface iAppProps {
     status: $Enums.ProductStatus;
     price: number;
     images: string[];
-    category: $Enums.Category;
+    categoryId: string;
     isFeatured: boolean;
   };
 }
 
 export function EditForm({ data }: iAppProps) {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<string[]>(data.images);
   const [lastResult, action] = useFormState(editProduct, undefined);
   const [form, fields] = useForm({
@@ -60,6 +62,23 @@ export function EditForm({ data }: iAppProps) {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch("/api/categories");
+        if (!response.ok) throw new Error("Ошибка загрузки категорий");
+        const data: Category[] = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCategories();
+  }, []);
 
   const handleDelete = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
@@ -155,14 +174,14 @@ export function EditForm({ data }: iAppProps) {
               <Select
                 key={fields.category.key}
                 name={fields.category.name}
-                defaultValue={data.category}
+                defaultValue={data.categoryId}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.name}>
+                    <SelectItem key={category.id} value={category.id}>
                       {category.title}
                     </SelectItem>
                   ))}

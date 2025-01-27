@@ -3,7 +3,7 @@
 // import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { parseWithZod } from "@conform-to/zod";
-import { bannerSchema, productSchema } from "./lib/zodSchemas";
+import { bannerSchema, categorySchema, productSchema } from "./lib/zodSchemas";
 import { prisma } from "./utils/db";
 import { auth } from "@/auth";
 // import { redis } from "./lib/redis";
@@ -39,7 +39,7 @@ export async function createProduct(prevState: unknown, formData: FormData) {
       status: submission.value.status,
       price: submission.value.price,
       images: flattenUrls,
-      category: submission.value.category,
+      category: { connect: { id: submission.value.category } },
       isFeatured: submission.value.isFeatured === true ? true : false,
     },
   });
@@ -74,7 +74,7 @@ export async function editProduct(prevState: any, formData: FormData) {
     data: {
       name: submission.value.name,
       description: submission.value.description,
-      category: submission.value.category,
+      category: { connect: { id: submission.value.category } },
       price: submission.value.price,
       isFeatured: submission.value.isFeatured === true ? true : false,
       status: submission.value.status,
@@ -143,6 +143,31 @@ export async function deleteBanner(formData: FormData) {
   });
 
   redirect("/dashboard/banner");
+}
+
+export async function createCategory(prevState: unknown, formData: FormData) {
+  //   const { getUser } = getKindeServerSession();
+  const session = await auth();
+
+  if (!session?.user || session.user.email !== "sarah@test.com") {
+    return redirect("/");
+  }
+
+  const submission = parseWithZod(formData, {
+    schema: categorySchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  await prisma.category.create({
+    data: {
+      title: submission.value.title,
+    },
+  });
+
+  redirect("/dashboard/categories");
 }
 
 // export async function addItem(productId: string) {
