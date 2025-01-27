@@ -90,7 +90,7 @@ export async function deleteProduct(formData: FormData) {
   const session = await auth();
 
   if (!session?.user || session.user.email !== "sarah@test.com") {
-    return redirect("/");
+    return redirect("/dashboard/products");
   }
 
   await prisma.product.delete({
@@ -168,6 +168,51 @@ export async function createCategory(prevState: unknown, formData: FormData) {
   });
 
   redirect("/dashboard/categories");
+}
+
+export async function editCategory(prevState: any, formData: FormData) {
+  // const { getUser } = getKindeServerSession();
+  const session = await auth();
+
+  if (!session?.user || session.user.email !== "sarah@test.com") {
+    return redirect("/");
+  }
+  const submission = parseWithZod(formData, {
+    schema: categorySchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  const categoryId = formData.get("categoryId") as string;
+  await prisma.category.update({
+    where: {
+      id: categoryId,
+    },
+    data: {
+      title: submission.value.title,
+    },
+  });
+
+  redirect("/dashboard/categories");
+}
+
+export async function deleteCategory(formData: FormData) {
+  // const { getUser } = getKindeServerSession();
+  const session = await auth();
+
+  if (!session?.user || session.user.email !== "sarah@test.com") {
+    return redirect("/");
+  }
+
+  await prisma.category.delete({
+    where: {
+      id: formData.get("categoryId") as string,
+    },
+  });
+
+  redirect("/dashboard/products");
 }
 
 // export async function addItem(productId: string) {

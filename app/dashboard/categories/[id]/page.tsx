@@ -1,12 +1,12 @@
-import { EditForm } from "@/app/components/dashboard/ProductEditForm";
+import { EditForm } from "@/app/components/dashboard/CategoryEditForm";
 import { prisma } from "@/app/utils/db";
 import { notFound } from "next/navigation";
 // import { unstable_noStore as noStore } from "next/cache";
 
-async function getData(productId: string) {
-  const data = await prisma.product.findUnique({
+async function getData(categoryId: string) {
+  const data = await prisma.category.findUnique({
     where: {
-      id: productId,
+      id: categoryId,
     },
   });
 
