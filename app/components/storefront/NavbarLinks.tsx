@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Category } from "@prisma/client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const navbarLinks = [
@@ -45,6 +45,9 @@ export const navbarLinks = [
 export function NavbarLinks() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const router = useRouter();
+  const location = usePathname();
 
   useEffect(() => {
     async function fetchCategories() {
@@ -63,7 +66,10 @@ export function NavbarLinks() {
     fetchCategories();
   }, []);
 
-  const location = usePathname();
+  const handleCategoryChange = (categoryId: string) => {
+    router.push(`/products/${categoryId}`);
+  };
+
   return (
     <div className="hidden md:flex justify-center items-center gap-x-2 ml-8">
       {navbarLinks.map((item) => (
@@ -71,36 +77,33 @@ export function NavbarLinks() {
           href={item.href}
           key={item.id}
           className={cn(
+            "font-maname",
             location === item.href
               ? "bg-muted"
               : "hover:bg-muted hover:bg-opacity-75",
-            "group p-2 font-medium rounded-md"
+            "group p-2 font-medium ms-cded-md"
           )}
         >
           {item.name}
         </Link>
       ))}
       <div className="flex flex-col gap-3">
-        <Select key={1} name={"select"} defaultValue="Больше категорий">
+        <Select
+          name={"select"}
+          defaultValue={"ok"}
+          onValueChange={(value) => {
+            const category = categories.find((cat) => cat.title === value);
+            if (category) handleCategoryChange(category.id);
+          }}
+        >
           <SelectTrigger>
-            <SelectValue placeholder="Select Category" />
+            <SelectValue placeholder="Выберите категорию" />
           </SelectTrigger>
           <SelectContent>
             {categories.map((category) => (
-              <Link
-                href={`/products/${category.title}`}
-                key={`${category.id}`}
-                className={cn(
-                  location === `/products/${category.title}`
-                    ? "bg-muted"
-                    : "hover:bg-muted hover:bg-opacity-75",
-                  "group p-2 font-medium rounded-md"
-                )}
-              >
-                <SelectItem key={category.id} value={category.id}>
-                  {category.title}
-                </SelectItem>
-              </Link>
+              <SelectItem key={category.id} value={category.title}>
+                {category.title}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
