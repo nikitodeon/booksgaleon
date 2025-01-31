@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/auth";
 import { LoginButton, RegisterButton } from "../AuthButtons";
 import Image from "next/image";
+import { Hero } from "./Hero";
 export async function Navbar() {
   const session = await auth();
   const user = session?.user;
@@ -56,8 +57,10 @@ export async function Navbar() {
         </div>
 
         {/* Правый баннер */}
-        <div className="hidden md:flex w-1/4 h-24 bg-gray-100 items-center justify-center">
-          <span className="text-gray-500">Правый баннер</span>
+        <div className=" md:flex w-1/4 min-h-41    ">
+          <div className="w-full h-full">
+            <Hero />
+          </div>
         </div>
       </div>
       <nav className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">

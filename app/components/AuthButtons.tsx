@@ -16,7 +16,7 @@ export function LoginButton() {
     return redirect("/login");
   };
 
-  return <Button onClick={handleSignInRedirect}>Logout</Button>;
+  return <Button onClick={handleSignInRedirect}>Login</Button>;
 }
 
 export function RegisterButton() {
@@ -24,5 +24,5 @@ export function RegisterButton() {
     return redirect("/register");
   };
 
-  return <Button onClick={handleSignUpRedirect}>Logout</Button>;
+  return <Button onClick={handleSignUpRedirect}>SignUp</Button>;
 }

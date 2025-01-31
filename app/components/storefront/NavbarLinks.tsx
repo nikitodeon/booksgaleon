@@ -28,17 +28,17 @@ export const navbarLinks = [
   {
     id: 2,
     name: "Классика",
-    href: "/products/men",
+    href: "/products/classics",
   },
   {
     id: 3,
     name: "Фантастика",
-    href: "/products/women",
+    href: "/products/fiction",
   },
   {
     id: 4,
     name: "Детективы",
-    href: "/products/kids",
+    href: "/products/detectives",
   },
 ];
 
