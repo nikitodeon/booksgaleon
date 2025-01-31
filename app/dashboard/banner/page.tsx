@@ -90,7 +90,11 @@ export default async function BannerRoute() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-
+                        <DropdownMenuItem asChild>
+                          <Link href={`/dashboard/banner/${item.id}`}>
+                            Edit
+                          </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link href={`/dashboard/banner/${item.id}/delete`}>
                             Delete

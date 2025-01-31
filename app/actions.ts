@@ -128,6 +128,34 @@ export async function createBanner(prevState: any, formData: FormData) {
   redirect("/dashboard/banner");
 }
 
+export async function editBanner(prevState: any, formData: FormData) {
+  // const { getUser } = getKindeServerSession();
+  const session = await auth();
+
+  if (!session?.user || session.user.email !== "sarah@test.com") {
+    return redirect("/");
+  }
+  const submission = parseWithZod(formData, {
+    schema: bannerSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  const bannerId = formData.get("bannerId") as string;
+  await prisma.banner.update({
+    where: {
+      id: bannerId,
+    },
+    data: {
+      title: submission.value.title,
+    },
+  });
+
+  redirect("/dashboard/banner");
+}
+
 export async function deleteBanner(formData: FormData) {
   // const { getUser } = getKindeServerSession();
   const session = await auth();

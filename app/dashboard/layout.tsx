@@ -14,7 +14,7 @@ import {
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { signOutUser } from "../actions/authActions";
-import LogoutButton from "../components/AuthButtons";
+import { LogoutButton } from "../components/AuthButtons";
 
 export default async function DashboardLayout({
   children,
