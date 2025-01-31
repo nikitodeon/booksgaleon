@@ -18,6 +18,19 @@ async function getData() {
   return data;
 }
 
+function getMedalColor(title: string) {
+  switch (title) {
+    case "1":
+      return "bg-[#FFD700]"; // Золотая медаль
+    case "2":
+      return "bg-[#C0C0C0]"; // Серебряная медаль
+    case "3":
+      return "bg-[#CD7F32]"; // Бронзовая медаль
+    default:
+      return "bg-gray-400"; // Серый, если не 1, 2 или 3
+  }
+}
+
 export async function Hero() {
   const data = await getData();
 
@@ -33,8 +46,14 @@ export async function Hero() {
                 fill
                 className="object-contain w-full h-full rounded-xl"
               />
-              <div className="object-contain  absolute top-6 left-6 bg-opacity-75 bg-black text-white p-6 rounded-xl shadow-lg transition-transform hover:scale-105">
-                <h1 className="text-sm lg:text-xl font-bold">{item.title}</h1>
+              <div
+                className={`absolute bottom-6 left-9  flex items-center justify-center ${getMedalColor(
+                  item.title
+                )} text-[#070247] w-[3rem] h-[3rem] rounded-full shadow-lg border-4 border-[#d4af37]transition-transform hover:scale-105`}
+              >
+                <h1 className="text-[1.7rem] font-bold  font-moondance">
+                  {item.title}
+                </h1>
               </div>
             </div>
           </CarouselItem>
