@@ -1,4 +1,8 @@
-import { prisma } from "@/app/utils/db";
+// Hero.tsx
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -6,16 +10,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
 
-async function getData() {
-  const data = await prisma.banner.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-
-  return data;
+// Тип данных для баннера
+interface Banner {
+  id: string;
+  imageString: string;
+  title: string;
 }
 
 function getMedalColor(title: string) {
@@ -31,13 +31,15 @@ function getMedalColor(title: string) {
   }
 }
 
-export async function Hero() {
-  const data = await getData();
+interface HeroProps {
+  banners: Banner[]; // Получаем баннеры через пропс
+}
 
+export function Hero({ banners }: HeroProps) {
   return (
     <Carousel>
       <CarouselContent>
-        {data.map((item) => (
+        {banners.map((item) => (
           <CarouselItem key={item.id}>
             <div className=" h-[17rem] relative">
               <Image
