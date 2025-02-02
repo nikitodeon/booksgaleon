@@ -120,9 +120,10 @@ export default function ProductCreateRoute() {
               <Input
                 key={fields.price.key}
                 name={fields.price.name}
-                defaultValue={fields.price.initialValue}
+                defaultValue={Number(fields.price.initialValue).toFixed(2)}
                 type="number"
-                placeholder="$55"
+                step="0.01"
+                placeholder="55.99 BYN"
               />
               <p className="text-red-500">{fields.price.errors}</p>
             </div>

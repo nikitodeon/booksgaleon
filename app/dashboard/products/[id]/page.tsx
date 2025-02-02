@@ -1,5 +1,6 @@
 import { EditForm } from "@/app/components/dashboard/ProductEditForm";
 import { prisma } from "@/app/utils/db";
+import { Decimal } from "@prisma/client/runtime/library";
 import { notFound } from "next/navigation";
 // import { unstable_noStore as noStore } from "next/cache";
 
@@ -14,7 +15,13 @@ async function getData(productId: string) {
     return notFound();
   }
 
-  return data;
+  return {
+    ...data,
+    price:
+      data.price instanceof Decimal
+        ? data.price.toFixed(2)
+        : String(data.price), // 👈 Преобразуем Decimal в строку
+  };
 }
 
 export default async function EditRoute({

@@ -40,7 +40,7 @@ interface iAppProps {
     name: string;
     description: string;
     status: $Enums.ProductStatus;
-    price: number;
+    price: string;
     images: string[];
     categoryId: string;
     isFeatured: boolean;
@@ -133,9 +133,10 @@ export function EditForm({ data }: iAppProps) {
               <Input
                 key={fields.price.key}
                 name={fields.price.name}
-                defaultValue={data.price}
+                defaultValue={Number(data.price).toFixed(2)}
                 type="number"
-                placeholder="$55"
+                step="0.01"
+                placeholder="55.99 BYN"
               />
               <p className="text-red-500">{fields.price.errors}</p>
             </div>

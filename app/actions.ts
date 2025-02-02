@@ -6,6 +6,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { bannerSchema, categorySchema, productSchema } from "./lib/zodSchemas";
 import { prisma } from "./utils/db";
 import { auth } from "@/auth";
+import { Decimal } from "@prisma/client/runtime/library";
 // import { redis } from "./lib/redis";
 // import { Cart } from "./lib/interfaces";
 // import { revalidatePath } from "next/cache";
@@ -37,7 +38,7 @@ export async function createProduct(prevState: unknown, formData: FormData) {
       name: submission.value.name,
       description: submission.value.description,
       status: submission.value.status,
-      price: submission.value.price,
+      price: new Decimal(submission.value.price),
       images: flattenUrls,
       category: { connect: { id: submission.value.category } },
       isFeatured: submission.value.isFeatured === true ? true : false,
@@ -75,7 +76,7 @@ export async function editProduct(prevState: any, formData: FormData) {
       name: submission.value.name,
       description: submission.value.description,
       category: { connect: { id: submission.value.category } },
-      price: submission.value.price,
+      price: new Decimal(submission.value.price),
       isFeatured: submission.value.isFeatured === true ? true : false,
       status: submission.value.status,
       images: flattenUrls,
