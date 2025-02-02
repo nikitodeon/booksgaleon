@@ -104,8 +104,8 @@ export function NavbarLinks() {
           key={item.id}
           className={`font-maname ${
             location === item.href
-              ? "bg-muted"
-              : "hover:bg-muted hover:bg-opacity-75"
+              ? "bg-muted rounded-md"
+              : "hover:bg-muted rounded-md hover:bg-opacity-75"
           } group p-2 font-medium ms-cded-md`}
         >
           {item.name}

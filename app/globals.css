@@ -1,72 +1,97 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
     --font-moon-dance: "Moon Dance", cursive;
     --font-maname: "Maname", sans-serif;
 
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
+    --background: 0 0% 100%; /* Белый фон для светлой темы */
+    --foreground: 222.2 84% 4.9%; /* Темный текст для светлой темы */
+
+    --card: 0 0% 100%; /* Белый фон для карточек */
     --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
+
+    --popover: 0 0% 100%; /* Белый фон для всплывающих окон */
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
+
+    --primary: 222.2 47.4% 11.2%; /* Основной цвет */
+    --primary-foreground: 210 40% 98%; /* Текст на основном цвете */
+
+    --secondary: 210 40% 96.1%; /* Вторичный цвет */
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
+
+    --muted: 210 40% 96.1%; /* Приглушенный цвет */
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
+
+    --accent: 210 40% 96.1%; /* Акцентный цвет */
     --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
+
+    --destructive: 0 84.2% 60.2%; /* Деструктивный цвет (красный) */
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --chart-1: 12 76% 61%;
+
+    --border: 214.3 31.8% 91.4%; /* Цвет границ */
+    --input: 214.3 31.8% 91.4%; /* Цвет полей ввода */
+
+    --ring: 222.2 84% 4.9%; /* Цвет акцентов (например, фокус) */
+
+    --chart-1: 12 76% 61%; /* Цвета для графиков */
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+
+    --radius: 0.5rem; /* Скругление углов */
   }
+
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
+    --background: 0 0% 6.67%; /* #111111 в HSL (0°, 0%, 6.67%) */
+    --foreground: 210 40% 98%; /* Белый текст */
+
+    --card: 0 0% 6.67%; /* #111111 для карточек */
     --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
+
+    --popover: 0 0% 6.67%; /* #111111 для всплывающих окон */
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
+
+    --primary: 210 40% 98%; /* Белый для основного акцента */
+    --primary-foreground: 0 0% 6.67%; /* #111111 для текста на основном акценте */
+
+    --secondary: 0 0% 13.33%; /* Темно-серый для вторичных элементов */
     --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
+
+    --muted: 0 0% 13.33%; /* Темно-серый для приглушенных элементов */
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
+
+    --accent: 0 0% 13.33%; /* Темно-серый для акцентных элементов */
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
+
+    --destructive: 0 62.8% 30.6%; /* Темно-красный для деструктивных элементов */
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
+
+    --border: 0 0% 13.33%; /* Темно-серый для границ */
+    --input: 0 0% 13.33%; /* Темно-серый для полей ввода */
+
+    --ring: 212.7 26.8% 83.9%; /* Светло-серый для акцентов (например, фокус) */
+
+    --chart-1: 220 70% 50%; /* Цвета для графиков */
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
 }
+
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border; /* Применяем цвет границ */
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground; /* Применяем фон и цвет текста */
   }
 }
+
 .font-moondance {
   font-family: var(--font-moon-dance);
 }

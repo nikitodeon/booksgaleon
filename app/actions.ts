@@ -240,7 +240,7 @@ export async function deleteCategory(formData: FormData) {
     },
   });
 
-  redirect("/dashboard/products");
+  redirect("/dashboard/categories");
 }
 
 // export async function addItem(productId: string) {

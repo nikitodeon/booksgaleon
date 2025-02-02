@@ -27,7 +27,7 @@ import Image from "next/image";
 import { UploadDropzone } from "@/app/lib/uploadthing";
 // import { categories } from "@/app/lib/categories";
 import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { createProduct, editProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
@@ -51,7 +51,7 @@ export function EditForm({ data }: iAppProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<string[]>(data.images);
-  const [lastResult, action] = useFormState(editProduct, undefined);
+  const [lastResult, action] = useActionState(editProduct, undefined);
   const [form, fields] = useForm({
     lastResult,
 
