@@ -36,7 +36,8 @@ export function Navbar({ user, banners }: NavbarProps) {
   }
 
   // Логика для смены логотипа в зависимости от темы
-  const logoPath = resolvedTheme === "dark" ? "/blacklogo.png" : "/endlogo.png";
+  const logoPath =
+    resolvedTheme === "dark" ? "/blacklogo.png" : "/whitelogo.png";
 
   return (
     <div>
@@ -45,14 +46,14 @@ export function Navbar({ user, banners }: NavbarProps) {
           <NavbarLinks />
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center ">
           {user ? (
             <>
-              <div className="mt-2 mr-16">
+              <div className="mt-2 mr-13">
                 <ThemeToggle />
               </div>
               <Link href="/bag" className="group p-2 flex items-center mr-2">
-                <ShoppingBagIcon className="h-6 w-6 text-gray-400 group-hover:text-gray-500" />
+                <ShoppingBagIcon className="h-6 w-6 mt-3 text-gray-400 group-hover:text-gray-500" />
                 <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                   {/* {total} */}
                 </span>
