@@ -43,11 +43,17 @@ export function ShoppingBagButton() {
     <>
       {pending ? (
         <Button disabled size="lg" className="w-full mt-5">
-          <Loader2 className="mr-4 h-5 w-5 animate-spin" /> Please Wait
+          <Loader2 className="mr-4 h-5 w-5 animate-spin" /> Пожалуйста,
+          подождите
         </Button>
       ) : (
-        <Button size="lg" className="w-full mt-5" type="submit">
-          <ShoppingBag className="mr-4 h-5 w-5" /> Add to Cart
+        <Button
+          size="lg"
+          className="w-full mt-5 flex items-center gap-3"
+          type="submit"
+        >
+          <ShoppingBag className="  mr-4 h-8 w-8  flex-shrink-0" />{" "}
+          <div className="text-xl">Добавить в корзину</div>
         </Button>
       )}
     </>

@@ -44,7 +44,7 @@ export function ProductCard({ item }: iAppProps) {
       </Carousel>
 
       <div className="flex justify-between items-center mt-2">
-        <h1 className="font-semibold text-xl">{item.name}</h1>
+        <h1 className="font-semibold text-xl line-clamp-3">{item.name}</h1>
         <h3 className="inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/10">
           {item.price} BYN
         </h3>
@@ -54,7 +54,7 @@ export function ProductCard({ item }: iAppProps) {
       </p>
 
       <Button asChild className="w-full mt-5">
-        <Link href={`/product/${item.id}`}>Learn More!</Link>
+        <Link href={`/product/${item.id}`}>Подробнее</Link>
       </Button>
     </div>
   );
