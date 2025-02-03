@@ -22,5 +22,18 @@ export const bannerSchema = z.object({
   imageString: z.string(),
 });
 export const categorySchema = z.object({
-  title: z.string(),
+  title: z
+    .string()
+    .min(2, "Title must be at least 2 characters long")
+    .max(100, "Title must be at most 100 characters long"),
+
+  slug: z
+    .string()
+    .min(2, "Slug must be at least 2 characters long")
+    .max(100, "Slug must be at most 100 characters long")
+    .regex(
+      /^[a-z0-9-]+$/,
+      "Slug can only contain lowercase letters, numbers, and dashes"
+    )
+    .optional(), // Делаем `slug` необязательным, если хотим генерировать его автоматически
 });

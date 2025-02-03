@@ -7,6 +7,7 @@ import { bannerSchema, categorySchema, productSchema } from "./lib/zodSchemas";
 import { prisma } from "./utils/db";
 import { auth } from "@/auth";
 import { Decimal } from "@prisma/client/runtime/library";
+import { SubmissionResult } from "@conform-to/react";
 // import { redis } from "./lib/redis";
 // import { Cart } from "./lib/interfaces";
 // import { revalidatePath } from "next/cache";
@@ -174,8 +175,10 @@ export async function deleteBanner(formData: FormData) {
   redirect("/dashboard/banner");
 }
 
-export async function createCategory(prevState: unknown, formData: FormData) {
-  //   const { getUser } = getKindeServerSession();
+export async function createCategory(
+  prevState: SubmissionResult<string[]> | null,
+  formData: FormData
+): Promise<SubmissionResult<string[]> | null> {
   const session = await auth();
 
   if (!session?.user || session.user.email !== "sarah@test.com") {
@@ -188,24 +191,47 @@ export async function createCategory(prevState: unknown, formData: FormData) {
 
   if (submission.status !== "success") {
     return submission.reply();
+  }
+
+  const { title, slug } = submission.value;
+  const generatedSlug = slug || title.toLowerCase().replace(/\s+/g, "-");
+
+  // Проверяем, есть ли уже категория с таким title или slug
+  const existingCategory = await prisma.category.findFirst({
+    where: {
+      OR: [{ title }, { slug: generatedSlug }],
+    },
+  });
+
+  if (existingCategory) {
+    return {
+      error: {
+        title: ["A category with this title or slug already exists."],
+      },
+    };
   }
 
   await prisma.category.create({
     data: {
-      title: submission.value.title,
+      title,
+      slug: generatedSlug,
     },
   });
 
   redirect("/dashboard/categories");
 }
 
-export async function editCategory(prevState: any, formData: FormData) {
-  // const { getUser } = getKindeServerSession();
+export async function updateCategory(
+  prevState: SubmissionResult<string[]> | null,
+  formData: FormData,
+  categoryId: string
+): Promise<SubmissionResult<string[]> | null> {
   const session = await auth();
 
   if (!session?.user || session.user.email !== "sarah@test.com") {
     return redirect("/");
   }
+
   const submission = parseWithZod(formData, {
     schema: categorySchema,
   });
@@ -214,30 +240,43 @@ export async function editCategory(prevState: any, formData: FormData) {
     return submission.reply();
   }
 
-  const categoryId = formData.get("categoryId") as string;
-  await prisma.category.update({
+  const { title, slug } = submission.value;
+  const generatedSlug = slug || title.toLowerCase().replace(/\s+/g, "-");
+
+  const existingCategory = await prisma.category.findFirst({
     where: {
-      id: categoryId,
-    },
-    data: {
-      title: submission.value.title,
+      id: { not: categoryId },
+      OR: [{ title }, { slug: generatedSlug }],
     },
   });
 
-  redirect("/dashboard/categories");
-}
+  if (existingCategory) {
+    return {
+      error: {
+        title: ["A category with this title or slug already exists."],
+      },
+    };
+  }
 
+  await prisma.category.update({
+    where: { id: categoryId },
+    data: { title, slug: generatedSlug },
+  });
+
+  return redirect("/dashboard/categories");
+}
 export async function deleteCategory(formData: FormData) {
-  // const { getUser } = getKindeServerSession();
   const session = await auth();
 
   if (!session?.user || session.user.email !== "sarah@test.com") {
     return redirect("/");
   }
 
+  const categorySlug = formData.get("categorySlug") as string;
+
   await prisma.category.delete({
     where: {
-      id: formData.get("categoryId") as string,
+      slug: categorySlug,
     },
   });
 
