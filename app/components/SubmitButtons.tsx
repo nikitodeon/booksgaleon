@@ -15,9 +15,10 @@ interface buttonProps {
     | "link"
     | null
     | undefined;
+  disabled?: boolean;
 }
 
-export function SubmitButton({ text, variant }: buttonProps) {
+export function SubmitButton({ text, variant, disabled }: buttonProps) {
   const { pending } = useFormStatus();
   return (
     <>
@@ -27,7 +28,7 @@ export function SubmitButton({ text, variant }: buttonProps) {
           Please Wait
         </Button>
       ) : (
-        <Button variant={variant} type="submit">
+        <Button variant={variant} type="submit" disabled={disabled}>
           {text}
         </Button>
       )}

@@ -1,5 +1,5 @@
 "use server";
-
+import { transliterate as tr, slugify } from "transliteration";
 // import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { parseWithZod } from "@conform-to/zod";
@@ -194,7 +194,7 @@ export async function createCategory(
   }
 
   const { title, slug } = submission.value;
-  const generatedSlug = slug || title.toLowerCase().replace(/\s+/g, "-");
+  const generatedSlug = slug || slugify(tr(title));
 
   // Проверяем, есть ли уже категория с таким title или slug
   const existingCategory = await prisma.category.findFirst({
@@ -232,9 +232,7 @@ export async function updateCategory(
     return redirect("/");
   }
 
-  const submission = parseWithZod(formData, {
-    schema: categorySchema,
-  });
+  const submission = parseWithZod(formData, { schema: categorySchema });
 
   if (submission.status !== "success") {
     return submission.reply();
@@ -252,8 +250,16 @@ export async function updateCategory(
 
   if (existingCategory) {
     return {
+      status: "error",
       error: {
-        title: ["A category with this title or slug already exists."],
+        title:
+          existingCategory.title === title
+            ? ["This title is already taken."]
+            : [],
+        slug:
+          existingCategory.slug === generatedSlug
+            ? ["This slug is already taken."]
+            : [],
       },
     };
   }
@@ -265,6 +271,7 @@ export async function updateCategory(
 
   return redirect("/dashboard/categories");
 }
+
 export async function deleteCategory(formData: FormData) {
   const session = await auth();
 
@@ -272,11 +279,11 @@ export async function deleteCategory(formData: FormData) {
     return redirect("/");
   }
 
-  const categorySlug = formData.get("categorySlug") as string;
+  const categoryId = formData.get("categoryId") as string;
 
   await prisma.category.delete({
     where: {
-      slug: categorySlug,
+      id: categoryId,
     },
   });
 

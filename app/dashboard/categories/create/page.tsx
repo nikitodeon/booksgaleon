@@ -49,17 +49,36 @@ export default function CategoryCreateRoute() {
   });
 
   const [title, setTitle] = useState<string>(fields.title.initialValue || "");
-  const [slug, setSlugValue] = useState<undefined | string>(undefined);
+  const [slug, setSlugValue] = useState<string | undefined>(undefined);
+  const [titleError, setTitleError] = useState<string | null>(null);
+  const [slugError, setSlugError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (titleError) setTitleError(null);
+  }, [title]);
+
+  useEffect(() => {
+    if (slugError) setSlugError(null);
+  }, [slug]);
+
+  useEffect(() => {
+    if (lastResult?.error?.title) {
+      setTitleError(lastResult.error.title[0]);
+    } else {
+      setTitleError(null);
+    }
+    if (lastResult?.error?.slug) {
+      setSlugError(lastResult.error.slug[0]);
+    } else {
+      setSlugError(null);
+    }
+  }, [lastResult]);
 
   function handleSlugGeneration() {
-    const titleInput = title;
-
-    if (titleInput?.length === 0 || titleInput === undefined) {
+    if (!title) {
       return toast.error("Please create a title first");
     }
-
-    setSlugValue(slugify(tr(titleInput)));
-
+    setSlugValue(slugify(tr(title)));
     return toast.success("Slug has been created");
   }
 
@@ -94,7 +113,9 @@ export default function CategoryCreateRoute() {
                 className="w-full"
                 placeholder="Category Title"
               />
-              <p className="text-red-500">{fields.title.errors}</p>
+              {titleError && (
+                <p className="text-red-500 text-sm">{titleError}</p>
+              )}
             </div>
 
             <div className="flex flex-col gap-3">
@@ -115,12 +136,15 @@ export default function CategoryCreateRoute() {
               >
                 <Atom className="size-4 mr-2" /> Generate Slug
               </Button>
-              <p className="text-red-500 text-sm">{fields.slug.errors}</p>
+              {slugError && <p className="text-red-500 text-sm">{slugError}</p>}
             </div>
           </div>
         </CardContent>
         <CardFooter>
-          <SubmitButton text="Create Category" />
+          <SubmitButton
+            text="Create Category"
+            disabled={!!titleError || !!slugError}
+          />
         </CardFooter>
       </Card>
     </form>

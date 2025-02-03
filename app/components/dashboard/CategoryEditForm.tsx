@@ -1,5 +1,4 @@
 "use client";
-
 import { updateCategory } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,7 +17,7 @@ import { useActionState } from "react";
 import { useForm, SubmissionResult } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { categorySchema } from "@/app/lib/zodSchemas";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SubmitButton } from "@/app/components/SubmitButtons";
 import { toast } from "react-toastify";
 import { transliterate as tr, slugify } from "transliteration";
@@ -32,20 +31,17 @@ interface CategoryData {
 export function EditForm({ data }: { data: CategoryData }) {
   const [lastResult, action] = useActionState<SubmissionResult<
     string[]
-  > | null>(
-    async (
-      state: SubmissionResult<string[]> | null,
-      formData?: FormData
-    ): Promise<SubmissionResult<string[]> | null> => {
-      if (!formData) return state;
-      return updateCategory(state, formData, data.id);
-    },
-    null
-  );
+  > | null>(async (state: SubmissionResult<string[]> | null) => {
+    const formElement = document.getElementById(form.id) as HTMLFormElement;
+    if (!formElement) return null;
+
+    const formData = new FormData(formElement);
+    return updateCategory(state, formData, data.id);
+  }, null);
 
   const [form, fields] = useForm({
     lastResult,
-    onValidate({ formData }: { formData: FormData }) {
+    onValidate({ formData }) {
       return parseWithZod(formData, { schema: categorySchema });
     },
     shouldValidate: "onBlur",
@@ -54,6 +50,30 @@ export function EditForm({ data }: { data: CategoryData }) {
 
   const [title, setTitle] = useState<string>(data.title || "");
   const [slug, setSlugValue] = useState<string>(data.slug || "");
+  const [titleError, setTitleError] = useState<string | null>(null);
+  const [slugError, setSlugError] = useState<string | null>(null);
+
+  // Очистка ошибок при изменении полей
+  useEffect(() => {
+    if (titleError) setTitleError(null);
+  }, [title]);
+
+  useEffect(() => {
+    if (slugError) setSlugError(null);
+  }, [slug]);
+
+  useEffect(() => {
+    if (lastResult?.error?.title) {
+      setTitleError(lastResult.error.title[0]);
+    } else {
+      setTitleError(null);
+    }
+    if (lastResult?.error?.slug) {
+      setSlugError(lastResult.error.slug[0]);
+    } else {
+      setSlugError(null);
+    }
+  }, [lastResult]);
 
   function handleSlugGeneration() {
     if (!title) {
@@ -81,6 +101,7 @@ export function EditForm({ data }: { data: CategoryData }) {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
+            {/* Title Field */}
             <div className="flex flex-col gap-3">
               <Label>Title</Label>
               <Input
@@ -92,9 +113,12 @@ export function EditForm({ data }: { data: CategoryData }) {
                 className="w-full"
                 placeholder="Category Title"
               />
-              <p className="text-red-500">{fields.title.errors}</p>
+              {titleError && (
+                <p className="text-red-500 text-sm">{titleError}</p>
+              )}
             </div>
 
+            {/* Slug Field */}
             <div className="flex flex-col gap-3">
               <Label>Slug</Label>
               <Input
@@ -113,12 +137,17 @@ export function EditForm({ data }: { data: CategoryData }) {
               >
                 <Atom className="size-4 mr-2" /> Generate Slug
               </Button>
-              <p className="text-red-500 text-sm">{fields.slug.errors}</p>
+              {slugError && <p className="text-red-500 text-sm">{slugError}</p>}
             </div>
           </div>
         </CardContent>
+
+        {/* Disable Submit Button if there are errors */}
         <CardFooter>
-          <SubmitButton text="Update Category" />
+          <SubmitButton
+            text="Update Category"
+            disabled={!!titleError || !!slugError}
+          />
         </CardFooter>
       </Card>
     </form>
