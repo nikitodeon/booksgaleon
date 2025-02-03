@@ -124,7 +124,7 @@ export default function CategoryCreateRoute() {
                 key={fields.slug.key}
                 name={fields.slug.name}
                 defaultValue={fields.slug.initialValue}
-                placeholder="Article Slug"
+                placeholder="Article Slug (latin letters)"
                 onChange={(e) => setSlugValue(e.target.value)}
                 value={slug}
               />

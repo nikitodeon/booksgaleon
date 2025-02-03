@@ -14,9 +14,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-function generateSlug(name: string): string {
-  return slugify(tr(name));
-}
+// function generateSlug(name: string): string {
+// return slugify(tr(name));
+// }
 
 export const navbarLinks = [
   {
@@ -60,9 +60,9 @@ export const navbarLinks = [
     name: "Для детей и подростков",
   },
 ];
-{
-  navbarLinks.map((item) => console.log(`${generateSlug(item.name)}`));
-}
+// {
+//   navbarLinks.map((item) => console.log(`${generateSlug(item.name)}`));
+// }
 export function NavbarLinks() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -90,29 +90,34 @@ export function NavbarLinks() {
     fetchCategories();
   }, []);
 
-  const handleCategoryChange = (categoryId: string) => {
-    router.push(`/products/${categoryId}`);
+  const handleCategoryChange = (categorySlug: string) => {
+    router.push(`/products/${categorySlug}`);
   };
 
   return (
     <div className="hidden md:flex justify-center items-center gap-x-2 ">
-      {navbarLinks.map((item) => (
-        <Link
-          href={
-            item.name === "Все жанры"
-              ? "/"
-              : `/products/${generateSlug(item.name)}`
-          }
-          key={item.id}
-          className={`font-moondance ${
-            location === `/products/${generateSlug(item.name)}`
-              ? "bg-muted rounded-md"
-              : "hover:bg-muted rounded-md hover:bg-opacity-75"
-          } group p-2 font-medium ms-cded-md`}
-        >
-          {item.name}
-        </Link>
-      ))}
+      {navbarLinks.map((item) => {
+        const navcategory = categories.find((cat) => cat.title === item.name);
+        return (
+          navcategory && (
+            <Link
+              href={
+                item.name === "Все жанры"
+                  ? "/"
+                  : `/products/${navcategory.slug}`
+              }
+              key={item.id}
+              className={`font-moondance ${
+                location === `/products/${navcategory.slug}`
+                  ? "bg-muted rounded-md"
+                  : "hover:bg-muted rounded-md hover:bg-opacity-75"
+              } group p-2 font-medium ms-cded-md`}
+            >
+              {item.name}
+            </Link>
+          )
+        );
+      })}
 
       {/* Селектор для категорий с названием "Больше категорий" */}
       <div className="flex flex-col gap-3 mt-2">
@@ -120,7 +125,7 @@ export function NavbarLinks() {
           name="select"
           onValueChange={(value) => {
             const category = categories.find((cat) => cat.title === value);
-            if (category) handleCategoryChange(category.id);
+            if (category) handleCategoryChange(category.slug);
           }}
         >
           <SelectTrigger>

@@ -127,7 +127,7 @@ export function EditForm({ data }: { data: CategoryData }) {
                 value={slug}
                 onChange={(e) => setSlugValue(e.target.value)}
                 className="w-full"
-                placeholder="Category Slug"
+                placeholder="Category Slug (latin letters)"
               />
               <Button
                 onClick={handleSlugGeneration}
