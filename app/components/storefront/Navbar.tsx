@@ -12,6 +12,7 @@ import { Hero } from "./Hero";
 import { ThemeToggle } from "../ThemeToggle";
 import { useTheme } from "next-themes";
 import { User } from "next-auth";
+import SearchBar from "./SearchBar";
 
 // Тип данных для пользователя
 
@@ -103,12 +104,9 @@ export function Navbar({ user, banners }: NavbarProps) {
             <br /> открывай море историй!
           </p>
           {/* Поле поиска */}
-          <div className="mt-4 w-full max-w-md">
-            <input
-              type="text"
-              placeholder="Найти книги..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+          {/* <div className="mt-4 w-full max-w-md"> */}
+          <div className="mx-auto w-full max-w-md  mt-4 flex flex-col ">
+            <SearchBar />
           </div>
         </div>
 
