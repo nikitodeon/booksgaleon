@@ -46,7 +46,7 @@ const SearchBar = () => {
           onKeyDown={handleKeyDown} // Обработчик для Escape
           ref={inputRef}
           className="absolute inset-0 h-full border-2 placeholder-custom"
-          placeholder="Название или описание книги..."
+          placeholder="Название, автор или описание книги..."
         />
 
         <Button
