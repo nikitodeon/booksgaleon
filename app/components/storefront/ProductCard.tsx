@@ -7,6 +7,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ProductStatus } from "@prisma/client";
+import { Decimal } from "@prisma/client/runtime/library";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +23,22 @@ interface iAppProps {
   };
 }
 
-export function ProductCard({ item }: iAppProps) {
+interface iAppPropsTwo {
+  category?: { id: string; title: string; createdAt: Date; slug: string }; // Сделано опциональным
+  item: {
+    id: string;
+    name: string;
+    description: string;
+    status: ProductStatus;
+    price: Decimal;
+    images: string[];
+    isFeatured: boolean;
+    createdAt: Date;
+    categoryId: string;
+  };
+}
+
+export function ProductCard({ item }: iAppProps | iAppPropsTwo) {
   return (
     <div className="rounded-lg">
       <Carousel className="w-full mx-auto">
@@ -44,17 +61,21 @@ export function ProductCard({ item }: iAppProps) {
       </Carousel>
 
       <div className="flex justify-between items-center mt-2">
-        <h1 className="font-semibold text-xl line-clamp-3">{item.name}</h1>
+        <h1 className="font-semibold text-xl customline-clamp-3 custom">
+          {item.name}
+        </h1>
         <h3 className="inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/10">
-          {item.price} BYN
+          {item.price.toString()} BYN
         </h3>
       </div>
-      <p className="text-gray-600 text-sm mt-2 line-clamp-2">
+      <p className="text-gray-600 text-sm mt-2 customline-clamp-2 custom-description">
         {item.description}
       </p>
 
       <Button asChild className="w-full mt-5">
-        <Link href={`/product/${item.id}`}>Подробнее</Link>
+        <Link className="custom-button " href={`/product/${item.id}`}>
+          Подробнее
+        </Link>
       </Button>
     </div>
   );

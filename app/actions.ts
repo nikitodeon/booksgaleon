@@ -8,6 +8,7 @@ import { prisma } from "./utils/db";
 import { auth } from "@/auth";
 import { Decimal } from "@prisma/client/runtime/library";
 import { SubmissionResult } from "@conform-to/react";
+import { Product } from "@prisma/client";
 // import { redis } from "./lib/redis";
 // import { Cart } from "./lib/interfaces";
 // import { revalidatePath } from "next/cache";
@@ -289,6 +290,48 @@ export async function deleteCategory(formData: FormData) {
 
   redirect("/dashboard/categories");
 }
+
+export const searchProducts = async (searchQuery: string) => {
+  const products = await prisma.product.findMany({
+    where: {
+      OR: [
+        {
+          name: {
+            contains: searchQuery, // Подстрока в названии
+            mode: "insensitive", // Поиск без учета регистра
+          },
+        },
+        {
+          description: {
+            contains: searchQuery, // Подстрока в описании
+            mode: "insensitive", // Поиск без учета регистра
+          },
+        },
+        {
+          category: {
+            title: {
+              contains: searchQuery, // Подстрока в названии категории
+              mode: "insensitive", // Поиск без учета регистра
+            },
+          },
+        },
+        {
+          category: {
+            slug: {
+              contains: searchQuery, // Подстрока в слаг-стороне категории
+              mode: "insensitive", // Поиск без учета регистра
+            },
+          },
+        },
+      ],
+    },
+    include: {
+      category: true, // Включаем данные о категории
+    },
+  });
+
+  return products;
+};
 
 // export async function addItem(productId: string) {
 //   const { getUser } = getKindeServerSession();

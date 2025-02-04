@@ -24,7 +24,7 @@ const SelectTrigger = React.forwardRef<
     )}
     {...props}
   >
-    <div className="text-[1rem] font-medium font-moondance mb-2">
+    <div className="text-[1rem] font-medium custom-navbar mb-2">
       {" "}
       {children}{" "}
     </div>

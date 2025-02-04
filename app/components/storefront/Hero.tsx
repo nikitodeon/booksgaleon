@@ -53,7 +53,7 @@ export function Hero({ banners }: HeroProps) {
                   item.title
                 )} text-[#070247] w-[3rem] h-[3rem] rounded-full shadow-lg border-4 border-[#d4af37]transition-transform hover:scale-105`}
               >
-                <h1 className="text-[1.7rem] font-bold  font-moondance">
+                <h1 className="text-[1.7rem] font-bold  custom-medal">
                   {item.title}
                 </h1>
               </div>

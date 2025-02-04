@@ -1,9 +1,28 @@
 import { ProductCard } from "@/app/components/storefront/ProductCard";
 import { prisma } from "@/app/utils/db";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 
 async function getData(categorySlug: string) {
+  if (categorySlug === "vse-zhanry") {
+    redirect("/");
+    // Для категории vse-zhanry - возвращаем все опубликованные продукты
+    // const data = await prisma.product.findMany({
+    //   where: { status: "published" },
+    //   select: {
+    //     name: true,
+    //     images: true,
+    //     price: true,
+    //     id: true,
+    //     description: true,
+    //   },
+    // });
+
+    // return {
+    //   title: "Все жанры", // Название категории можно задать жестко
+    //   data: data.map((item) => ({ ...item, price: item.price.toString() })),
+    // };
+  }
   // Список "красивых" категорий и их названий
   //   const categoryMap: Record<string, string> = {
   //     bestsellery: "Бестселлеры",

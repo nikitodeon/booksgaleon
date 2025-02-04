@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --font-moon-dance: "Moon Dance", cursive;
+    --font-moondance: "Moon Dance", sans-serif;
     --font-maname: "Maname", sans-serif;
 
     --background: 0 0% 100%; /* Белый фон для светлой темы */
@@ -98,4 +98,70 @@
 
 .font-maname {
   font-family: var(--font-maname);
+}
+.customline-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Максимум 3 строки */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(
+    3 * 1.45em
+  ); /* Минимум 3 строки, 1.25em — высота строки, можно подрегулировать */
+}
+.customline-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Максимум 3 строки */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(
+    2 * 1.35em
+  ); /* Минимум 3 строки, 1.25em — высота строки, можно подрегулировать */
+}
+.placeholder-custom::placeholder {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  font-weight: 500; /* Пример кастомного веса шрифта */
+  font-size: 18px;
+
+  color: #555; /* Пример кастомного цвета */
+}
+.custom-gray {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  font-weight: 500; /* Пример кастомного веса шрифта */
+  font-size: 20px;
+
+  color: #555; /* Пример кастомного цвета */
+}
+.custom-navbar {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  /* Пример кастомного веса шрифта */
+  font-size: 18px;
+
+  /* Пример кастомного цвета */
+}
+.custom {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  /* Пример кастомного веса шрифта */
+
+  /* Пример кастомного цвета */
+}
+.custom-button {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  /* Пример кастомного веса шрифта */
+  font-size: 17px;
+
+  /* Пример кастомного цвета */
+}
+.custom-description {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  /* Пример кастомного веса шрифта */
+  font-size: 16px;
+
+  /* Пример кастомного цвета */
+}
+.custom-medal {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  /* Пример кастомного веса шрифта */
+  font-size: 32px;
+
+  /* Пример кастомного цвета */
 }

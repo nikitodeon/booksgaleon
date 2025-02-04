@@ -107,7 +107,7 @@ export function NavbarLinks() {
                   : `/products/${navcategory.slug}`
               }
               key={item.id}
-              className={`font-moondance ${
+              className={`custom-navbar ${
                 location === `/products/${navcategory.slug}`
                   ? "bg-muted rounded-md"
                   : "hover:bg-muted rounded-md hover:bg-opacity-75"
@@ -133,7 +133,11 @@ export function NavbarLinks() {
           </SelectTrigger>
           <SelectContent>
             {categories.map((category) => (
-              <SelectItem key={category.id} value={category.title}>
+              <SelectItem
+                className="custom-button"
+                key={category.id}
+                value={category.title}
+              >
                 {category.title}
               </SelectItem>
             ))}
