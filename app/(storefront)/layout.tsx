@@ -4,6 +4,7 @@ import { prisma } from "@/app/utils/db"; // Для получения данны
 import { ReactNode } from "react";
 import { Navbar } from "../components/storefront/Navbar";
 import { Footer } from "../components/storefront/Footer";
+import { BestsellersProducts } from "../components/storefront/BestsellersProducts";
 
 // Функция для получения баннеров
 async function getBanners() {
@@ -24,6 +25,9 @@ export default async function StoreFrontLayout({
       <Navbar user={user} banners={banners} />
       {/* Передаем данные о пользователе и баннерах в Navbar */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">{children}</main>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-[70px]">
+        <BestsellersProducts />
+      </div>
       <Footer />
     </>
   );

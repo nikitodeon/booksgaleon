@@ -82,11 +82,25 @@ const Carousel = React.forwardRef<
     }, []);
 
     const scrollPrev = React.useCallback(() => {
-      api?.scrollPrev();
+      if (api) {
+        if (api.selectedScrollSnap() === 0) {
+          const lastIndex = api.scrollSnapList().length - 1;
+          api.scrollTo(lastIndex, true); // Плавно переходим к последнему элементу
+        } else {
+          api.scrollPrev();
+        }
+      }
     }, [api]);
 
     const scrollNext = React.useCallback(() => {
-      api?.scrollNext();
+      if (api) {
+        const lastIndex = api.scrollSnapList().length - 1;
+        if (api.selectedScrollSnap() === lastIndex) {
+          api.scrollTo(0, true); // Плавный переход к первому элементу
+        } else {
+          api.scrollNext();
+        }
+      }
     }, [api]);
 
     const handleKeyDown = React.useCallback(
@@ -221,7 +235,6 @@ const CarouselPrevious = React.forwardRef<
             : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
           className
         )}
-        disabled={!canScrollPrev}
         onClick={scrollPrev}
         {...props}
       >
@@ -257,7 +270,6 @@ const CarouselNext = React.forwardRef<
             : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
           className
         )}
-        disabled={!canScrollNext}
         onClick={scrollNext}
         {...props}
       >

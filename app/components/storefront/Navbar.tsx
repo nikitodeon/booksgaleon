@@ -44,7 +44,9 @@ export function Navbar({ user, banners }: NavbarProps) {
     <div>
       <nav className="w-full max-w-screen-3xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
         <div className="flex items-center">
+          {/* <div className="navbar-links"> */}
           <NavbarLinks />
+          {/* </div> */}
         </div>
 
         <div className="flex items-center ">
@@ -67,7 +69,7 @@ export function Navbar({ user, banners }: NavbarProps) {
               />
             </>
           ) : (
-            <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2">
+            <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2 ">
               <div className="mt-2">
                 <ThemeToggle />
               </div>
@@ -99,12 +101,13 @@ export function Navbar({ user, banners }: NavbarProps) {
             />
           </Link>
           {/* Описание */}
-          <p className="mt-4 text-center text-md text-gray-600 custom-gray">
+          <div className="mt-4 text-center text-md text-gray-600  custom-logo-description">
             Ветер в твоих парусах,
             <br /> открывай море историй!
-          </p>
+          </div>
           {/* Поле поиска */}
-          <div className="mt-4 w-full max-w-md">
+          {/* <div className="mt-4 w-full max-w-md"> */}
+          <div className="mx-auto w-full max-w-md  mt-4 flex flex-col ">
             <SearchBar />
           </div>
         </div>

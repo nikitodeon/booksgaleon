@@ -53,7 +53,7 @@ export const navbarLinks = [
   },
   {
     id: 8,
-    name: "Популярные книги",
+    name: "Искусство и Культура",
   },
   {
     id: 9,
@@ -107,13 +107,13 @@ export function NavbarLinks() {
                   : `/products/${navcategory.slug}`
               }
               key={item.id}
-              className={`custom-navbar ${
+              className={`custom-navbar custom-navbar-link ${
                 location === `/products/${navcategory.slug}`
                   ? "bg-muted rounded-md"
                   : "hover:bg-muted rounded-md hover:bg-opacity-75"
               } group p-2 font-medium ms-cded-md`}
             >
-              {item.name}
+              <span className="custom-navbar-text">{item.name}</span>
             </Link>
           )
         );

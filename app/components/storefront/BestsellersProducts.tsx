@@ -32,7 +32,7 @@ async function getData() {
 export function BestsellersProducts() {
   return (
     <>
-      <h2 className="text-2xl font-extrabold tracking-tight">Bestsellers</h2>
+      <h1 className="font-semibold text-3xl my-5 custom">Бестселлеры</h1>
       <Suspense fallback={<LoadingRows />}>
         <LoadFeaturedproducts />
       </Suspense>
@@ -45,7 +45,7 @@ async function LoadFeaturedproducts() {
   const data = await getData();
 
   return (
-    <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div className="mt-5 grid sm:grid-cols-4 lg:grid-cols-6 gap-5">
       {data.bestsellersData.map((item) => (
         <ProductCard key={item.id} item={item} />
       ))}

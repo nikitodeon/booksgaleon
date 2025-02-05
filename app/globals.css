@@ -147,7 +147,7 @@
 .custom-button {
   font-family: "Moon Dance"; /* Пример кастомного шрифта */
   /* Пример кастомного веса шрифта */
-  font-size: 17px;
+  font-size: 18px;
 
   /* Пример кастомного цвета */
 }
@@ -158,6 +158,26 @@
 
   /* Пример кастомного цвета */
 }
+.custom-big-description {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  /* Пример кастомного веса шрифта */
+  font-size: 20px;
+
+  /* Пример кастомного цвета */
+}
+.custom-big-button {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  /* Пример кастомного веса шрифта */
+
+  /* Пример кастомного цвета */
+}
+.custom-logo-description {
+  font-family: "Moon Dance"; /* Пример кастомного шрифта */
+  /* Пример кастомного веса шрифта */
+  font-size: 18px;
+
+  /* Пример кастомного цвета */
+}
 .custom-medal {
   font-family: "Moon Dance"; /* Пример кастомного шрифта */
   /* Пример кастомного веса шрифта */
@@ -165,3 +185,35 @@
 
   /* Пример кастомного цвета */
 }
+/* .category-link {
+  width: min-content;
+}
+.navbar-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
+  text-align: center;
+} */
+/* Новый стиль для категорий */
+.custom-navbar-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 120px; /* Ограничиваем ширину */
+  word-wrap: break-word; /* Позволяем разрывать длинные слова */
+  white-space: normal; /* Разрешаем перенос строк */
+  overflow: visible; /* Убираем троеточия */
+  line-height: 1.2; /* Делаем текст компактнее */
+  padding: 5px;
+}
+
+/* .custom-navbar-text { */
+/* display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px; Устанавливаем максимальную ширину для категории */
+/* text-align: center; Выравнивание по центру */
+/* word-break: break-word; Чтобы длинные слова тоже не вылезали */
+/* }  */

@@ -18,7 +18,7 @@ const SearchBar = () => {
       startTransition(() => {
         router.push(`/search?query=${query}`);
       });
-    }, 600); // Добавляем задержку, чтобы избежать частых запросов при вводе текста
+    }, 300); // Добавляем задержку, чтобы избежать частых запросов при вводе текста
 
     return () => clearTimeout(delayDebounce);
   }, [query, router]);
