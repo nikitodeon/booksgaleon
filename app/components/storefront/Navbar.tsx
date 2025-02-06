@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { NavbarLinks } from "./NavbarLinks";
-import { ShoppingBagIcon } from "lucide-react";
+// import { ShoppingBagIcon } from "lucide-react";
 import { UserDropdown } from "./UserDropdown";
 import { Button } from "@/components/ui/button";
 import { LoginButton, RegisterButton } from "../AuthButtons";
@@ -13,15 +13,21 @@ import { ThemeToggle } from "../ThemeToggle";
 import { useTheme } from "next-themes";
 import { User } from "next-auth";
 import SearchBar from "./SearchBar";
+import { ShoppingBasket } from "lucide-react";
+import { auth } from "@/auth";
+import { Cart } from "@/app/lib/interfaces";
 
 // Тип данных для пользователя
 
 interface NavbarProps {
   user: User | null; // Пропс для передачи данных о пользователе
   banners: { id: string; imageString: string; title: string }[]; // Пропс для баннеров
+  cart: Cart | null;
 }
 
-export function Navbar({ user, banners }: NavbarProps) {
+export function Navbar({ user, banners, cart }: NavbarProps) {
+  const total = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
+
   const { theme, resolvedTheme } = useTheme(); // Получаем текущую тему
   const [themeLoaded, setThemeLoaded] = useState(false); // Состояние для отслеживания загрузки темы
 
@@ -56,9 +62,9 @@ export function Navbar({ user, banners }: NavbarProps) {
                 <ThemeToggle />
               </div>
               <Link href="/bag" className="group p-2 flex items-center mr-2">
-                <ShoppingBagIcon className="h-6 w-6 mt-3 text-gray-400 group-hover:text-gray-500" />
-                <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                  {/* {total} */}
+                <ShoppingBasket className="h-6 w-6 mt-3 group-hover:text-gray-500" />
+                <span className="ml-2 text-sm font-medium group-hover:text-gray-500">
+                  {total}
                 </span>
               </Link>
 

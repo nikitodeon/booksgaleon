@@ -1,7 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Loader2, ShoppingBag } from "lucide-react";
+import {
+  Loader2,
+  //  ShoppingBag,
+  ShoppingBasket,
+} from "lucide-react";
 import { useFormStatus } from "react-dom";
 
 interface buttonProps {
@@ -43,8 +47,8 @@ export function ShoppingBagButton() {
     <>
       {pending ? (
         <Button disabled size="lg" className="w-full mt-5">
-          <Loader2 className="mr-4 h-5 w-5 animate-spin" /> Пожалуйста,
-          подождите
+          <Loader2 className="mr-4 h-5 w-5 animate-spin" />{" "}
+          <div className="text-xl">Пожалуйста, подождите </div>
         </Button>
       ) : (
         <Button
@@ -52,7 +56,7 @@ export function ShoppingBagButton() {
           className="w-full mt-5 flex items-center gap-3"
           type="submit"
         >
-          <ShoppingBag className="  mr-4 h-8 w-8  flex-shrink-0" />{" "}
+          <ShoppingBasket className="  mr-4 transform scale-150  flex-shrink-0" />{" "}
           <div className="text-xl">Добавить в корзину</div>
         </Button>
       )}
@@ -67,11 +71,11 @@ export function DeleteItem() {
     <>
       {pending ? (
         <button disabled className="font-medium text-primary text-end">
-          Removing...
+          Удаление...
         </button>
       ) : (
         <button type="submit" className="font-medium text-primary text-end">
-          Delete
+          Удалить
         </button>
       )}
     </>

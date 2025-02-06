@@ -9,6 +9,9 @@ import { auth } from "@/auth";
 import { Decimal } from "@prisma/client/runtime/library";
 import { SubmissionResult } from "@conform-to/react";
 import { Product } from "@prisma/client";
+import { redis } from "./lib/redis";
+import { Cart } from "./lib/interfaces";
+import { revalidatePath } from "next/cache";
 // import { redis } from "./lib/redis";
 // import { Cart } from "./lib/interfaces";
 // import { revalidatePath } from "next/cache";
@@ -333,98 +336,128 @@ export const searchProducts = async (searchQuery: string) => {
   return products;
 };
 
-// export async function addItem(productId: string) {
-//   const { getUser } = getKindeServerSession();
-//   const user = await getUser();
+export async function addItem(productId: string) {
+  const session = await auth();
 
-//   if (!user) {
-//     return redirect("/");
-//   }
+  const user = session?.user;
 
-//   let cart: Cart | null = await redis.get(`cart-${user.id}`);
+  if (!user || !user.id) {
+    return redirect("/");
+  }
 
-//   const selectedProduct = await prisma.product.findUnique({
-//     select: {
-//       id: true,
-//       name: true,
-//       price: true,
-//       images: true,
-//     },
-//     where: {
-//       id: productId,
-//     },
-//   });
+  let cart: Cart | null = await redis.get(`cart-${user.id}`);
 
-//   if (!selectedProduct) {
-//     throw new Error("No product with this id");
-//   }
-//   let myCart = {} as Cart;
+  const selectedProduct = await prisma.product.findUnique({
+    select: {
+      id: true,
+      name: true,
+      price: true,
+      images: true,
+    },
+    where: {
+      id: productId,
+    },
+  });
 
-//   if (!cart || !cart.items) {
-//     myCart = {
-//       userId: user.id,
-//       items: [
-//         {
-//           price: selectedProduct.price,
-//           id: selectedProduct.id,
-//           imageString: selectedProduct.images[0],
-//           name: selectedProduct.name,
-//           quantity: 1,
-//         },
-//       ],
-//     };
-//   } else {
-//     let itemFound = false;
+  if (!selectedProduct) {
+    throw new Error("No product with this id");
+  }
+  let myCart = {} as Cart;
 
-//     myCart.items = cart.items.map((item) => {
-//       if (item.id === productId) {
-//         itemFound = true;
-//         item.quantity += 1;
-//       }
+  if (!cart || !cart.items) {
+    myCart = {
+      userId: user.id,
+      items: [
+        {
+          price: selectedProduct.price.toNumber(),
+          id: selectedProduct.id,
+          imageString: selectedProduct.images[0],
+          name: selectedProduct.name,
+          quantity: 1,
+        },
+      ],
+    };
+  } else {
+    let itemFound = false;
 
-//       return item;
-//     });
+    myCart.items = cart.items.map((item) => {
+      if (item.id === productId) {
+        itemFound = true;
+        item.quantity += 1;
+      }
 
-//     if (!itemFound) {
-//       myCart.items.push({
-//         id: selectedProduct.id,
-//         imageString: selectedProduct.images[0],
-//         name: selectedProduct.name,
-//         price: selectedProduct.price,
-//         quantity: 1,
-//       });
-//     }
-//   }
+      return item;
+    });
 
-//   await redis.set(`cart-${user.id}`, myCart);
+    if (!itemFound) {
+      myCart.items.push({
+        id: selectedProduct.id,
+        imageString: selectedProduct.images[0],
+        name: selectedProduct.name,
+        price: selectedProduct.price.toNumber(),
+        quantity: 1,
+      });
+    }
+  }
 
-//   revalidatePath("/", "layout");
-// }
+  await redis.set(`cart-${user.id}`, myCart);
 
-// export async function delItem(formData: FormData) {
-//   const { getUser } = getKindeServerSession();
-//   const user = await getUser();
+  revalidatePath("/", "layout");
+}
 
-//   if (!user) {
-//     return redirect("/");
-//   }
+export async function delItem(formData: FormData) {
+  const session = await auth();
 
-//   const productId = formData.get("productId");
+  const user = session?.user;
 
-//   let cart: Cart | null = await redis.get(`cart-${user.id}`);
+  if (!user || !user.id) {
+    return redirect("/");
+  }
 
-//   if (cart && cart.items) {
-//     const updateCart: Cart = {
-//       userId: user.id,
-//       items: cart.items.filter((item) => item.id !== productId),
-//     };
+  const productId = formData.get("productId");
 
-//     await redis.set(`cart-${user.id}`, updateCart);
-//   }
+  let cart: Cart | null = await redis.get(`cart-${user.id}`);
 
-//   revalidatePath("/bag");
-// }
+  if (cart && cart.items) {
+    const updateCart: Cart = {
+      userId: user.id,
+      items: cart.items.filter((item) => item.id !== productId),
+    };
 
+    await redis.set(`cart-${user.id}`, updateCart);
+  }
+
+  revalidatePath("/bag");
+}
+
+export async function updateQuantity(itemId: string, newQuantity: number) {
+  const session = await auth();
+
+  const user = session?.user;
+
+  if (!user || !user.id) {
+    return redirect("/");
+  }
+
+  let cart: Cart | null = await redis.get(`cart-${user.id}`);
+
+  if (cart && cart.items) {
+    const updateCart: Cart = {
+      userId: user.id,
+      items: cart.items.map((item) => {
+        if (item.id === itemId) {
+          item.quantity = newQuantity;
+        }
+
+        return item;
+      }),
+    };
+
+    await redis.set(`cart-${user.id}`, updateCart);
+  }
+
+  revalidatePath("/bag");
+}
 // export async function checkOut() {
 //   const { getUser } = getKindeServerSession();
 //   const user = await getUser();

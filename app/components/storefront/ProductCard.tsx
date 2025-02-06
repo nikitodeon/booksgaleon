@@ -1,3 +1,4 @@
+// "use client";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -12,6 +13,7 @@ import { Decimal } from "@prisma/client/runtime/library";
 
 import Image from "next/image";
 import Link from "next/link";
+// import { useEffect, useState } from "react";
 
 interface iAppProps {
   item: {
@@ -39,6 +41,13 @@ interface iAppPropsTwo {
 }
 
 export function ProductCard({ item }: iAppProps | iAppPropsTwo) {
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 3000); // 3 секунды задержки
+  // }, []);
   return (
     <div className="rounded-lg">
       <Carousel className="w-full mx-auto">
@@ -62,14 +71,14 @@ export function ProductCard({ item }: iAppProps | iAppPropsTwo) {
 
       <div className="flex justify-between items-center mt-2">
         <h1 className="font-semibold text-xl customline-clamp-3 custom">
-          {item.name}
+          <Link href={`/product/${item.id}`}>{item.name}</Link>
         </h1>
         <h3 className="inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/10">
           {item.price.toString()} BYN
         </h3>
       </div>
       <p className="text-gray-600 text-sm mt-2 customline-clamp-2 custom-description">
-        {item.description}
+        <Link href={`/product/${item.id}`}>{item.description}</Link>
       </p>
 
       <Button asChild className="w-full mt-5">
@@ -83,13 +92,25 @@ export function ProductCard({ item }: iAppProps | iAppPropsTwo) {
 
 export function LoadingProductCard() {
   return (
-    <div className="flex flex-col">
-      <Skeleton className="w-full h-[330px]" />
-      <div className="flex flex-col mt-2 gap-y-2">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="w-full h-6" />
+    <div className="rounded-lg">
+      {/* Карусель изображений */}
+      <div className="w-full mx-auto">
+        <div className="relative h-[280px]">
+          <Skeleton className="w-full h-full rounded-lg" />
+        </div>
       </div>
-      <Skeleton className="w-full h-10 mt-5" />
+
+      {/* Заголовок и цена */}
+      <div className="flex justify-between items-center mt-2">
+        <Skeleton className="h-6 w-3/4" /> {/* Заголовок */}
+        <Skeleton className="h-6 w-20" /> {/* Цена */}
+      </div>
+
+      {/* Описание */}
+      <Skeleton className="w-full h-6 mt-2" />
+
+      {/* Кнопка "Подробнее" */}
+      <Skeleton className="w-full h-10 mt-5 rounded-md" />
     </div>
   );
 }

@@ -185,6 +185,14 @@
 
   /* Пример кастомного цвета */
 }
+.custom-cart-title {
+  font-family: "Moon Dance";
+  font-size: 26px;
+}
+.custom-cart-description {
+  font-family: "Moon Dance";
+  font-size: 18px;
+}
 /* .category-link {
   width: min-content;
 }

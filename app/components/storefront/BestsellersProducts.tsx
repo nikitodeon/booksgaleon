@@ -55,7 +55,7 @@ async function LoadFeaturedproducts() {
 
 function LoadingRows() {
   return (
-    <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div className="mt-5 grid sm:grid-cols-4 lg:grid-cols-6 gap-5">
       <LoadingProductCard />
       <LoadingProductCard />
       <LoadingProductCard />
