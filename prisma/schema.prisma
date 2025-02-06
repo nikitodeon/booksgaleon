@@ -23,7 +23,7 @@ model User {
   profileImage String
   
 
-  // orders Order[]
+  orders Order[]
 
   createdAt DateTime @default(now())
 }
@@ -72,6 +72,34 @@ model Category {
 
 //   createdAt DateTime @default(now())
 // }
+model Order {
+ id Int @id @default(autoincrement())
+
+    user   User? @relation(fields: [userId], references: [id])
+    userId String?
+
+    // token String
+
+    totalAmount Int
+    status      OrderStatus
+    paymentId   String?
+
+    items Json
+
+    fullName String
+    email    String
+    phone    String
+    address  String
+    comment  String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+enum OrderStatus {
+    PENDING
+    SUCCEEDED
+    CANCELLED
+}
 
 enum ProductStatus {
   draft

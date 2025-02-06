@@ -3,15 +3,22 @@ import { transliterate as tr, slugify } from "transliteration";
 // import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { parseWithZod } from "@conform-to/zod";
-import { bannerSchema, categorySchema, productSchema } from "./lib/zodSchemas";
+import {
+  bannerSchema,
+  categorySchema,
+  CheckoutFormValues,
+  productSchema,
+} from "./lib/zodSchemas";
 import { prisma } from "./utils/db";
 import { auth } from "@/auth";
 import { Decimal } from "@prisma/client/runtime/library";
 import { SubmissionResult } from "@conform-to/react";
-import { Product } from "@prisma/client";
+import { OrderStatus, Product } from "@prisma/client";
 import { redis } from "./lib/redis";
 import { Cart } from "./lib/interfaces";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { createPayment } from "./lib/create-payment";
 // import { redis } from "./lib/redis";
 // import { Cart } from "./lib/interfaces";
 // import { revalidatePath } from "next/cache";
@@ -458,6 +465,144 @@ export async function updateQuantity(itemId: string, newQuantity: number) {
 
   revalidatePath("/bag");
 }
+
+export async function createOrder(data: CheckoutFormValues) {
+  try {
+    // const cookieStore = await cookies();
+    // const cartToken = cookieStore.get('cartToken')?.value;
+
+    // if (!cartToken) {
+    //   throw new Error('Cart token not found');
+    // }
+    const session = await auth();
+
+    const user = session?.user;
+
+    if (!user || !user.id) {
+      return redirect("/");
+    }
+
+    let cart: Cart | null = await redis.get(`cart-${user.id}`);
+    /* Находим корзину по токену */
+    // const userCart = await prisma.cart.findFirst({
+    //   include: {
+    //     user: true,
+    //     items: {
+    //       include: {
+    //         ingredients: true,
+    //         productItem: {
+    //           include: {
+    //             product: true,
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    //   where: {
+    //     // token: cartToken,
+    //   },
+    // });
+
+    /* Если корзина не найдена возращаем ошибку */
+    if (!cart || !cart.items || cart.items.length === 0) {
+      throw new Error("Cart not found or empty");
+    }
+
+    // if (cart && cart.items) {
+    //   let sum=0
+    //   let totalAmount=0
+
+    // : Stripe.Checkout.SessionCreateParams.LineItem[]
+
+    const totalAmount = cart.items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    //   price_data: {
+    //     currency: "usd",
+    //     unit_amount: ,
+    //     product_data: {
+    //       name: item.name,
+    //       images: [item.imageString],
+    //     },
+    //   },
+    //   quantity: item.quantity,
+
+    /* Если корзина пустая возращаем ошибку */
+    // if (cart?.totalAmount === 0) {
+    //   throw new Error('Cart is empty');
+    // }
+
+    /* Создаем заказ */
+    const order = await prisma.order.create({
+      data: {
+        // token: cartToken,
+        userId: user.id,
+        fullName: data.firstName + " " + data.lastName,
+        email: data.email,
+        phone: data.phone,
+        address: data.address,
+        comment: data.comment,
+        totalAmount: totalAmount,
+        status: OrderStatus.PENDING,
+        items: JSON.stringify(cart.items),
+      },
+    });
+    await redis.del(`cart-${user.id}`);
+    /* Очищаем корзину */
+    // await prisma.cart.update({
+    //   where: {
+    //     id: userCart.id,
+    //   },
+    //   data: {
+    //     totalAmount: 0,
+    //   },
+    // });
+
+    // await prisma.cartItem.deleteMany({
+    //   where: {
+    //     cartId: userCart.id,
+    //   },
+    // });
+
+    const paymentData = await createPayment({
+      amount: totalAmount,
+      orderId: order.id,
+      description: "Оплата заказа #" + order.id,
+    });
+
+    if (!paymentData) {
+      throw new Error("Payment data not found");
+    }
+
+    await prisma.order.update({
+      where: {
+        id: order.id,
+      },
+      data: {
+        paymentId: paymentData.id,
+      },
+    });
+
+    const paymentUrl = paymentData.confirmation.confirmation_url;
+
+    // await sendEmail(
+    //   data.email,
+    //   'Next Pizza / Оплатите заказ #' + order.id,
+    //   PayOrderTemplate({
+    //     orderId: order.id,
+    //     totalAmount: order.totalAmount,
+    //     paymentUrl,
+    //   }),
+    // );
+
+    return paymentUrl;
+  } catch (err) {
+    console.log("[CreateOrder] Server error", err);
+  }
+}
+
 // export async function checkOut() {
 //   const { getUser } = getKindeServerSession();
 //   const user = await getUser();

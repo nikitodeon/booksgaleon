@@ -1,8 +1,8 @@
 import {
-  // checkOut,
+  //   checkOut,
   delItem,
 } from "@/app/actions";
-import { ChceckoutButton, DeleteItem } from "@/app/components/SubmitButtons";
+import { CheckoutButton, DeleteItem } from "@/app/components/SubmitButtons";
 import { Cart } from "@/app/lib/interfaces";
 import { redis } from "@/app/lib/redis";
 import { Button } from "@/components/ui/button";
@@ -66,7 +66,7 @@ export default async function BagRoute() {
             <div key={item.id} className="flex">
               <div className="w-24 h-24 sm:w-32 sm:h-32 relative">
                 <Image
-                  className="rounded-md object-cover"
+                  className="rounded-md object-contain"
                   fill
                   src={item.imageString}
                   alt="Product image"
@@ -98,7 +98,7 @@ export default async function BagRoute() {
             </div>
 
             {/* <form action={checkOut}>
-              <ChceckoutButton />
+              <CheckoutButton />
             </form> */}
           </div>
         </div>
