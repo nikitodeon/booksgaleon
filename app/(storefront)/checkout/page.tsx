@@ -116,14 +116,14 @@ export default function CheckoutPage() {
     }
   };
 
-  const onClickCountButton = (
-    id: string,
-    quantity: number,
-    type: "plus" | "minus"
-  ) => {
-    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
-    updateQuantity(id, newQuantity);
-  };
+  // const onClickCountButton = (
+  //   id: string,
+  //   quantity: number,
+  //   type: "plus" | "minus"
+  // ) => {
+  //   const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
+  //   updateQuantity(id, newQuantity);
+  // };
 
   return (
     <Container className="mt-10">
@@ -160,8 +160,8 @@ export default function CheckoutPage() {
             {/* Правая часть */}
             <div className="w-[450px]">
               <CheckoutSidebar
-                totalAmount={totalAmount}
-                //   loading={loading || submitting}
+              // totalAmount={totalAmount}
+              //   loading={loading || submitting}
               />
             </div>
           </div>

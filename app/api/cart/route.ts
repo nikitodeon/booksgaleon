@@ -1,6 +1,7 @@
 import { Cart } from "@/app/lib/interfaces";
 import { redis } from "@/app/lib/redis";
 import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function GET(req: Request) {
@@ -15,6 +16,7 @@ export async function GET(req: Request) {
 
     let cart: Cart | null = await redis.get(`cart-${user.id}`);
     console.log("Запрос к Redis для корзины пользователя:", user.id);
+    revalidatePath("/checkout");
 
     if (!cart || !cart.items) {
       return new Response(JSON.stringify([]), { status: 200 });

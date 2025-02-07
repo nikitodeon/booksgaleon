@@ -5,23 +5,40 @@ import { ArrowRight, Package, Percent, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { cn } from "@/lib/utils";
-import { parse } from "path";
-
 const VAT = 15;
 const DELIVERY_PRICE = 8;
 
 interface Props {
-  totalAmount: number;
   loading?: boolean;
   className?: string;
 }
 
-export const CheckoutSidebar: React.FC<Props> = ({
-  totalAmount,
-  loading,
-  className,
-}) => {
+export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
+  const [cart, setCart] = React.useState<any>(null);
+  const [totalAmount, setTotalAmount] = React.useState<number>(0);
+
+  // Получаем информацию о корзине при монтировании компонента
+  React.useEffect(() => {
+    async function fetchCartInfo() {
+      const response = await fetch("/api/cart");
+      if (!response.ok) throw new Error("Ошибка загрузки корзины");
+      const cartData = await response.json();
+      setCart(cartData);
+      setTotalAmount(
+        cartData
+          ? cartData.items.reduce(
+              (acc: number, item: { price: number; quantity: number }) =>
+                acc + item.price * item.quantity,
+              0
+            )
+          : 0
+      );
+    }
+
+    fetchCartInfo();
+  }, []);
+
+  // Расчёт НДС и общей суммы
   const vatPrice = ((totalAmount * VAT) / 100).toFixed(2);
   const totalPrice = (
     totalAmount +
@@ -30,7 +47,7 @@ export const CheckoutSidebar: React.FC<Props> = ({
   ).toFixed(2);
 
   return (
-    <WhiteBlock className={cn("p-6 sticky top-4", className)}>
+    <WhiteBlock className={`p-6 sticky top-4 ${className}`}>
       <div className="flex flex-col gap-1">
         <span className="text-xl">Итого:</span>
         {loading ? (
