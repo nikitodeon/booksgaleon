@@ -1,26 +1,28 @@
-import {
-  //   checkOut,
-  delItem,
-} from "@/app/actions";
+import { delItem, updateQuantity } from "@/app/actions";
 import { CheckoutButton, DeleteItem } from "@/app/components/SubmitButtons";
-import { Cart } from "@/app/lib/interfaces";
-import { redis } from "@/app/lib/redis";
 import { Button } from "@/components/ui/button";
-//
-import {
-  //  ShoppingBag,
-  ShoppingBasket,
-} from "lucide-react";
+import { ShoppingBasket } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
-
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import { CountButton } from "@/app/components/storefront/CountButton";
+import { CheckoutCountButton } from "@/app/components/storefront/checkout/CheckoutCountButton";
 import { useSession } from "next-auth/react";
 import React from "react";
-import { set } from "zod";
+
+// Интерфейсы для корзины и элементов
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  imageString: string;
+}
+
+interface Cart {
+  items: CartItem[];
+}
 
 export function CheckoutCart() {
   const [items, setItems] = React.useState<string[]>([]);
@@ -28,15 +30,7 @@ export function CheckoutCart() {
   const [cart, setCart] = React.useState<Cart | null>(null);
   noStore();
   const { data: session } = useSession();
-  // const session = await auth();
-  //   const data = session?.user
-  // const user = session?.user;
 
-  // if (!user) {
-  //   redirect("/");
-  // }
-
-  // const cart: Cart | null = await redis.get(`cart-${data?.id}`);
   React.useEffect(() => {
     async function fetchCartInfo() {
       const response = await fetch("/api/cart");
@@ -47,7 +41,7 @@ export function CheckoutCart() {
       setTotalAmount(
         cart
           ? cart.items.reduce(
-              (acc, item) => acc + item.price * item.quantity,
+              (acc: number, item: CartItem) => acc + item.price * item.quantity,
               0
             )
           : 0
@@ -57,11 +51,66 @@ export function CheckoutCart() {
     fetchCartInfo();
   }, []);
 
-  // let totalPrice = 0;
+  const onClickCountButton = (
+    id: string,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
 
-  // cart?.items.forEach((item) => {
-  //   totalPrice += item.price * item.quantity;
-  // });
+    // Обновление локального состояния корзины
+    setCart((prevCart) => {
+      if (prevCart) {
+        const updatedItems = prevCart.items.map((item) =>
+          item.id === id ? { ...item, quantity: newQuantity } : item
+        );
+        const updatedCart = { ...prevCart, items: updatedItems };
+
+        // Обновление общей суммы
+        setTotalAmount(
+          updatedCart.items.reduce(
+            (acc: number, item: CartItem) => acc + item.price * item.quantity,
+            0
+          )
+        );
+
+        return updatedCart;
+      }
+      return prevCart;
+    });
+
+    // Запрос на сервер для обновления данных
+    updateQuantity(id, newQuantity);
+  };
+
+  const handleDeleteItem = async (productId: string) => {
+    // Запрос на сервер для удаления товара
+    const response = await fetch(`/api/cart/remove/${productId}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      // Удалить товар из локального состояния корзины
+      setCart((prevCart) => {
+        if (prevCart) {
+          const updatedItems = prevCart.items.filter(
+            (item) => item.id !== productId
+          );
+          const updatedCart = { ...prevCart, items: updatedItems };
+
+          // Обновление общей суммы
+          setTotalAmount(
+            updatedCart.items.reduce(
+              (acc: number, item: CartItem) => acc + item.price * item.quantity,
+              0
+            )
+          );
+
+          return updatedCart;
+        }
+        return prevCart;
+      });
+    }
+  };
 
   return (
     <div className="max-w-2xl mx-auto mt-10 min-h-[55vh]">
@@ -80,10 +129,7 @@ export function CheckoutCart() {
           </p>
 
           <Button asChild>
-            <Link href="/">
-              {" "}
-              <div className="custom-cart-description">Перейти в магазин! </div>
-            </Link>
+            <Link href="/">{""}Перейти в магазин! </Link>
           </Button>
         </div>
       ) : (
@@ -105,14 +151,22 @@ export function CheckoutCart() {
                   {/* Цена сверху */}
                   <div className="flex flex-col items-center gap-y-4">
                     <span>Количество:</span>
-                    <CountButton productId={item.id} value={item.quantity} />
+                    <CheckoutCountButton
+                      productId={item.id}
+                      value={item.quantity}
+                      onClick={onClickCountButton} // передаем onClick
+                    />
                   </div>
-                  <form action={delItem} className="text-end">
-                    <input type="hidden" name="productId" value={item.id} />
-                    <div className="mt-2">
-                      <DeleteItem />
-                    </div>
-                  </form>
+                  {/* Кнопка удаления */}
+                  <div className="mt-2 text-end">
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteItem(item.id)} // Удаление товара
+                      className="font-medium text-primary"
+                    >
+                      Удалить
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -122,10 +176,6 @@ export function CheckoutCart() {
               <p>Итого:</p>
               <p>{new Intl.NumberFormat("en-US").format(totalAmount)} BYN</p>
             </div>
-
-            {/* <form action={checkOut}>
-                <CheckoutButton />
-              </form> */}
           </div>
         </div>
       )}

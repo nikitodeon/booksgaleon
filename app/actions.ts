@@ -464,6 +464,7 @@ export async function updateQuantity(itemId: string, newQuantity: number) {
   }
 
   revalidatePath("/bag");
+  // revalidatePath("/checkout");
 }
 
 export async function createOrder(data: CheckoutFormValues) {
