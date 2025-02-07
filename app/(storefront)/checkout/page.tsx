@@ -2,23 +2,29 @@
 
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+// Container,
+// Title,
+// CheckoutAddressForm,
+// CheckoutCart,
+// CheckoutPersonalForm,
+import { CheckoutSidebar } from "@/app/components/storefront/checkout/CheckoutSidebar";
+import { Title } from "@/app/components/storefront/checkout/Title";
+import { Container } from "@/app/components/storefront/checkout/Container";
+import { CheckoutAddressForm } from "@/app/components/storefront/checkout/CheckoutAddressForm";
+import { CheckoutCart } from "@/app/components/storefront/checkout/CheckoutCart";
+import { CheckoutPersonalForm } from "@/app/components/storefront/checkout/CheckoutPersonalForm";
 
-import {
-  CheckoutSidebar,
-  Container,
-  Title,
-  CheckoutAddressForm,
-  CheckoutCart,
-  CheckoutPersonalForm,
-} from "@/shared/components";
-import { CheckoutFormValues, checkoutFormSchema } from "@/shared/constants";
+import { CheckoutFormValues, checkoutFormSchema } from "@/app/lib/zodSchemas";
 // import { useCart } from '@/shared/hooks';
 import { createOrder, delItem, updateQuantity } from "@/app/actions";
 import toast from "react-hot-toast";
-import React from "react";
+import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 // import { Api } from '@/shared/services/api-client';
 import { User } from "next-auth";
+import { Cart } from "@/app/lib/interfaces";
+import { it } from "node:test";
+import { set } from "zod";
 
 export default function CheckoutPage() {
   const [submitting, setSubmitting] = React.useState(false);
@@ -36,7 +42,8 @@ export default function CheckoutPage() {
       comment: "",
     },
   });
-
+  const [items, setItems] = useState<string[]>([]);
+  const [totalAmount, setTotalAmount] = useState(0);
   React.useEffect(() => {
     async function fetchUserInfo() {
       //       const data = await Api.auth.getMe();
@@ -57,10 +64,12 @@ export default function CheckoutPage() {
         if (!response.ok) throw new Error("Ошибка загрузки пользователя");
         const data: User = await response.json();
         // setCategories(data);
-        const [firstName, lastName] = data.name?.split(" ");
+        const [firstName, lastName] = data.name
+          ? data.name.split(" ")
+          : ["", ""];
         form.setValue("firstName", firstName);
         form.setValue("lastName", lastName);
-        form.setValue("email", data.email);
+        form.setValue("email", data.email ?? "");
       } catch (error) {
         console.error(error);
       }
@@ -70,6 +79,20 @@ export default function CheckoutPage() {
       fetchUserInfo();
     }
   }, [session]);
+
+  React.useEffect(() => {
+    async function fetchCartInfo() {
+      const response = await fetch("/api/cart");
+      if (!response.ok) throw new Error("Ошибка загрузки корзины");
+      const cart: Cart | null = await response.json();
+      setItems(cart ? cart.items.map((item) => item.id) : []);
+      setTotalAmount(
+        cart ? cart.items.reduce((acc, item) => acc + item.price, 0) : 0
+      );
+    }
+
+    fetchCartInfo();
+  }, []);
 
   const onSubmit = async (data: CheckoutFormValues) => {
     try {
@@ -115,10 +138,8 @@ export default function CheckoutPage() {
             {/* Левая часть */}
             <div className="flex flex-col gap-10 flex-1 mb-20">
               <CheckoutCart
-                onClickCountButton={onClickCountButton}
-                removeCartItem={delItem}
-                items={items}
-                // loading={loading}
+
+              // loading={loading}
               />
 
               <CheckoutPersonalForm

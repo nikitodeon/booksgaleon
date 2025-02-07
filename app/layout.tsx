@@ -7,6 +7,8 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { Session } from "inspector/promises";
+import { SessionProvider } from "next-auth/react";
 
 const geistMoon = Moon_Dance({
   weight: "400",
@@ -41,7 +43,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SessionProvider>{children}</SessionProvider>
         </ThemeProvider>
       </body>
     </html>

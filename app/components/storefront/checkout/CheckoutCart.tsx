@@ -18,24 +18,50 @@ import { unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { CountButton } from "@/app/components/storefront/CountButton";
+import { useSession } from "next-auth/react";
+import React from "react";
+import { set } from "zod";
 
-export default async function BagRoute() {
+export function CheckoutCart() {
+  const [items, setItems] = React.useState<string[]>([]);
+  const [totalAmount, setTotalAmount] = React.useState<number>(0);
+  const [cart, setCart] = React.useState<Cart | null>(null);
   noStore();
-  const session = await auth();
+  const { data: session } = useSession();
+  // const session = await auth();
+  //   const data = session?.user
+  // const user = session?.user;
 
-  const user = session?.user;
+  // if (!user) {
+  //   redirect("/");
+  // }
 
-  if (!user) {
-    redirect("/");
-  }
+  // const cart: Cart | null = await redis.get(`cart-${data?.id}`);
+  React.useEffect(() => {
+    async function fetchCartInfo() {
+      const response = await fetch("/api/cart");
+      if (!response.ok) throw new Error("Ошибка загрузки корзины");
+      const cart: Cart | null = await response.json();
+      setCart(cart);
+      setItems(cart ? cart.items.map((item) => item.id) : []);
+      setTotalAmount(
+        cart
+          ? cart.items.reduce(
+              (acc, item) => acc + item.price * item.quantity,
+              0
+            )
+          : 0
+      );
+    }
 
-  const cart: Cart | null = await redis.get(`cart-${user.id}`);
+    fetchCartInfo();
+  }, []);
 
-  let totalPrice = 0;
+  // let totalPrice = 0;
 
-  cart?.items.forEach((item) => {
-    totalPrice += item.price * item.quantity;
-  });
+  // cart?.items.forEach((item) => {
+  //   totalPrice += item.price * item.quantity;
+  // });
 
   return (
     <div className="max-w-2xl mx-auto mt-10 min-h-[55vh]">
@@ -94,12 +120,12 @@ export default async function BagRoute() {
           <div className="mt-10">
             <div className="flex items-center justify-between font-medium">
               <p>Итого:</p>
-              <p>{new Intl.NumberFormat("en-US").format(totalPrice)} BYN</p>
+              <p>{new Intl.NumberFormat("en-US").format(totalAmount)} BYN</p>
             </div>
-            <Link href="/checkout">checkout</Link>
+
             {/* <form action={checkOut}>
-              <CheckoutButton />
-            </form> */}
+                <CheckoutButton />
+              </form> */}
           </div>
         </div>
       )}
