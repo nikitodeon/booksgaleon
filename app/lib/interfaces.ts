@@ -1,3 +1,4 @@
+// interface for redis
 export type Cart = {
   userId: string;
   items: Array<{
