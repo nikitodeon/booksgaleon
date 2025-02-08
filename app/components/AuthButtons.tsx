@@ -1,8 +1,10 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { signInUser, signOutUser } from "../actions/authActions";
 import { Button } from "@/components/ui/button";
+import { Router } from "next/router";
+import { use } from "react";
 
 export function LogoutButton() {
   const handleSignOut = async () => {
@@ -20,9 +22,14 @@ export function LoginButton() {
 }
 
 export function RegisterButton() {
+  const router = useRouter();
   const handleSignUpRedirect = async () => {
-    return redirect("/register");
+    router.push("/register");
   };
 
-  return <Button onClick={handleSignUpRedirect}>SignUp</Button>;
+  return (
+    <Button onClick={handleSignUpRedirect} className="custom-navbar ">
+      Вход
+    </Button>
+  );
 }

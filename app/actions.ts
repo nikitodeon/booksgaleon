@@ -29,7 +29,7 @@ export async function createProduct(prevState: unknown, formData: FormData) {
   //   const { getUser } = getKindeServerSession();
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/");
   }
 
@@ -64,7 +64,7 @@ export async function editProduct(prevState: any, formData: FormData) {
   // const { getUser } = getKindeServerSession();
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/");
   }
   const submission = parseWithZod(formData, {
@@ -102,7 +102,7 @@ export async function deleteProduct(formData: FormData) {
   // const { getUser } = getKindeServerSession();
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/dashboard/products");
   }
 
@@ -119,7 +119,7 @@ export async function createBanner(prevState: any, formData: FormData) {
   // const { getUser } = getKindeServerSession();
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/");
   }
 
@@ -145,7 +145,7 @@ export async function editBanner(prevState: any, formData: FormData) {
   // const { getUser } = getKindeServerSession();
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/");
   }
   const submission = parseWithZod(formData, {
@@ -173,7 +173,7 @@ export async function deleteBanner(formData: FormData) {
   // const { getUser } = getKindeServerSession();
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/");
   }
 
@@ -192,7 +192,7 @@ export async function createCategory(
 ): Promise<SubmissionResult<string[]> | null> {
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/");
   }
 
@@ -239,7 +239,7 @@ export async function updateCategory(
 ): Promise<SubmissionResult<string[]> | null> {
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/");
   }
 
@@ -286,7 +286,7 @@ export async function updateCategory(
 export async function deleteCategory(formData: FormData) {
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/");
   }
 

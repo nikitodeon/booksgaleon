@@ -109,7 +109,7 @@ export default async function BagRoute() {
 
             <div className="mt-4">
               <Link legacyBehavior href="/checkout">
-                <a className="block text-center py-2 px-4 bg-primary text-white rounded-md">
+                <a className="block text-center py-2 px-4  rounded-md background bg-[#B099d3]    hover:bg-[#DCD1EB] text-black custom text-lg">
                   Перейти к оформлению
                 </a>
               </Link>

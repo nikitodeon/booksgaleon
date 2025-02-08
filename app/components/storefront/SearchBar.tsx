@@ -51,8 +51,9 @@ const SearchBar = () => {
 
         <Button
           size="sm"
+          variant="outline"
           onClick={handleSearchClick} // Запуск поиска по клику на лупу
-          className="absolute right-0 inset-y-0 h-full rounded-l-none"
+          className="absolute right-0 inset-y-0 h-full rounded-l-none text-black bg-[#B099D3] hover:bg-[#DCD1EB] "
         >
           {isSearching ? (
             <Loader2 className="h-6 w-6 animate-spin" />

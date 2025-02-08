@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 
 export default function LoginPage() {
   return (
-    <div className="flex items-center justify-center vertical-center">
+    <div className="flex items-center justify-center  vertical-center h-screen ">
       <LoginForm />
     </div>
   );

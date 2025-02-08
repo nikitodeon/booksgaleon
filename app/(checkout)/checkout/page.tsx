@@ -136,7 +136,7 @@ export default function CheckoutPage() {
       <Button
         type="button"
         onClick={() => window.history.back()}
-        className="custom-button"
+        className="custom-button bg-[#B099D3] hover:bg-[#DCD1EB] text-black"
       >
         Назад
       </Button>

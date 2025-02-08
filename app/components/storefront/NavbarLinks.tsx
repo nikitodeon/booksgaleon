@@ -109,8 +109,8 @@ export function NavbarLinks() {
               key={item.id}
               className={`custom-navbar custom-navbar-link ${
                 location === `/products/${navcategory.slug}`
-                  ? "bg-muted rounded-md"
-                  : "hover:bg-muted rounded-md hover:bg-opacity-75"
+                  ? "bg-[#B099D3] rounded-md"
+                  : "hover:bg-[#DCD1EB] rounded-md hover:bg-opacity-75"
               } group p-2 font-medium ms-cded-md`}
             >
               <span className="custom-navbar-text">{item.name}</span>
@@ -134,7 +134,7 @@ export function NavbarLinks() {
           <SelectContent>
             {categories.map((category) => (
               <SelectItem
-                className="custom-button"
+                className="custom-button  "
                 key={category.id}
                 value={category.title}
               >

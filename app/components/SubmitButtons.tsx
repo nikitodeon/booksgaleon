@@ -3,9 +3,11 @@
 import { Button } from "@/components/ui/button";
 import {
   Loader2,
+  MoveRight,
   //  ShoppingBag,
   ShoppingBasket,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 
 interface buttonProps {
@@ -53,11 +55,40 @@ export function ShoppingBagButton() {
       ) : (
         <Button
           size="lg"
-          className="w-full mt-5 flex items-center gap-3"
+          className="w-full mt-5 flex items-center gap-3  bg-[#B099D3]   hover:bg-[#DCD1EB] text-black"
           type="submit"
         >
           <ShoppingBasket className="  mr-4 transform scale-150  flex-shrink-0" />{" "}
-          <div className="text-xl">Добавить в корзину</div>
+          <div className="text-xl ">Добавить в корзину</div>
+        </Button>
+      )}
+    </>
+  );
+}
+
+export function ToCartButton() {
+  const { pending } = useFormStatus();
+  const router = useRouter();
+
+  const handleGoToCart = () => {
+    router.push("/bag");
+  };
+  return (
+    <>
+      {pending ? (
+        <Button disabled size="lg" className="w-full mt-5">
+          <Loader2 className="mr-4 h-5 w-5 animate-spin" />{" "}
+          <div className="text-xl">Пожалуйста, подождите </div>
+        </Button>
+      ) : (
+        <Button
+          size="lg"
+          className="w-full mt-5 flex items-center gap-3  bg-[#B099D3]   hover:bg-[#DCD1EB] text-black"
+          type="submit"
+          onClick={handleGoToCart}
+        >
+          <MoveRight className="  mr-4 transform scale-150  flex-shrink-0" />{" "}
+          <div className="text-xl ">Перейти в корзину</div>
         </Button>
       )}
     </>

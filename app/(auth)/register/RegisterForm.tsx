@@ -12,20 +12,30 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 // import { GiPadlock } from "react-icons/gi";
 // import UserDetailsForm from "./UserDetailsForm";
 // import ProfileDetailsForm from "./ProfileDetailsForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 // const stepSchemas = [registerSchema, profileSchema];
 
 export default function RegisterForm() {
   //   const [activeStep, setActiveStep] = useState(0);
   //   const currentValidationSchema = stepSchemas[activeStep];
+  const { theme, resolvedTheme } = useTheme(); // Получаем текущую тему
+  const [themeLoaded, setThemeLoaded] = useState(false); // Состояние для отслеживания загрузки темы
 
+  // Если тема не загружена, показываем индикатор загрузки
+
+  // Логика для смены логотипа в зависимости от темы
+  const logoPath =
+    resolvedTheme === "dark" ? "/blacklogo.png" : "/whitelogo.png";
   const registerFormMethods = useForm<RegisterSchema>({
     // resolver: zodResolver(
     //   registerSchema
@@ -48,7 +58,7 @@ export default function RegisterForm() {
     // console.log(data);
     const result = await registerUser(getValues());
     if (result.status === "success") {
-      router.push("/register/success");
+      router.push("/login");
     } else {
       handleFormServerErrors(result, setError);
     }
@@ -76,24 +86,37 @@ export default function RegisterForm() {
   //       setActiveStep((prev) => prev + 1);
   //     }
   //   };
-
+  useEffect(() => {
+    if (theme) {
+      setThemeLoaded(true); // Обновляем состояние, когда тема загружена
+    }
+  }, [theme]);
+  if (!themeLoaded) {
+    return <div>Загрузка...</div>;
+  }
   return (
-    <Card className="w-3/5 mx-auto">
+    <Card className="w-[500px] h-[700px]   my-auto">
+      <Image
+        src={logoPath}
+        alt="Logo"
+        width={250}
+        height={250}
+        className="mx-auto mt-6"
+      />
       <CardHeader className="flex flex-col items-center justify-center">
-        <div className="flex flex-col gap-2 items-center text-default">
-          <div className="flex flex-row items-center gap-3">
-            <h1 className="text-3xl font-semibold">Register</h1>
-          </div>
-          <p className="text-neutral-500">Welcome to BooksGaleon</p>
-        </div>
+        <h1 className="text-3xl font-semibold custom ">Регистрация</h1>
+        <p className="text-neutral-500 ">
+          <span className="custom-maname text-lg">Добро пожаловать в</span>{" "}
+          BooksGaleon
+        </p>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
             <Input
               defaultValue=""
-              placeholder="Name"
-              {...register("name", { required: "Name is required" })}
+              placeholder="Имя"
+              {...register("name", { required: "Имя обязательно" })}
               //   isInvalid=
               //   {!!errors.Email}
               // errorMessage={errors.email?.message as string}
@@ -101,40 +124,46 @@ export default function RegisterForm() {
             {errors.name && (
               <p className="text-red-500">{errors.name?.message as string}</p>
             )}
+
             <Input
-              defaultValue=""
               placeholder="Email"
-              {...register("email", { required: "Email is required" })}
-              //   isInvalid=
-              //   {!!errors.Email}
-              //   errorMessage={errors.email?.message as string}
+              {...register("email", { required: "Email обязателен" })}
             />
             {errors.email && (
               <p className="text-red-500">{errors.email?.message as string}</p>
             )}
-
             <Input
-              defaultValue=""
-              placeholder="Password"
+              placeholder="Пароль"
               type="password"
-              {...register("password", { required: "Password is required" })}
+              {...register("password", { required: "Пароль обязателен" })}
             />
             {errors.password && (
               <p className="text-red-500">
                 {errors.password?.message as string}
               </p>
             )}
-
             <Button
               className="w-full"
               color="default"
               type="submit"
               disabled={!isValid}
             >
-              Register
+              Login
             </Button>
             {/* <SocialLogin /> */}
-            <div className="flex justify-center hover:underline text-sm"></div>
+            <div className="text-center">
+              <p className="text-neutral-500 ">
+                <span className="custom-maname text-lg">
+                  Уже есть аккаунт?{" "}
+                </span>
+                <Link href="/login">
+                  <span className="custom-maname text-lg text-blue-700">
+                    Вход
+                  </span>
+                </Link>
+              </p>
+              {/* <Link href="/forgot-password">Forgot password?</Link> */}
+            </div>
           </div>
         </form>
       </CardContent>

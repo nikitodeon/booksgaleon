@@ -58,29 +58,36 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
         <div className="flex items-center ">
           {user ? (
             <>
-              <div className="mt-2 mr-13">
+              <div className=" ">
                 <ThemeToggle />
               </div>
               <Link href="/bag" className="group p-2 flex items-center mr-2">
-                <ShoppingBasket className="h-6 w-6 mt-3 group-hover:text-gray-500" />
-                <span className="ml-2 text-sm font-medium group-hover:text-gray-500">
-                  {total}
-                </span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="bg-[#B099D3]   hover:bg-[#DCD1EB] text-black "
+                >
+                  <ShoppingBasket className="transform scale-150 mt-3 mb-2 ml-4   " />
+                  <span className=" text-sm mb-3 mr-4 font-medium ">
+                    {total}
+                  </span>
+                </Button>
               </Link>
 
               <UserDropdown
                 email={user.email ?? ""}
                 name={user.name ?? ""}
-                userImage={`https://avatar.vercel.sh/${user.name}`}
+                userImage={"/1476975-200.png"}
+                // `https://avatar.vercel.sh/${user.name}`  }
               />
             </>
           ) : (
             <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2 ">
-              <div className="mt-2">
+              <div className="">
                 <ThemeToggle />
               </div>
-              <LoginButton />
-              <span className="h-6 w-px bg-gray-200"></span>
+              {/* <LoginButton />
+              <span className="h-6 w-px bg-gray-200"></span> */}
               <Button variant="ghost" asChild>
                 <RegisterButton />
               </Button>
@@ -96,7 +103,7 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
         </div> */}
 
         <div className="md:flex w-1/4 min-h-41">
-          <div className=" object-contain w-[250px] h-[250px]">
+          <div className=" object-contain w-[250px] h-[250px] ml-10 mt-6">
             <Image
               src="/sale.jpg"
               alt="Logo"
@@ -129,6 +136,18 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
           </div>
         </div>
         {/* Правый баннер */}
+        {/* from-violet-500 to-[#B099D3] bg-gradient-to-r */}
+        <div
+          className="text-center leading-tight text-transparent bg-clip-text  bg-black  font-bold text-2xl custom-top from-violet-500 to-[#B099D3] bg-gradient-to-r"
+          style={{
+            letterSpacing: "-0.5px",
+            lineHeight: "1.1",
+            animation: "fadeIn 1.5s ease-in-out",
+          }}
+        >
+          Т<br />о<br />п<br />
+          <br />м <br />е<br />с<br />я<br />ц<br />а
+        </div>
         <div className="md:flex w-1/4 min-h-41">
           <div className="w-full h-full">
             <Hero banners={banners} />

@@ -3,7 +3,7 @@ import SocialLogin from "./SocialLogin";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { loginSchema } from "@/lib/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,8 +11,12 @@ import { signInUser } from "@/app/actions/authActions";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 export default function LoginForm() {
+  const { theme, resolvedTheme } = useTheme(); // Получаем текущую тему
+  const [themeLoaded, setThemeLoaded] = useState(false); // Состояние для отслеживания загрузки темы
   const {
     register,
     handleSubmit,
@@ -33,12 +37,31 @@ export default function LoginForm() {
       toast.error(result.error as string);
     }
   };
-
+  useEffect(() => {
+    if (theme) {
+      setThemeLoaded(true); // Обновляем состояние, когда тема загружена
+    }
+  }, [theme]);
+  if (!themeLoaded) {
+    return <div>Загрузка...</div>;
+  }
+  const logoPath =
+    resolvedTheme === "dark" ? "/blacklogo.png" : "/whitelogo.png";
   return (
-    <Card className="w-3/5 mx-auto">
+    <Card className="w-[500px] h-[600px]   my-auto">
+      <Image
+        src={logoPath}
+        alt="Logo"
+        width={250}
+        height={250}
+        className="mx-auto mt-6"
+      />
       <CardHeader className="flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-semibold">Login</h1>
-        <p className="text-neutral-500">Welcome back to BooksGaleon</p>
+        <h1 className="text-3xl font-semibold custom tracking-wider">Вход</h1>
+        <p className="text-neutral-500 ">
+          <span className="custom-maname text-lg">Добро пожаловать в</span>{" "}
+          BooksGaleon
+        </p>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -51,7 +74,7 @@ export default function LoginForm() {
               <p className="text-red-500">{errors.email?.message as string}</p>
             )}
             <Input
-              placeholder="Password"
+              placeholder="Пароль"
               type="password"
               {...register("password", { required: "Password is required" })}
             />
@@ -68,9 +91,17 @@ export default function LoginForm() {
             >
               Login
             </Button>
-            <SocialLogin />
+            {/* <SocialLogin /> */}
             <div className="text-center">
-              <Link href="/forgot-password">Forgot password?</Link>
+              <p className="text-neutral-500 ">
+                <span className="custom-maname text-lg">Нет аккаунта? </span>
+                <Link href="/register">
+                  <span className="custom-maname text-lg text-blue-700">
+                    Зарегистрируйтесь
+                  </span>
+                </Link>
+              </p>
+              {/* <Link href="/forgot-password">Forgot password?</Link> */}
             </div>
           </div>
         </form>

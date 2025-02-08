@@ -1,11 +1,14 @@
 import { addItem } from "@/app/actions";
-import { ShoppingBagButton } from "@/app/components/SubmitButtons";
+import {
+  ShoppingBagButton,
+  ToCartButton,
+} from "@/app/components/SubmitButtons";
 import { BestsellersProducts } from "@/app/components/storefront/BestsellersProducts";
 import ImageSlider from "@/app/components/storefront/ImageSlider";
 import { prisma } from "@/app/utils/db";
 
 import { ShoppingBasket, StarIcon } from "lucide-react";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 
 async function getData(productId: string) {
@@ -40,6 +43,7 @@ export default async function ProductIdRoute({
   noStore();
   const data = await getData(params.id);
   const addProducttoShoppingCart = addItem.bind(null, data.id);
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start lg:gap-x-24 py-6">
@@ -65,6 +69,10 @@ export default async function ProductIdRoute({
               <ShoppingBagButton />
             </span>
           </form>
+
+          <span className="custom-big-button">
+            <ToCartButton />
+          </span>
         </div>
       </div>
     </>

@@ -24,7 +24,7 @@ export default async function DashboardLayout({
 }) {
   const session = await auth();
 
-  if (!session?.user || session.user.email !== "sarah@test.com") {
+  if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
     return redirect("/");
   }
 

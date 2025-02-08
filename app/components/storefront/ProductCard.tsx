@@ -81,7 +81,10 @@ export function ProductCard({ item }: iAppProps | iAppPropsTwo) {
         <Link href={`/product/${item.id}`}>{item.description}</Link>
       </p>
 
-      <Button asChild className="w-full mt-5">
+      <Button
+        asChild
+        className="w-full mt-5  bg-[#B099D3]   hover:bg-[#DCD1EB]  text-black"
+      >
         <Link className="custom-button " href={`/product/${item.id}`}>
           Подробнее
         </Link>
