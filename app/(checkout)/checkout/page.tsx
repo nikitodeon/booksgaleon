@@ -25,6 +25,8 @@ import { User } from "next-auth";
 import { Cart } from "@/app/lib/interfaces";
 import { it } from "node:test";
 import { set } from "zod";
+import { CartProvider } from "@/app/context/CartContext";
+import { Button } from "@/components/ui/button";
 
 export default function CheckoutPage() {
   const [submitting, setSubmitting] = React.useState(false);
@@ -131,17 +133,24 @@ export default function CheckoutPage() {
         text="Оформление заказа"
         className="font-extrabold mb-8 text-[36px]"
       />
-
+      <Button
+        type="button"
+        onClick={() => window.history.back()}
+        className="custom-button"
+      >
+        Назад
+      </Button>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex gap-10">
             {/* Левая часть */}
             <div className="flex flex-col gap-10 flex-1 mb-20">
-              <CheckoutCart
+              <CartProvider>
+                <CheckoutCart
 
-              // loading={loading}
-              />
-
+                // loading={loading}
+                />
+              </CartProvider>
               <CheckoutPersonalForm
                 className={
                   // loading ? 'opacity-40 pointer-events-none' :
@@ -159,10 +168,12 @@ export default function CheckoutPage() {
 
             {/* Правая часть */}
             <div className="w-[450px]">
-              <CheckoutSidebar
-              // totalAmount={totalAmount}
-              //   loading={loading || submitting}
-              />
+              <CartProvider>
+                <CheckoutSidebar
+                // totalAmount={totalAmount}
+                //   loading={loading || submitting}
+                />
+              </CartProvider>
             </div>
           </div>
         </form>

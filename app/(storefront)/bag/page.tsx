@@ -8,6 +8,7 @@ import { redis } from "@/app/lib/redis";
 import { Button } from "@/components/ui/button";
 //
 import {
+  Loader2,
   //  ShoppingBag,
   ShoppingBasket,
 } from "lucide-react";
@@ -15,9 +16,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { auth } from "@/auth";
 import { CountButton } from "@/app/components/storefront/CountButton";
+import { Router } from "next/router";
 
 export default async function BagRoute() {
   noStore();
@@ -37,6 +39,9 @@ export default async function BagRoute() {
     totalPrice += item.price * item.quantity;
   });
 
+  // const checkOut = () => {
+  //   redirect("/checkout");
+  // };
   return (
     <div className="max-w-2xl mx-auto mt-10 min-h-[55vh]">
       {!cart || (Array.isArray(cart.items) && cart.items.length === 0) ? (
@@ -96,10 +101,19 @@ export default async function BagRoute() {
               <p>Итого:</p>
               <p>{new Intl.NumberFormat("en-US").format(totalPrice)} BYN</p>
             </div>
-            <Link href="/checkout">checkout</Link>
+
             {/* <form action={checkOut}>
               <CheckoutButton />
-            </form> */}
+            </form>
+             */}
+
+            <div className="mt-4">
+              <Link legacyBehavior href="/checkout">
+                <a className="block text-center py-2 px-4 bg-primary text-white rounded-md">
+                  Перейти к оформлению
+                </a>
+              </Link>
+            </div>
           </div>
         </div>
       )}

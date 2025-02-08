@@ -16,7 +16,7 @@ export async function GET(req: Request) {
 
     let cart: Cart | null = await redis.get(`cart-${user.id}`);
     console.log("Запрос к Redis для корзины пользователя:", user.id);
-    revalidatePath("/checkout");
+    // revalidatePath("/checkout");
 
     if (!cart || !cart.items) {
       return new Response(JSON.stringify([]), { status: 200 });

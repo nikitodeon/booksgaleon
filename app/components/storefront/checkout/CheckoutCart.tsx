@@ -10,6 +10,7 @@ import { auth } from "@/auth";
 import { CheckoutCountButton } from "@/app/components/storefront/checkout/CheckoutCountButton";
 import { useSession } from "next-auth/react";
 import React from "react";
+import { useCart } from "@/app/context/CartContext";
 
 // Интерфейсы для корзины и элементов
 interface CartItem {
@@ -25,32 +26,7 @@ interface Cart {
 }
 
 export function CheckoutCart() {
-  const [items, setItems] = React.useState<string[]>([]);
-  const [totalAmount, setTotalAmount] = React.useState<number>(0);
-  const [cart, setCart] = React.useState<Cart | null>(null);
-  noStore();
-  const { data: session } = useSession();
-
-  React.useEffect(() => {
-    async function fetchCartInfo() {
-      const response = await fetch("/api/cart");
-      if (!response.ok) throw new Error("Ошибка загрузки корзины");
-      const cart: Cart | null = await response.json();
-      setCart(cart);
-      setItems(cart ? cart.items.map((item) => item.id) : []);
-      setTotalAmount(
-        cart
-          ? cart.items.reduce(
-              (acc: number, item: CartItem) => acc + item.price * item.quantity,
-              0
-            )
-          : 0
-      );
-    }
-
-    fetchCartInfo();
-  }, []);
-
+  const { cart, totalAmount, updateCart } = useCart();
   const onClickCountButton = (
     id: string,
     quantity: number,
@@ -58,60 +34,114 @@ export function CheckoutCart() {
   ) => {
     const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
 
-    // Обновление локального состояния корзины
-    setCart((prevCart) => {
-      if (prevCart) {
-        const updatedItems = prevCart.items.map((item) =>
-          item.id === id ? { ...item, quantity: newQuantity } : item
-        );
-        const updatedCart = { ...prevCart, items: updatedItems };
+    if (!cart) return;
 
-        // Обновление общей суммы
-        setTotalAmount(
-          updatedCart.items.reduce(
-            (acc: number, item: CartItem) => acc + item.price * item.quantity,
-            0
-          )
-        );
+    const updatedItems = cart.items.map((item) =>
+      item.id === id ? { ...item, quantity: newQuantity } : item
+    );
+    const updatedCart = { ...cart, items: updatedItems };
 
-        return updatedCart;
-      }
-      return prevCart;
-    });
-
-    // Запрос на сервер для обновления данных
+    updateCart(updatedCart);
     updateQuantity(id, newQuantity);
   };
 
   const handleDeleteItem = async (productId: string) => {
-    // Запрос на сервер для удаления товара
     const response = await fetch(`/api/cart/remove/${productId}`, {
       method: "DELETE",
     });
-    if (response.ok) {
-      // Удалить товар из локального состояния корзины
-      setCart((prevCart) => {
-        if (prevCart) {
-          const updatedItems = prevCart.items.filter(
-            (item) => item.id !== productId
-          );
-          const updatedCart = { ...prevCart, items: updatedItems };
-
-          // Обновление общей суммы
-          setTotalAmount(
-            updatedCart.items.reduce(
-              (acc: number, item: CartItem) => acc + item.price * item.quantity,
-              0
-            )
-          );
-
-          return updatedCart;
-        }
-        return prevCart;
-      });
-      // revalidatePath("/bag");
+    if (response.ok && cart) {
+      const updatedItems = cart.items.filter((item) => item.id !== productId);
+      updateCart({ ...cart, items: updatedItems });
     }
   };
+
+  // const [items, setItems] = React.useState<string[]>([]);
+  // const [totalAmount, setTotalAmount] = React.useState<number>(0);
+  // const [cart, setCart] = React.useState<Cart | null>(null);
+  // noStore();
+  // const { data: session } = useSession();
+
+  // React.useEffect(() => {
+  //   async function fetchCartInfo() {
+  //     const response = await fetch("/api/cart");
+  //     if (!response.ok) throw new Error("Ошибка загрузки корзины");
+  //     const cart: Cart | null = await response.json();
+  //     setCart(cart);
+  //     setItems(cart ? cart.items.map((item) => item.id) : []);
+  //     setTotalAmount(
+  //       cart
+  //         ? cart.items.reduce(
+  //             (acc: number, item: CartItem) => acc + item.price * item.quantity,
+  //             0
+  //           )
+  //         : 0
+  //     );
+  //   }
+
+  //   fetchCartInfo();
+  // }, []);
+
+  // const onClickCountButton = (
+  //   id: string,
+  //   quantity: number,
+  //   type: "plus" | "minus"
+  // ) => {
+  //   const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
+
+  //   // Обновление локального состояния корзины
+  //   setCart((prevCart) => {
+  //     if (prevCart) {
+  //       const updatedItems = prevCart.items.map((item) =>
+  //         item.id === id ? { ...item, quantity: newQuantity } : item
+  //       );
+  //       const updatedCart = { ...prevCart, items: updatedItems };
+
+  //       // Обновление общей суммы
+  //       setTotalAmount(
+  //         updatedCart.items.reduce(
+  //           (acc: number, item: CartItem) => acc + item.price * item.quantity,
+  //           0
+  //         )
+  //       );
+
+  //       return updatedCart;
+  //     }
+  //     return prevCart;
+  //   });
+
+  //   // Запрос на сервер для обновления данных
+  //   updateQuantity(id, newQuantity);
+  // };
+
+  // const handleDeleteItem = async (productId: string) => {
+  //   // Запрос на сервер для удаления товара
+  //   const response = await fetch(`/api/cart/remove/${productId}`, {
+  //     method: "DELETE",
+  //   });
+  //   if (response.ok) {
+  //     // Удалить товар из локального состояния корзины
+  //     setCart((prevCart) => {
+  //       if (prevCart) {
+  //         const updatedItems = prevCart.items.filter(
+  //           (item) => item.id !== productId
+  //         );
+  //         const updatedCart = { ...prevCart, items: updatedItems };
+
+  //         // Обновление общей суммы
+  //         setTotalAmount(
+  //           updatedCart.items.reduce(
+  //             (acc: number, item: CartItem) => acc + item.price * item.quantity,
+  //             0
+  //           )
+  //         );
+
+  //         return updatedCart;
+  //       }
+  //       return prevCart;
+  //     });
+  //     // revalidatePath("/bag");
+  //   }
+  // };
 
   return (
     <div className="max-w-2xl mx-auto mt-10 min-h-[55vh]">

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { WhiteBlock } from "./WhiteBlock";
 import { CheckoutItemDetails } from "./CheckoutItemDetails";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useCart } from "@/app/context/CartContext";
 
 const VAT = 15;
 const DELIVERY_PRICE = 8;
@@ -14,31 +15,8 @@ interface Props {
 }
 
 export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
-  const [cart, setCart] = React.useState<any>(null);
-  const [totalAmount, setTotalAmount] = React.useState<number>(0);
+  const { totalAmount } = useCart();
 
-  // Получаем информацию о корзине при монтировании компонента
-  React.useEffect(() => {
-    async function fetchCartInfo() {
-      const response = await fetch("/api/cart");
-      if (!response.ok) throw new Error("Ошибка загрузки корзины");
-      const cartData = await response.json();
-      setCart(cartData);
-      setTotalAmount(
-        cartData
-          ? cartData.items.reduce(
-              (acc: number, item: { price: number; quantity: number }) =>
-                acc + item.price * item.quantity,
-              0
-            )
-          : 0
-      );
-    }
-
-    fetchCartInfo();
-  }, []);
-
-  // Расчёт НДС и общей суммы
   const vatPrice = ((totalAmount * VAT) / 100).toFixed(2);
   const totalPrice = (
     totalAmount +
@@ -108,7 +86,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
       <Button
         // loading={loading}
         type="submit"
-        className="w-full h-14 rounded-2xl mt-6 text-base font-bold"
+        className="w-full h-14 rounded-2xl mt-6 text-base font-bold "
       >
         Перейти к оплате
         <ArrowRight className="w-5 ml-2" />

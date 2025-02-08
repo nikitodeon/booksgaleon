@@ -91,10 +91,21 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
         {/* Левый баннер */}
-        <div className="hidden md:flex w-1/4 h-24 bg-gray-100 items-center justify-center">
+        {/* <div className="hidden md:flex w-1/4 h-64 bg-gray-100 items-center justify-center">
           <span className="text-gray-500">Левый баннер</span>
-        </div>
+        </div> */}
 
+        <div className="md:flex w-1/4 min-h-41">
+          <div className=" object-contain w-[250px] h-[250px]">
+            <Image
+              src="/sale.jpg"
+              alt="Logo"
+              width={250}
+              height={250}
+              className="mx-auto rounded-lg"
+            />
+          </div>
+        </div>
         {/* Логотип */}
         <div className="flex flex-col items-center w-1/2">
           <Link href="/">
@@ -117,7 +128,6 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
             <SearchBar />
           </div>
         </div>
-
         {/* Правый баннер */}
         <div className="md:flex w-1/4 min-h-41">
           <div className="w-full h-full">
