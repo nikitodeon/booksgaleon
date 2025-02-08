@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingBasket } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { CheckoutCountButton } from "@/app/components/storefront/checkout/CheckoutCountButton";
@@ -109,6 +109,7 @@ export function CheckoutCart() {
         }
         return prevCart;
       });
+      // revalidatePath("/bag");
     }
   };
 

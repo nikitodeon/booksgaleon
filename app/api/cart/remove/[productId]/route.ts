@@ -46,7 +46,7 @@ export async function DELETE(
       await redis.set(`cart-${user.id}`, updateCart);
 
       // Обновляем путь корзины на клиенте
-      revalidatePath("/checkout");
+      revalidatePath("/bag");
 
       return NextResponse.json(
         { message: "Товар удален из корзины" },
