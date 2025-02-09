@@ -88,7 +88,7 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
               </div>
               {/* <LoginButton />
               <span className="h-6 w-px bg-gray-200"></span> */}
-              <Button variant="ghost" asChild>
+              <Button asChild>
                 <RegisterButton />
               </Button>
             </div>
@@ -138,7 +138,7 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
         {/* Правый баннер */}
         {/* from-violet-500 to-[#B099D3] bg-gradient-to-r */}
         <div
-          className="text-center leading-tight text-transparent bg-clip-text  bg-black  font-bold text-2xl custom-top from-violet-500 to-[#B099D3] bg-gradient-to-r"
+          className="text-center leading-tight text-transparent bg-clip-text  bg-black   text-2xl custom-top from-violet-500 to-[#B099D3] bg-gradient-to-r "
           style={{
             letterSpacing: "-0.5px",
             lineHeight: "1.1",

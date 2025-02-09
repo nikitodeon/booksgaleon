@@ -11,7 +11,14 @@ export function LogoutButton() {
     await signOutUser();
   };
 
-  return <Button onClick={handleSignOut}>Logout</Button>;
+  return (
+    <Button
+      className="bg-[#B099D3]   hover:bg-[#DCD1EB] text-black"
+      onClick={handleSignOut}
+    >
+      Выйти
+    </Button>
+  );
 }
 export function LoginButton() {
   const handleSignInRedirect = async () => {
@@ -28,7 +35,10 @@ export function RegisterButton() {
   };
 
   return (
-    <Button onClick={handleSignUpRedirect} className="custom-navbar ">
+    <Button
+      onClick={handleSignUpRedirect}
+      className="custom-navbar bg-[#B099D3]   hover:bg-[#DCD1EB] text-black "
+    >
       Вход
     </Button>
   );

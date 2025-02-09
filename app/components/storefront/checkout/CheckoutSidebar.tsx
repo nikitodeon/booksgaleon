@@ -32,7 +32,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
           <Skeleton className="h-11 w-48" />
         ) : (
           <span className="h-11 text-[34px] font-extrabold">
-            {totalPrice} ₽
+            {totalPrice} BYN
           </span>
         )}
       </div>
@@ -40,7 +40,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
       <CheckoutItemDetails
         title={
           <div className="flex items-center">
-            <Package size={18} className="mr-2 text-gray-400" />
+            <Package size={18} className="mr-2 text-black" />
             Стоимость корзины:
           </div>
         }
@@ -55,7 +55,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
       <CheckoutItemDetails
         title={
           <div className="flex items-center">
-            <Percent size={18} className="mr-2 text-gray-400" />
+            <Percent size={18} className="mr-2 text-black" />
             Налоги:
           </div>
         }
@@ -63,14 +63,14 @@ export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
           loading ? (
             <Skeleton className="h-6 w-16 rounded-[6px]" />
           ) : (
-            `${vatPrice} ₽`
+            `${vatPrice} BYN`
           )
         }
       />
       <CheckoutItemDetails
         title={
           <div className="flex items-center">
-            <Truck size={18} className="mr-2 text-gray-400" />
+            <Truck size={18} className="mr-2 text-black" />
             Доставка:
           </div>
         }
@@ -78,7 +78,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
           loading ? (
             <Skeleton className="h-6 w-16 rounded-[6px]" />
           ) : (
-            `${DELIVERY_PRICE} ₽`
+            `${DELIVERY_PRICE} BYN`
           )
         }
       />
