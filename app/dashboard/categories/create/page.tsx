@@ -76,10 +76,10 @@ export default function CategoryCreateRoute() {
 
   function handleSlugGeneration() {
     if (!title) {
-      return toast.error("Please create a title first");
+      return toast.error("Сначала создайте название");
     }
     setSlugValue(slugify(tr(title)));
-    return toast.success("Slug has been created");
+    return toast.success("Slug сгенерирован!");
   }
 
   return (
@@ -90,20 +90,20 @@ export default function CategoryCreateRoute() {
             <ChevronLeft className="w-4 h-4" />
           </Link>
         </Button>
-        <h1 className="text-xl font-semibold tracking-tight">New Category</h1>
+        <h1 className="text-xl font-semibold tracking-tight">
+          Новая категория
+        </h1>
       </div>
 
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Category Details</CardTitle>
-          <CardDescription>
-            In this form you can create your category
-          </CardDescription>
+          <CardTitle>Детали Категории</CardTitle>
+          <CardDescription>Здесь вы можете создавать категории</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <Label>Title</Label>
+              <Label>Название</Label>
               <Input
                 type="text"
                 key={fields.title.key}
@@ -111,7 +111,7 @@ export default function CategoryCreateRoute() {
                 value={title || ""}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full"
-                placeholder="Category Title"
+                placeholder="Название категории"
               />
               {titleError && (
                 <p className="text-red-500 text-sm">{titleError}</p>
@@ -119,12 +119,12 @@ export default function CategoryCreateRoute() {
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Slug</Label>
+              <Label>Slug (URL Идентификатор)</Label>
               <Input
                 key={fields.slug.key}
                 name={fields.slug.name}
                 defaultValue={fields.slug.initialValue}
-                placeholder="Article Slug (latin letters)"
+                placeholder="Поисковой идентификатор (латинские буквы)"
                 onChange={(e) => setSlugValue(e.target.value)}
                 value={slug}
               />
@@ -134,7 +134,7 @@ export default function CategoryCreateRoute() {
                 variant="secondary"
                 type="button"
               >
-                <Atom className="size-4 mr-2" /> Generate Slug
+                <Atom className="size-4 mr-2" /> Сгенерировать Slug
               </Button>
               {slugError && <p className="text-red-500 text-sm">{slugError}</p>}
             </div>
@@ -142,7 +142,7 @@ export default function CategoryCreateRoute() {
         </CardContent>
         <CardFooter>
           <SubmitButton
-            text="Create Category"
+            text="Создать идентификатор"
             disabled={!!titleError || !!slugError}
           />
         </CardFooter>

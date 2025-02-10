@@ -1,64 +1,43 @@
-import { prisma } from "@/app/utils/db";
-import { LoadingProductCard, ProductCard } from "./ProductCard";
-import { Suspense } from "react";
-import { unstable_noStore as noStore } from "next/cache";
+// BestsellersProducts.tsx
+"use client";
 
-async function getData() {
-  const bestsellersData = await prisma.product.findMany({
-    where: {
-      status: "published",
-      isFeatured: true,
-    },
-    select: {
-      id: true,
-      name: true,
-      description: true,
-      images: true,
-      price: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 3,
-  });
+import { ProductCard } from "./ProductCard";
 
-  return {
-    bestsellersData: bestsellersData.map((item) => ({
-      ...item,
-      price: item.price.toString(),
-    })),
-  };
-}
-export function BestsellersProducts() {
+// Типизация данных
+type Product = {
+  price: string;
+  name: string;
+  id: string;
+  description: string;
+  images: string[];
+};
+
+type BestsellersProductsProps = {
+  bestsellersData: Product[]; // Данные для бестселлеров
+};
+
+export function BestsellersProducts({
+  bestsellersData,
+}: BestsellersProductsProps) {
   return (
     <>
       <h1 className="font-semibold text-3xl my-5 custom">Бестселлеры</h1>
-      <Suspense fallback={<LoadingRows />}>
-        <LoadFeaturedproducts />
-      </Suspense>
+
+      <LoadFeaturedProducts bestsellersData={bestsellersData} />
     </>
   );
 }
 
-async function LoadFeaturedproducts() {
-  noStore();
-  const data = await getData();
+function LoadFeaturedProducts({ bestsellersData }: BestsellersProductsProps) {
+  // Применяем noStore, чтобы не кешировать
 
+  // Здесь твой запрос к базе данных или другой логики для загрузки продуктов
+  // Для примера, ты передаешь bestsellersData как пропсы в компонент
   return (
-    <div className="mt-5 grid sm:grid-cols-4 lg:grid-cols-6 gap-5">
-      {data.bestsellersData.map((item) => (
+    <div className="mt-5 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
+      {bestsellersData.map((item) => (
         <ProductCard key={item.id} item={item} />
       ))}
-    </div>
-  );
-}
-
-function LoadingRows() {
-  return (
-    <div className="mt-5 grid sm:grid-cols-4 lg:grid-cols-6 gap-5">
-      <LoadingProductCard />
-      <LoadingProductCard />
-      <LoadingProductCard />
     </div>
   );
 }

@@ -47,23 +47,23 @@ export default async function BannerRoute() {
         <Button asChild className="flex gap-x-2">
           <Link href="/dashboard/banner/create">
             <PlusCircle className="h-3.5 w-3.5" />
-            <span>Add Banner</span>
+            <span>Создать Баннер</span>
           </Link>
         </Button>
       </div>
 
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Banners</CardTitle>
-          <CardDescription>Manage your banners</CardDescription>
+          <CardTitle>Баннеры</CardTitle>
+          <CardDescription>Управляйте изображениями баннера</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Image</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead className="text-end">Actions</TableHead>
+                <TableHead>Изображение</TableHead>
+                <TableHead>Заголовок</TableHead>
+                <TableHead className="text-end">Действия</TableHead>
               </TableRow>
             </TableHeader>
 
@@ -88,16 +88,16 @@ export default async function BannerRoute() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuLabel>Действия</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
                           <Link href={`/dashboard/banner/${item.id}`}>
-                            Edit
+                            Изменить
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link href={`/dashboard/banner/${item.id}/delete`}>
-                            Delete
+                            Удалить
                           </Link>
                         </DropdownMenuItem>
                       </DropdownMenuContent>

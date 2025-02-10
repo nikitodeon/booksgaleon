@@ -92,44 +92,46 @@ export function EditForm({ data }: iAppProps) {
             <ChevronLeft className="w-4 h-4" />
           </Link>
         </Button>
-        <h1 className="text-xl font-semibold tracking-tight">Edit Product</h1>
+        <h1 className="text-xl font-semibold tracking-tight">
+          Изменить Продукт
+        </h1>
       </div>
 
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Product Details</CardTitle>
+          <CardTitle>Детали Продукта</CardTitle>
           <CardDescription>
-            In this form you can update your product
+            Здесь вы можете изменять свои продукты
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <Label>Name</Label>
+              <Label>Название</Label>
               <Input
                 type="text"
                 key={fields.name.key}
                 name={fields.name.name}
                 defaultValue={data.name}
                 className="w-full"
-                placeholder="Product Name"
+                placeholder="Название Продукта"
               />
 
               <p className="text-red-500">{fields.name.errors}</p>
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Description</Label>
+              <Label>Описание</Label>
               <Textarea
                 key={fields.description.key}
                 name={fields.description.name}
                 defaultValue={data.description}
-                placeholder="Write your description right here..."
+                placeholder="Изменяйте описание здесь"
               />
               <p className="text-red-500">{fields.description.errors}</p>
             </div>
             <div className="flex flex-col gap-3">
-              <Label>Price</Label>
+              <Label>Цена</Label>
               <Input
                 key={fields.price.key}
                 name={fields.price.name}
@@ -142,7 +144,7 @@ export function EditForm({ data }: iAppProps) {
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Featured Product</Label>
+              <Label>Бестселлер (Featured)</Label>
               <Switch
                 key={fields.isFeatured.key}
                 name={fields.isFeatured.name}
@@ -152,33 +154,33 @@ export function EditForm({ data }: iAppProps) {
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Status</Label>
+              <Label>Статус</Label>
               <Select
                 key={fields.status.key}
                 name={fields.status.name}
                 defaultValue={data.status}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select Status" />
+                  <SelectValue placeholder="Выберите Статус" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="draft">Draft</SelectItem>
-                  <SelectItem value="published">Published</SelectItem>
-                  <SelectItem value="archived">Archived</SelectItem>
+                  <SelectItem value="draft">Черновик</SelectItem>
+                  <SelectItem value="published">Опубликован</SelectItem>
+                  <SelectItem value="archived">Заархивирован</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-red-500">{fields.status.errors}</p>
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Category</Label>
+              <Label>Категория</Label>
               <Select
                 key={fields.category.key}
                 name={fields.category.name}
                 defaultValue={data.categoryId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select Category" />
+                  <SelectValue placeholder="Выберите Категорию" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
@@ -192,7 +194,7 @@ export function EditForm({ data }: iAppProps) {
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Images</Label>
+              <Label>Изображения</Label>
               <input
                 type="hidden"
                 value={images}
@@ -239,7 +241,7 @@ export function EditForm({ data }: iAppProps) {
           </div>
         </CardContent>
         <CardFooter>
-          <SubmitButton text="Edit Product" />
+          <SubmitButton text="Изменить Продукт" />
         </CardFooter>
       </Card>
     </form>

@@ -19,19 +19,19 @@ export default function DeleteBannerRoute({
     <div className="h-[80vh] w-full flex items-center justify-center">
       <Card className="max-w-xl">
         <CardHeader>
-          <CardTitle>Are you absolutely sure?</CardTitle>
+          <CardTitle>Вы абсолютно уверены?</CardTitle>
           <CardDescription>
-            This action cannot be undone. This will permanently delete this
-            banner and remove all data from our servers.
+            Это действие будет невозможно отменить. Оно навсегда удалит записи
+            из базы данных.
           </CardDescription>
         </CardHeader>
         <CardFooter className="w-full flex justify-between">
           <Button variant="secondary" asChild>
-            <Link href="/dashboard/banner">Cancel</Link>
+            <Link href="/dashboard/banner">Отменить</Link>
           </Button>
           <form action={deleteBanner}>
             <input type="hidden" name="bannerId" value={params.id} />
-            <SubmitButton variant="destructive" text="Delete Product" />
+            <SubmitButton variant="destructive" text="Удалить Баннер" />
           </form>
         </CardFooter>
       </Card>

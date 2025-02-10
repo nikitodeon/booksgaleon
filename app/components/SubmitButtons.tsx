@@ -1,5 +1,6 @@
 "use client";
 
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
   Loader2,
@@ -7,7 +8,8 @@ import {
   //  ShoppingBag,
   ShoppingBasket,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { redirect, useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 
 interface buttonProps {
@@ -69,9 +71,14 @@ export function ShoppingBagButton() {
 export function ToCartButton() {
   const { pending } = useFormStatus();
   const router = useRouter();
+  const session = useSession();
+  const handleGoToCart = async () => {
+    const user = session?.data?.user;
 
-  const handleGoToCart = () => {
-    router.push("/bag");
+    if (!user || !user.id) {
+      return router.push("/register");
+    }
+    return router.push("/bag");
   };
   return (
     <>

@@ -349,7 +349,7 @@ export async function addItem(productId: string) {
   const user = session?.user;
 
   if (!user || !user.id) {
-    return redirect("/login");
+    return redirect("/register");
   }
 
   let cart: Cart | null = await redis.get(`cart-${user.id}`);

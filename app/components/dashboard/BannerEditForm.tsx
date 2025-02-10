@@ -61,33 +61,33 @@ export function EditForm({ data }: iAppProps) {
             <ChevronLeft className="w-4 h-4" />
           </Link>
         </Button>
-        <h1 className="text-xl font-semibold tracking-tight">Edit Banner</h1>
+        <h1 className="text-xl font-semibold tracking-tight">
+          Изменить Баннер
+        </h1>
       </div>
 
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Banner Details</CardTitle>
-          <CardDescription>
-            In this form you can update your banner
-          </CardDescription>
+          <CardTitle>Детали Баннера</CardTitle>
+          <CardDescription>Здесь вы можете изменить ваш баннер</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <Label>Title</Label>
+              <Label>Заголовок</Label>
               <Input
                 type="text"
                 key={fields.title.key}
                 name={fields.title.name}
                 defaultValue={data.title}
                 className="w-full"
-                placeholder="Banner Title"
+                placeholder="Заголовок Баннера"
               />
 
               <p className="text-red-500">{fields.title.errors}</p>
             </div>
             <div className="flex flex-col gap-3">
-              <Label>Image</Label>
+              <Label>Изображение</Label>
               <input
                 type="hidden"
                 value={images}
@@ -133,7 +133,7 @@ export function EditForm({ data }: iAppProps) {
           </div>
         </CardContent>
         <CardFooter>
-          <SubmitButton text="Edit Banner" />
+          <SubmitButton text="Изменить баннер" />
         </CardFooter>
       </Card>
     </form>

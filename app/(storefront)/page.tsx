@@ -33,7 +33,7 @@ export default async function IndexPage() {
   return (
     <section>
       <h1 className="font-semibold text-3xl my-5 custom">{title}</h1>
-      <div className="grid md:grid-cols-4 lg:grid-cols-6 gap-5">
+      <div className="grid grid-cols-3  md:grid-cols-4 lg:grid-cols-6 gap-5">
         {data.map((item) => (
           <ProductCard item={item} key={item.id} />
         ))}

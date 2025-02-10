@@ -15,19 +15,19 @@ export default function DeleteRoute({ params }: { params: { id: string } }) {
     <div className="h-[80vh] w-full flex items-center justify-center">
       <Card className="max-w-xl">
         <CardHeader>
-          <CardTitle>Are you absolutely sure?</CardTitle>
+          <CardTitle>Вы абсолютно уверены?</CardTitle>
           <CardDescription>
-            This action cannot be undone. This will permanently delete this
-            product and remove all data from our servers.
+            Это действие будет невозможно отменить. Оно навсегда удалит записи
+            из базы данных.
           </CardDescription>
         </CardHeader>
         <CardFooter className="w-full flex justify-between">
           <Button variant="secondary" asChild>
-            <Link href="/dashboard/categories">Cancel</Link>
+            <Link href="/dashboard/categories">Отменить</Link>
           </Button>
           <form action={deleteCategory}>
             <input type="hidden" name="categoryId" value={params.id} />
-            <SubmitButton variant="destructive" text="Delete Category" />
+            <SubmitButton variant="destructive" text="Удалить Категорию" />
           </form>
         </CardFooter>
       </Card>

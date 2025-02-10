@@ -131,7 +131,7 @@ export default function CheckoutPage() {
     <Container className="mt-10">
       <Title
         text="Оформление заказа"
-        className="font-extrabold mb-8 text-[36px]"
+        className="font-extrabold text-5xl custom mb-8 text-[36px]"
       />
       <Button
         type="button"
@@ -142,39 +142,13 @@ export default function CheckoutPage() {
       </Button>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex gap-10">
-            {/* Левая часть */}
-            <div className="flex flex-col gap-10 flex-1 mb-20">
-              <CartProvider>
-                <CheckoutCart
+          <div>
+            <CartProvider>
+              <CheckoutCart
 
-                // loading={loading}
-                />
-              </CartProvider>
-              <CheckoutPersonalForm
-                className={
-                  // loading ? 'opacity-40 pointer-events-none' :
-                  ""
-                }
+              // loading={loading}
               />
-
-              <CheckoutAddressForm
-                className={
-                  // loading ? 'opacity-40 pointer-events-none' :
-                  ""
-                }
-              />
-            </div>
-
-            {/* Правая часть */}
-            <div className="w-[450px]">
-              <CartProvider>
-                <CheckoutSidebar
-                // totalAmount={totalAmount}
-                //   loading={loading || submitting}
-                />
-              </CartProvider>
-            </div>
+            </CartProvider>
           </div>
         </form>
       </FormProvider>

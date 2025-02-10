@@ -14,12 +14,12 @@ export const CheckoutItemDetails: React.FC<Props> = ({
 }) => {
   return (
     <div className={cn("flex my-4", className)}>
-      <span className="flex flex-1 text-lg text-black">
+      <span className="flex flex-1 text-lg text-black font-maname">
         {title}
         <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
       </span>
 
-      <span className="font-bold text-lg">{value}</span>
+      <span className="font-bold text-lg font-maname">{value}</span>
     </div>
   );
 };

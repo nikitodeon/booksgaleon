@@ -77,10 +77,10 @@ export function EditForm({ data }: { data: CategoryData }) {
 
   function handleSlugGeneration() {
     if (!title) {
-      return toast.error("Please create a title first");
+      return toast.error("Сначала создайте название");
     }
     setSlugValue(slugify(tr(title)));
-    return toast.success("Slug has been created");
+    return toast.success("Slug сгенерирован!");
   }
 
   return (
@@ -91,19 +91,21 @@ export function EditForm({ data }: { data: CategoryData }) {
             <ChevronLeft className="w-4 h-4" />
           </Link>
         </Button>
-        <h1 className="text-xl font-semibold tracking-tight">Edit Category</h1>
+        <h1 className="text-xl font-semibold tracking-tight">
+          Изменить Категорию
+        </h1>
       </div>
 
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Category Details</CardTitle>
-          <CardDescription>Update your category details below</CardDescription>
+          <CardTitle>Детали Категории</CardTitle>
+          <CardDescription>Изменяйте детали категории</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
             {/* Title Field */}
             <div className="flex flex-col gap-3">
-              <Label>Title</Label>
+              <Label>Название</Label>
               <Input
                 type="text"
                 key={fields.title.key}
@@ -111,7 +113,7 @@ export function EditForm({ data }: { data: CategoryData }) {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full"
-                placeholder="Category Title"
+                placeholder="Название Категории"
               />
               {titleError && (
                 <p className="text-red-500 text-sm">{titleError}</p>
@@ -127,7 +129,7 @@ export function EditForm({ data }: { data: CategoryData }) {
                 value={slug}
                 onChange={(e) => setSlugValue(e.target.value)}
                 className="w-full"
-                placeholder="Category Slug (latin letters)"
+                placeholder="Поисковой идентификатор (латинские буквы)"
               />
               <Button
                 onClick={handleSlugGeneration}
@@ -135,7 +137,7 @@ export function EditForm({ data }: { data: CategoryData }) {
                 variant="secondary"
                 type="button"
               >
-                <Atom className="size-4 mr-2" /> Generate Slug
+                <Atom className="size-4 mr-2" /> Сгенерировать Slug
               </Button>
               {slugError && <p className="text-red-500 text-sm">{slugError}</p>}
             </div>
@@ -145,7 +147,7 @@ export function EditForm({ data }: { data: CategoryData }) {
         {/* Disable Submit Button if there are errors */}
         <CardFooter>
           <SubmitButton
-            text="Update Category"
+            text="Изменить Категорию"
             disabled={!!titleError || !!slugError}
           />
         </CardFooter>

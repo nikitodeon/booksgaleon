@@ -31,7 +31,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
         {loading ? (
           <Skeleton className="h-11 w-48" />
         ) : (
-          <span className="h-11 text-[34px] font-extrabold">
+          <span className="h-11 text-[34px] font-extrabold font-maname">
             {totalPrice} BYN
           </span>
         )}
@@ -39,8 +39,8 @@ export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
 
       <CheckoutItemDetails
         title={
-          <div className="flex items-center">
-            <Package size={18} className="mr-2 text-black" />
+          <div className="flex items-center ">
+            <Package size={18} className="mr-2 text-black " />
             Стоимость корзины:
           </div>
         }
@@ -86,7 +86,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
       <Button
         // loading={loading}
         type="submit"
-        className="w-full h-14 rounded-2xl mt-6 text-base font-bold "
+        className="w-full h-14 rounded-2xl mt-6  font-bold custom text-xl "
       >
         Перейти к оплате
         <ArrowRight className="w-5 ml-2" />

@@ -4,9 +4,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
   return (
-    <div className="max-w-2xl mx-auto  min-h-[55vh]">
+    <div className="max-w-2xl mx-auto mt-11 min-h-[55vh]">
       {/* Заголовок */}
-      <Skeleton className="h-8 w-1/3 mb-6 mx-auto" />
+      {/* <Skeleton className="h-8 w-1/3 mb-6 mx-auto" /> */}
 
       {/* Скелетон для товаров */}
       <div className="flex flex-col gap-y-10 ">
@@ -31,14 +31,14 @@ export default function Loading() {
       </div>
 
       {/* Итоговая цена */}
-      <div className="mt-10 flex items-center justify-between font-medium">
+      <div className="mt-12 flex items-center justify-between font-medium">
         <Skeleton className="h-6 w-20" />
         <Skeleton className="h-6 w-16" />
       </div>
 
       {/* Кнопка оформления */}
       <div className="mt-4 flex justify-center">
-        <Skeleton className="h-12 w-48 rounded-md" />
+        <Skeleton className="h-12 w-full rounded-md" />
       </div>
     </div>
   );

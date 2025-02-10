@@ -49,11 +49,13 @@ export function Hero({ banners }: HeroProps) {
                 className="object-contain w-full h-full rounded-xl"
               />
               <div
-                className={`absolute bottom-6 left-9  flex items-center justify-center ${getMedalColor(
-                  item.title
-                )} text-[#070247] w-[3rem] h-[3rem] rounded-full shadow-lg border-4 border-[#d4af37]transition-transform hover:scale-105`}
+                className={`hidden sm:flex  sm:bottom-6 sm:left-0  md:flex  md:bottom-4 md:left-2   lg:flex  lg:bottom-6 lg:left-9   xl:bottom-6 xl:left-9 xl:w-[3rem] xl:h-[3rem] xl:text-[1.7rem]  absolute items-center justify-center
+
+                   ${getMedalColor(
+                     item.title
+                   )} text-[#070247] xs:w-[16px] xs:w-[16px] w-[3rem] h-[3rem] rounded-full shadow-lg border-4 border-[#d4af37]transition-transform hover:scale-105`}
               >
-                <h1 className="text-[1.7rem] font-bold  custom-medal">
+                <h1 className="text-[1.7rem] xs:[] font-bold  custom-medal">
                   {item.title}
                 </h1>
               </div>
@@ -61,8 +63,10 @@ export function Hero({ banners }: HeroProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="ml-16" />
-      <CarouselNext className="mr-16" />
+      <CarouselPrevious className="md:ml-16 ml-8 " />
+      <CarouselNext className="md:mr-16 mr-8  " />
     </Carousel>
   );
 }
+// className={` hidden  lg:flex  top-1/2 left:1/2  lg:transform -translate-x-1/2 -translate-y-1/2  xl:bottom-6 xl:left-9 xl:flex absolute items-center justify-center
+// className={`hidden lg:flex  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 absolute items-center justify-center

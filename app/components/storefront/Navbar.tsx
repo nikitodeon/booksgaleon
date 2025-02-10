@@ -82,7 +82,7 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
               />
             </>
           ) : (
-            <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2 ">
+            <div className=" flex flex-1 items-center justify-end space-x-2 ">
               <div className="">
                 <ThemeToggle />
               </div>
@@ -102,7 +102,7 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
           <span className="text-gray-500">Левый баннер</span>
         </div> */}
 
-        <div className="md:flex w-1/4 min-h-41">
+        <div className="hidden md:flex w-1/4 min-h-41 ">
           <div className=" object-contain w-[250px] h-[250px] ml-10 mt-6">
             <Image
               src="/sale.jpg"
@@ -131,14 +131,14 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
           </div>
           {/* Поле поиска */}
           {/* <div className="mt-4 w-full max-w-md"> */}
-          <div className="mx-auto w-full max-w-md  mt-4 flex flex-col ">
+          <div className="mx-auto w-full max-w-md  mt-4 hidden md:flex flex-col ">
             <SearchBar />
           </div>
         </div>
         {/* Правый баннер */}
         {/* from-violet-500 to-[#B099D3] bg-gradient-to-r */}
         <div
-          className="text-center leading-tight text-transparent bg-clip-text  bg-black   text-2xl custom-top from-violet-500 to-[#B099D3] bg-gradient-to-r "
+          className="sm:text-2xl text-center leading-tight text-transparent bg-clip-text  bg-black   text-md custom-top from-violet-500 to-[#B099D3] bg-gradient-to-r "
           style={{
             letterSpacing: "-0.5px",
             lineHeight: "1.1",
@@ -153,6 +153,9 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
             <Hero banners={banners} />
           </div>
         </div>
+      </div>
+      <div className="md:hidden flex w-full max-w-md mx-auto mt-4">
+        <SearchBar />
       </div>
     </div>
   );

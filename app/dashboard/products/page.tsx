@@ -47,27 +47,25 @@ export default async function ProductsRoute() {
         <Button asChild className="flex items-center gap-x-2">
           <Link href="/dashboard/products/create">
             <PlusCircle className="w-3.5 h-3.5" />
-            <span>Add Product</span>
+            <span>Создать Продукт</span>
           </Link>
         </Button>
       </div>
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Products</CardTitle>
-          <CardDescription>
-            Manage your products and view their sales performance
-          </CardDescription>
+          <CardTitle>Продукты</CardTitle>
+          <CardDescription>Управляйте своими продуктами</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Image</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="text-end">Actions</TableHead>
+                <TableHead>Изображение</TableHead>
+                <TableHead>Название</TableHead>
+                <TableHead>Статус</TableHead>
+                <TableHead>Цена</TableHead>
+                <TableHead>Дата Создания</TableHead>
+                <TableHead className="text-end">Действия</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -96,16 +94,16 @@ export default async function ProductsRoute() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuLabel>Действия</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
                           <Link href={`/dashboard/products/${item.id}`}>
-                            Edit
+                            Изменить
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link href={`/dashboard/products/${item.id}/delete`}>
-                            Delete
+                            Удалить
                           </Link>
                         </DropdownMenuItem>
                       </DropdownMenuContent>

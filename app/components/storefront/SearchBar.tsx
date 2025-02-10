@@ -36,7 +36,24 @@ const SearchBar = () => {
       router.push(`/search?query=${query}`); // Выполнение редиректа с query
     });
   };
+  // const [placeholder, setPlaceholder] = useState(
+  //   "Название, автор или описание книги..."
+  // );
 
+  // useEffect(() => {
+  //   const updatePlaceholder = () => {
+  //     setPlaceholder(
+  //       window.innerWidth < 740
+  //         ? "Поиск"
+  //         : "Название, автор или описание книги..."
+  //     );
+  //   };
+
+  //   updatePlaceholder(); // Устанавливаем сразу
+  //   window.addEventListener("resize", updatePlaceholder);
+
+  //   return () => window.removeEventListener("resize", updatePlaceholder);
+  // }, []);
   return (
     <div className="relative w-full h-14 flex flex-col">
       <div className="relative h-14 z-10 rounded-md">
@@ -45,7 +62,7 @@ const SearchBar = () => {
           onChange={(e) => setQuery(e.target.value)} // Обновление query при вводе
           onKeyDown={handleKeyDown} // Обработчик для Escape
           ref={inputRef}
-          className="absolute inset-0 h-full border-2 placeholder-custom"
+          className="absolute inset-0 h-full border-2 placeholder-custom "
           placeholder="Название, автор или описание книги..."
         />
 

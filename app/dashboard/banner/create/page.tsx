@@ -46,30 +46,30 @@ export default function BannerRoute() {
             <ChevronLeft className="w-4 h-4" />
           </Link>
         </Button>
-        <h1 className="text-xl font-semibold tracking-tight">New Banner</h1>
+        <h1 className="text-xl font-semibold tracking-tight">Новый Баннер</h1>
       </div>
 
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Banner Details</CardTitle>
-          <CardDescription>Create your banner right here</CardDescription>
+          <CardTitle>Детали Баннера</CardTitle>
+          <CardDescription>Создавайте свой баннер здесь</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-y-6">
             <div className="flex flex-col gap-3">
-              <Label>Name</Label>
+              <Label>Заголовок</Label>
               <Input
                 name={fields.title.name}
                 key={fields.title.key}
                 defaultValue={fields.title.initialValue}
                 type="text"
-                placeholder="Create title for Banner"
+                placeholder="Создайте заголовок для баннера"
               />
               <p className="text-red-500">{fields.title.errors}</p>
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Image</Label>
+              <Label>Изображение</Label>
               <input
                 type="hidden"
                 value={image}
@@ -102,7 +102,7 @@ export default function BannerRoute() {
           </div>
         </CardContent>
         <CardFooter>
-          <SubmitButton text="Create Banner" />
+          <SubmitButton text="Создать Баннер" />
         </CardFooter>
       </Card>
     </form>

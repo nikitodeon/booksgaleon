@@ -50,10 +50,8 @@ export default async function Dashboard() {
       <div className="grid gap-4 md:gp-8 lg:grid-cols-2 xl:grid-cols-3 mt-10">
         <Card className="xl:col-span-2">
           <CardHeader>
-            <CardTitle>Transactions</CardTitle>
-            <CardDescription>
-              Recent transactions from the last 7 days
-            </CardDescription>
+            <CardTitle>Транзакции</CardTitle>
+            <CardDescription>Транзакции за последние 7 дней</CardDescription>
           </CardHeader>
           <CardContent>
             <Chart data={data} />

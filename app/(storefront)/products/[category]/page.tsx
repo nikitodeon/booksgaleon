@@ -7,6 +7,7 @@ import { BestsellersProducts } from "@/app/components/storefront/BestsellersProd
 async function getData(categorySlug: string) {
   if (categorySlug === "vse-zhanry") {
     redirect("/");
+
     // Для категории vse-zhanry - возвращаем все опубликованные продукты
     // const data = await prisma.product.findMany({
     //   where: { status: "published" },
@@ -23,6 +24,24 @@ async function getData(categorySlug: string) {
     //   title: "Все жанры", // Название категории можно задать жестко
     //   data: data.map((item) => ({ ...item, price: item.price.toString() })),
     // };
+  }
+  if (categorySlug === "bestsellery") {
+    const data = await prisma.product.findMany({
+      where: { status: "published", isFeatured: true },
+      select: {
+        name: true,
+        images: true,
+        price: true,
+        id: true,
+        description: true,
+      },
+    });
+
+    return {
+      title: "Бестселлеры",
+      //    categoryMap[productCategory],
+      data: data.map((item) => ({ ...item, price: item.price.toString() })),
+    };
   }
   // Список "красивых" категорий и их названий
   //   const categoryMap: Record<string, string> = {
@@ -109,7 +128,7 @@ export default async function CategoriesPage({
         {categoryData.title}
       </h1>
 
-      <div className="grid md:grid-cols-4 lg:grid-cols-6 gap-5">
+      <div className=" grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
         {categoryData.data.map((item) => (
           <ProductCard item={item} key={item.id} />
         ))}

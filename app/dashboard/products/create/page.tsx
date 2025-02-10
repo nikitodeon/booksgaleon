@@ -79,44 +79,44 @@ export default function ProductCreateRoute() {
             <ChevronLeft className="w-4 h-4" />
           </Link>
         </Button>
-        <h1 className="text-xl font-semibold tracking-tight">New Product</h1>
+        <h1 className="text-xl font-semibold tracking-tight">Новый Продукт</h1>
       </div>
 
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Product Details</CardTitle>
+          <CardTitle>Детали Продукта</CardTitle>
           <CardDescription>
-            In this form you can create your product
+            Здесь вы можете создавать свои продукты
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <Label>Name</Label>
+              <Label>Название</Label>
               <Input
                 type="text"
                 key={fields.name.key}
                 name={fields.name.name}
                 defaultValue={fields.name.initialValue}
                 className="w-full"
-                placeholder="Product Name"
+                placeholder="Название Продукта"
               />
 
               <p className="text-red-500">{fields.name.errors}</p>
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Description</Label>
+              <Label>Описание</Label>
               <Textarea
                 key={fields.description.key}
                 name={fields.description.name}
                 defaultValue={fields.description.initialValue}
-                placeholder="Write your description right here..."
+                placeholder="Создавайте описание здесь..."
               />
               <p className="text-red-500">{fields.description.errors}</p>
             </div>
             <div className="flex flex-col gap-3">
-              <Label>Price</Label>
+              <Label>Цена</Label>
               <Input
                 key={fields.price.key}
                 name={fields.price.name}
@@ -129,7 +129,7 @@ export default function ProductCreateRoute() {
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Featured Product</Label>
+              <Label>Бестселлер (Featured)</Label>
               <Switch
                 key={fields.isFeatured.key}
                 name={fields.isFeatured.name}
@@ -139,33 +139,33 @@ export default function ProductCreateRoute() {
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Status</Label>
+              <Label>Статус</Label>
               <Select
                 key={fields.status.key}
                 name={fields.status.name}
                 defaultValue={fields.status.initialValue}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select Status" />
+                  <SelectValue placeholder="Выберите Статус" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="draft">Draft</SelectItem>
-                  <SelectItem value="published">Published</SelectItem>
-                  <SelectItem value="archived">Archived</SelectItem>
+                  <SelectItem value="draft">Черновик</SelectItem>
+                  <SelectItem value="published">Опубликован</SelectItem>
+                  <SelectItem value="archived">Заархивирован</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-red-500">{fields.status.errors}</p>
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Category</Label>
+              <Label>Категория</Label>
               <Select
                 key={fields.category.key}
                 name={fields.category.name}
                 defaultValue={fields.category.initialValue}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select Category" />
+                  <SelectValue placeholder="Выберите Категорию" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
@@ -179,7 +179,7 @@ export default function ProductCreateRoute() {
             </div>
 
             <div className="flex flex-col gap-3">
-              <Label>Images</Label>
+              <Label>Изображения</Label>
               <input
                 type="hidden"
                 value={images}
@@ -226,7 +226,7 @@ export default function ProductCreateRoute() {
           </div>
         </CardContent>
         <CardFooter>
-          <SubmitButton text="Create Product" />
+          <SubmitButton text="Создать Продукт" />
         </CardFooter>
       </Card>
     </form>
