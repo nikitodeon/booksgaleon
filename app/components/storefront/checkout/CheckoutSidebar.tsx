@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { WhiteBlock } from "./WhiteBlock";
 import { CheckoutItemDetails } from "./CheckoutItemDetails";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";

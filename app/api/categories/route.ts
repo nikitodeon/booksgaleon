@@ -1,5 +1,6 @@
+/* eslint-disable */
+
 import { prisma } from "@/app/utils/db";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export async function GET(req: Request) {
   try {

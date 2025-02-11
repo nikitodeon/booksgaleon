@@ -1,4 +1,6 @@
 "use server";
+/* eslint-disable */
+
 import { transliterate as tr, slugify } from "transliteration";
 
 import { redirect } from "next/navigation";

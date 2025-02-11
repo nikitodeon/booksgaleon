@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable */
 
 import { Button } from "@/components/ui/button";
 import {
@@ -28,7 +29,7 @@ import { UploadDropzone } from "@/app/lib/uploadthing";
 // import { categories } from "@/app/lib/categories";
 import { useEffect, useState } from "react";
 import { useActionState } from "react";
-import { createProduct, editProduct } from "@/app/actions";
+import { editProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { productSchema } from "@/app/lib/zodSchemas";

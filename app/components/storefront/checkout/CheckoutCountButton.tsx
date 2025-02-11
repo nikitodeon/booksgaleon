@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 import { CountIconButton } from "../CountIconButton";
-import { updateQuantity } from "@/app/actions";
 
 export interface CountButtonProps {
   value?: number;
@@ -10,15 +9,6 @@ export interface CountButtonProps {
   productId: string;
   onClick: (id: string, quantity: number, type: "plus" | "minus") => void; // Добавлено
 }
-
-const onClickCountButton = (
-  id: string,
-  quantity: number,
-  type: "plus" | "minus"
-) => {
-  const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
-  updateQuantity(id, newQuantity);
-};
 
 export const CheckoutCountButton: React.FC<CountButtonProps> = ({
   className,

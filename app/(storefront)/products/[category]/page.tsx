@@ -1,8 +1,6 @@
 import { ProductCard } from "@/app/components/storefront/ProductCard";
 import { prisma } from "@/app/utils/db";
 import { notFound, redirect } from "next/navigation";
-import { unstable_noStore as noStore } from "next/cache";
-import { BestsellersProducts } from "@/app/components/storefront/BestsellersProducts";
 
 async function getData(categorySlug: string) {
   if (categorySlug === "vse-zhanry") {
@@ -58,8 +56,6 @@ export default async function CategoriesPage({
 }: {
   params: { category: string };
 }) {
-  noStore();
-
   const categoryData = await getData(params.category);
 
   if (!categoryData) {

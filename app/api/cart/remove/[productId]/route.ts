@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth"; // Путь до функции авторизации
 import { redis } from "@/app/lib/redis"; // Подключение Redis

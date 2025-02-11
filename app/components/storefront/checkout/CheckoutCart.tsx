@@ -13,15 +13,6 @@ import { CheckoutPersonalForm } from "./CheckoutPersonalForm";
 import { CheckoutAddressForm } from "./CheckoutAddressForm";
 import { CheckoutSidebar } from "./CheckoutSidebar";
 
-// Интерфейсы для корзины и элементов
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  imageString: string;
-}
-
 export function CheckoutCart() {
   const { cart, totalAmount, updateCart } = useCart();
   const onClickCountButton = (

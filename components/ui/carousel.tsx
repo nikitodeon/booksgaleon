@@ -2,7 +2,7 @@ import * as React from "react";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -218,7 +218,11 @@ const CarouselPrevious = React.forwardRef<
     { className, variant = "outline", size = "icon", small = false, ...props },
     ref
   ) => {
-    const { orientation, scrollPrev, canScrollPrev } = useCarousel();
+    const {
+      orientation,
+      scrollPrev,
+      // canScrollPrev
+    } = useCarousel();
 
     return (
       <Button
@@ -253,7 +257,11 @@ const CarouselNext = React.forwardRef<
     { className, variant = "outline", size = "icon", small = false, ...props },
     ref
   ) => {
-    const { orientation, scrollNext, canScrollNext } = useCarousel();
+    const {
+      orientation,
+      scrollNext,
+      // canScrollNext
+    } = useCarousel();
 
     return (
       <Button

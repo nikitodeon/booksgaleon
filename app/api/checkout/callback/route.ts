@@ -1,7 +1,6 @@
 import { PaymentCallbackData } from "@/types/yookassa";
 import { prisma } from "@/app/utils/db";
 
-import { CartItemDTO } from "@/types/cart.dto";
 import { OrderStatus } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -30,7 +29,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const items = JSON.parse(order?.items as string) as CartItemDTO[];
+    // const items = JSON.parse(order?.items as string) as CartItemDTO[];
 
     return NextResponse.json({ message: "Order status updated successfully" });
   } catch (error) {

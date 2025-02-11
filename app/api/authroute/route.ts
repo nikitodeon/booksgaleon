@@ -1,4 +1,4 @@
-// app/api/auth/route.ts
+/* eslint-disable */
 
 import { NextResponse } from "next/server";
 import { auth } from "@/auth"; // Путь к твоей логике аутентификации

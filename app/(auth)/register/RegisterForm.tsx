@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable */
 
 import { registerUser } from "@/app/actions/authActions";
 import {
@@ -12,9 +13,9 @@ import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 //
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -42,7 +43,7 @@ export default function RegisterForm() {
     register,
     getValues,
     setError,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid },
   } = registerFormMethods;
 
   const router = useRouter();

@@ -1,6 +1,5 @@
 "use client";
 
-import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
   Loader2,
@@ -9,7 +8,7 @@ import {
   ShoppingBasket,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 
 interface buttonProps {

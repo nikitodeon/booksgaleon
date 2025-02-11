@@ -1,7 +1,9 @@
+/* eslint-disable */
+
 import { Cart } from "@/app/lib/interfaces";
 import { redis } from "@/app/lib/redis";
 import { auth } from "@/auth";
-import { revalidatePath } from "next/cache";
+
 import { redirect } from "next/navigation";
 
 export async function GET(req: Request) {

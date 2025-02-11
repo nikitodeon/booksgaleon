@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable */
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,11 +19,10 @@ import { SubmitButton } from "../SubmitButtons";
 
 // import { categories } from "@/app/lib/categories";
 
-import { useFormState } from "react-dom";
 import { editBanner } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { bannerSchema, productSchema } from "@/app/lib/zodSchemas";
+import { bannerSchema } from "@/app/lib/zodSchemas";
 import { useActionState, useState } from "react";
 import Image from "next/image";
 import { UploadDropzone } from "@/app/lib/uploadthing";

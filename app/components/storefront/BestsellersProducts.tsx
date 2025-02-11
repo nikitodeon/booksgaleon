@@ -29,8 +29,6 @@ export function BestsellersProducts({
 }
 
 function LoadFeaturedProducts({ bestsellersData }: BestsellersProductsProps) {
-  // Применяем noStore, чтобы не кешировать
-
   // Здесь твой запрос к базе данных или другой логики для загрузки продуктов
   // Для примера, ты передаешь bestsellersData как пропсы в компонент
   return (

@@ -4,7 +4,7 @@ import { prisma } from "@/app/utils/db"; // Для получения данны
 import { ReactNode, Suspense } from "react";
 import { Navbar } from "../components/storefront/Navbar";
 import { Footer } from "../components/storefront/Footer";
-import { BestsellersProducts } from "../components/storefront/BestsellersProducts";
+
 import { Cart } from "../lib/interfaces";
 import { redis } from "../lib/redis";
 import { ClientPathnameForBestsellers } from "../components/storefront/PathnameForBestsellers";

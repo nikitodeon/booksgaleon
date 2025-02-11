@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable */
 
 import { createProduct } from "@/app/actions";
 import { UploadDropzone } from "@/app/lib/uploadthing";

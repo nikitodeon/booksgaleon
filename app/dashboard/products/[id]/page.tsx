@@ -2,7 +2,6 @@ import { EditForm } from "@/app/components/dashboard/ProductEditForm";
 import { prisma } from "@/app/utils/db";
 import { Decimal } from "@prisma/client/runtime/library";
 import { notFound } from "next/navigation";
-// import { unstable_noStore as noStore } from "next/cache";
 
 async function getData(productId: string) {
   const data = await prisma.product.findUnique({
@@ -29,7 +28,6 @@ export default async function EditRoute({
 }: {
   params: { id: string };
 }) {
-  //   noStore();
   const data = await getData(params.id);
   return <EditForm data={data} />;
 }

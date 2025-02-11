@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import { signOutUser } from "../actions/authActions";
+
 import { LogoutButton } from "../components/AuthButtons";
 import { ThemeToggle } from "../components/ThemeToggle";
 

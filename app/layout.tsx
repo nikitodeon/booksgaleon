@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Moon_Dance, Maname } from "next/font/google";
+import { Moon_Dance, Maname } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,7 +7,7 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { ThemeProvider } from "./components/ThemeProvider";
-import { Session } from "inspector/promises";
+
 import { SessionProvider } from "next-auth/react";
 
 const geistMoon = Moon_Dance({
