@@ -43,8 +43,8 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
   }
 
   // Логика для смены логотипа в зависимости от темы
-  const logoPath =
-    resolvedTheme === "dark" ? "/blacklogo.png" : "/whitelogo.png";
+  // const logoPath =
+  // resolvedTheme === "dark" ? "/blacklogo.png" : "/whitelogo.png";
 
   return (
     <div>
