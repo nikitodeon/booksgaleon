@@ -30,7 +30,7 @@ async function getData() {
     orderBy: {
       createdAt: "desc",
     },
-    take: 3,
+    // take: 3,
   });
 
   return {

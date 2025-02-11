@@ -3,12 +3,12 @@ import {
   ShoppingBagButton,
   ToCartButton,
 } from "@/app/components/SubmitButtons";
-import { BestsellersProducts } from "@/app/components/storefront/BestsellersProducts";
+
 import ImageSlider from "@/app/components/storefront/ImageSlider";
 import { prisma } from "@/app/utils/db";
 
-import { ShoppingBasket, StarIcon } from "lucide-react";
-import { notFound, useRouter } from "next/navigation";
+import { StarIcon } from "lucide-react";
+import { notFound } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 
 async function getData(productId: string) {

@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { NavbarLinks } from "./NavbarLinks";
-// import { ShoppingBagIcon } from "lucide-react";
+
 import { UserDropdown } from "./UserDropdown";
 import { Button } from "@/components/ui/button";
-import { LoginButton, RegisterButton } from "../AuthButtons";
+import { RegisterButton } from "../AuthButtons";
 import Image from "next/image";
 import { Hero } from "./Hero";
 import { ThemeToggle } from "../ThemeToggle";
@@ -14,7 +14,7 @@ import { useTheme } from "next-themes";
 import { User } from "next-auth";
 import SearchBar from "./SearchBar";
 import { ShoppingBasket } from "lucide-react";
-import { auth } from "@/auth";
+
 import { Cart } from "@/app/lib/interfaces";
 
 // Тип данных для пользователя

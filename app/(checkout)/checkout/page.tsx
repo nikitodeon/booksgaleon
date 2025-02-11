@@ -2,29 +2,23 @@
 
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-// Container,
-// Title,
-// CheckoutAddressForm,
-// CheckoutCart,
-// CheckoutPersonalForm,
-import { CheckoutSidebar } from "@/app/components/storefront/checkout/CheckoutSidebar";
+//
+
 import { Title } from "@/app/components/storefront/checkout/Title";
 import { Container } from "@/app/components/storefront/checkout/Container";
-import { CheckoutAddressForm } from "@/app/components/storefront/checkout/CheckoutAddressForm";
+
 import { CheckoutCart } from "@/app/components/storefront/checkout/CheckoutCart";
-import { CheckoutPersonalForm } from "@/app/components/storefront/checkout/CheckoutPersonalForm";
 
 import { CheckoutFormValues, checkoutFormSchema } from "@/app/lib/zodSchemas";
-// import { useCart } from '@/shared/hooks';
-import { createOrder, delItem, updateQuantity } from "@/app/actions";
+//
+import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
-// import { Api } from '@/shared/services/api-client';
+//
 import { User } from "next-auth";
 import { Cart } from "@/app/lib/interfaces";
-import { it } from "node:test";
-import { set } from "zod";
+
 import { CartProvider } from "@/app/context/CartContext";
 import { Button } from "@/components/ui/button";
 
@@ -117,15 +111,6 @@ export default function CheckoutPage() {
       });
     }
   };
-
-  // const onClickCountButton = (
-  //   id: string,
-  //   quantity: number,
-  //   type: "plus" | "minus"
-  // ) => {
-  //   const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
-  //   updateQuantity(id, newQuantity);
-  // };
 
   return (
     <Container className="mt-10">

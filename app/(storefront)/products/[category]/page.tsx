@@ -7,23 +7,6 @@ import { BestsellersProducts } from "@/app/components/storefront/BestsellersProd
 async function getData(categorySlug: string) {
   if (categorySlug === "vse-zhanry") {
     redirect("/");
-
-    // Для категории vse-zhanry - возвращаем все опубликованные продукты
-    // const data = await prisma.product.findMany({
-    //   where: { status: "published" },
-    //   select: {
-    //     name: true,
-    //     images: true,
-    //     price: true,
-    //     id: true,
-    //     description: true,
-    //   },
-    // });
-
-    // return {
-    //   title: "Все жанры", // Название категории можно задать жестко
-    //   data: data.map((item) => ({ ...item, price: item.price.toString() })),
-    // };
   }
   if (categorySlug === "bestsellery") {
     const data = await prisma.product.findMany({
@@ -39,28 +22,14 @@ async function getData(categorySlug: string) {
 
     return {
       title: "Бестселлеры",
-      //    categoryMap[productCategory],
+
       data: data.map((item) => ({ ...item, price: item.price.toString() })),
     };
   }
-  // Список "красивых" категорий и их названий
-  //   const categoryMap: Record<string, string> = {
-  //     bestsellery: "Бестселлеры",
-  //     klassika: "Классика",
-  //     fantastika: "Фантастика",
-  //     detektivy: "Детективы",
-  //     nauchnye: "Научные",
-  //     priklyucheniya: "Приключения",
-  //     poeziya: "Поэзия",
-  //     "populyarnye-knigi": "Популярные книги",
-  //     "dlya-detey-i-podrostkov": "Для детей и подростков",
-  //   };
 
-  //   if (categoryMap.hasOwnProperty(productSlug)) {
-  // Ищем категорию по названию
   const category = await prisma.category.findUnique({
     where: { slug: categorySlug },
-    //   { title: categoryMap[productSlug] },
+
     select: { id: true, title: true },
   });
 
@@ -79,34 +48,9 @@ async function getData(categorySlug: string) {
 
   return {
     title: category.title,
-    //    categoryMap[productCategory],
+
     data: data.map((item) => ({ ...item, price: item.price.toString() })),
   };
-  //   } else {
-  //     // Проверяем, передан ли ID категории (например, "64f8e3b2d6a3")
-  //     const category = await prisma.category.findUnique({
-  //       where: { slug: categorySlug },
-  //       select: { title: true, id: true },
-  //     });
-
-  //     if (!category) return notFound();
-
-  //     const data = await prisma.product.findMany({
-  //       where: { status: "published", categoryId: category.id },
-  //       select: {
-  //         name: true,
-  //         images: true,
-  //         price: true,
-  //         id: true,
-  //         description: true,
-  //       },
-  //     });
-
-  //     return {
-  //       title: category.title, // Используем название категории из БД
-  //       data: data.map((item) => ({ ...item, price: item.price.toString() })),
-  //     };
-  //   }
 }
 
 export default async function CategoriesPage({

@@ -204,15 +204,7 @@
   font-family: "Moon Dance";
   font-size: 18px;
 }
-/* .category-link {
-  width: min-content;
-}
-.navbar-links {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 10px;
-  text-align: center;
-} */
+/*
 /* Новый стиль для категорий */
 .custom-navbar-link {
   display: flex;
@@ -226,13 +218,3 @@
   line-height: 1.2; /* Делаем текст компактнее */
   padding: 5px;
 }
-
-/* .custom-navbar-text { */
-/* display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 120px; Устанавливаем максимальную ширину для категории */
-/* text-align: center; Выравнивание по центру */
-/* word-break: break-word; Чтобы длинные слова тоже не вылезали */
-/* }  */

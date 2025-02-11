@@ -1,4 +1,3 @@
-// import ProductGrid from '@/components/product/ProductGrid';
 import { searchProducts } from "@/app/actions";
 import React from "react";
 import { ProductCard } from "@/app/components/storefront/ProductCard";

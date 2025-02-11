@@ -142,7 +142,7 @@ export default function CategoryCreateRoute() {
         </CardContent>
         <CardFooter>
           <SubmitButton
-            text="Создать идентификатор"
+            text="Создать Категорию"
             disabled={!!titleError || !!slugError}
           />
         </CardFooter>

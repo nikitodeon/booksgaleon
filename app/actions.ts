@@ -1,6 +1,6 @@
 "use server";
 import { transliterate as tr, slugify } from "transliteration";
-// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
 import { redirect } from "next/navigation";
 import { parseWithZod } from "@conform-to/zod";
 import {
@@ -13,21 +13,14 @@ import { prisma } from "./utils/db";
 import { auth } from "@/auth";
 import { Decimal } from "@prisma/client/runtime/library";
 import { SubmissionResult } from "@conform-to/react";
-import { OrderStatus, Product } from "@prisma/client";
+import { OrderStatus } from "@prisma/client";
 import { redis } from "./lib/redis";
 import { Cart } from "./lib/interfaces";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
+
 import { createPayment } from "./lib/create-payment";
-import { parse } from "path";
-// import { redis } from "./lib/redis";
-// import { Cart } from "./lib/interfaces";
-// import { revalidatePath } from "next/cache";
-// import { stripe } from "./lib/stripe";
-// import Stripe from "stripe";
 
 export async function createProduct(prevState: unknown, formData: FormData) {
-  //   const { getUser } = getKindeServerSession();
   const session = await auth();
 
   if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
@@ -62,7 +55,6 @@ export async function createProduct(prevState: unknown, formData: FormData) {
 }
 
 export async function editProduct(prevState: any, formData: FormData) {
-  // const { getUser } = getKindeServerSession();
   const session = await auth();
 
   if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
@@ -100,7 +92,6 @@ export async function editProduct(prevState: any, formData: FormData) {
 }
 
 export async function deleteProduct(formData: FormData) {
-  // const { getUser } = getKindeServerSession();
   const session = await auth();
 
   if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
@@ -117,7 +108,6 @@ export async function deleteProduct(formData: FormData) {
 }
 
 export async function createBanner(prevState: any, formData: FormData) {
-  // const { getUser } = getKindeServerSession();
   const session = await auth();
 
   if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
@@ -143,7 +133,6 @@ export async function createBanner(prevState: any, formData: FormData) {
 }
 
 export async function editBanner(prevState: any, formData: FormData) {
-  // const { getUser } = getKindeServerSession();
   const session = await auth();
 
   if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
@@ -171,7 +160,6 @@ export async function editBanner(prevState: any, formData: FormData) {
 }
 
 export async function deleteBanner(formData: FormData) {
-  // const { getUser } = getKindeServerSession();
   const session = await auth();
 
   if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
@@ -470,12 +458,7 @@ export async function updateQuantity(itemId: string, newQuantity: number) {
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
-    // const cookieStore = await cookies();
-    // const cartToken = cookieStore.get('cartToken')?.value;
-
-    // if (!cartToken) {
-    //   throw new Error('Cart token not found');
-    // }
+    //
     const session = await auth();
 
     const user = session?.user;
@@ -485,36 +468,11 @@ export async function createOrder(data: CheckoutFormValues) {
     }
 
     let cart: Cart | null = await redis.get(`cart-${user.id}`);
-    /* Находим корзину по токену */
-    // const userCart = await prisma.cart.findFirst({
-    //   include: {
-    //     user: true,
-    //     items: {
-    //       include: {
-    //         ingredients: true,
-    //         productItem: {
-    //           include: {
-    //             product: true,
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    //   where: {
-    //     // token: cartToken,
-    //   },
-    // });
-
+    /* 
     /* Если корзина не найдена возращаем ошибку */
     if (!cart || !cart.items || cart.items.length === 0) {
       throw new Error("Cart not found or empty");
     }
-
-    // if (cart && cart.items) {
-    //   let sum=0
-    //   let totalAmount=0
-
-    // : Stripe.Checkout.SessionCreateParams.LineItem[]
 
     const totalAmount = cart.items.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -544,29 +502,13 @@ export async function createOrder(data: CheckoutFormValues) {
     } catch (error) {
       console.error(error);
     }
-    // };
 
     //////////////////////////////////////////
 
-    //   price_data: {
-    //     currency: "usd",
-    //     unit_amount: ,
-    //     product_data: {
-    //       name: item.name,
-    //       images: [item.imageString],
-    //     },
-    //   },
-    //   quantity: item.quantity,
-
-    /* Если корзина пустая возращаем ошибку */
-    // if (cart?.totalAmount === 0) {
-    //   throw new Error('Cart is empty');
-    // }
-
+    //
     /* Создаем заказ */
     const order = await prisma.order.create({
       data: {
-        // token: cartToken,
         userId: user.id,
         fullName: data.firstName + " " + data.lastName,
         email: data.email,
@@ -579,21 +521,6 @@ export async function createOrder(data: CheckoutFormValues) {
       },
     });
     await redis.del(`cart-${user.id}`);
-    /* Очищаем корзину */
-    // await prisma.cart.update({
-    //   where: {
-    //     id: userCart.id,
-    //   },
-    //   data: {
-    //     totalAmount: 0,
-    //   },
-    // });
-
-    // await prisma.cartItem.deleteMany({
-    //   where: {
-    //     cartId: userCart.id,
-    //   },
-    // });
 
     const paymentData = await createPayment({
       amount: totalPriceInRub,
@@ -616,62 +543,10 @@ export async function createOrder(data: CheckoutFormValues) {
 
     const paymentUrl = paymentData.confirmation.confirmation_url;
 
-    // await sendEmail(
-    //   data.email,
-    //   'Next Pizza / Оплатите заказ #' + order.id,
-    //   PayOrderTemplate({
-    //     orderId: order.id,
-    //     totalAmount: order.totalAmount,
-    //     paymentUrl,
-    //   }),
-    // );
+    //
 
     return paymentUrl;
   } catch (err) {
     console.log("[CreateOrder] Server error", err);
   }
 }
-
-// export async function checkOut() {
-//   const { getUser } = getKindeServerSession();
-//   const user = await getUser();
-
-//   if (!user) {
-//     return redirect("/");
-//   }
-
-//   let cart: Cart | null = await redis.get(`cart-${user.id}`);
-
-//   if (cart && cart.items) {
-//     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
-//       cart.items.map((item) => ({
-//         price_data: {
-//           currency: "usd",
-//           unit_amount: item.price * 100,
-//           product_data: {
-//             name: item.name,
-//             images: [item.imageString],
-//           },
-//         },
-//         quantity: item.quantity,
-//       }));
-
-//     const session = await stripe.checkout.sessions.create({
-//       mode: "payment",
-//       line_items: lineItems,
-//       success_url:
-//         process.env.NODE_ENV === "development"
-//           ? "http://localhost:3000/payment/success"
-//           : "https://shoe-marshal.vercel.app/payment/success",
-//       cancel_url:
-//         process.env.NODE_ENV === "development"
-//           ? "http://localhost:3000/payment/cancel"
-//           : "https://shoe-marshal.vercel.app/payment/cancel",
-//       metadata: {
-//         userId: user.id,
-//       },
-//     });
-
-//     return redirect(session.url as string);
-//   }
-// }

@@ -1,25 +1,17 @@
-import {
-  //   checkOut,
-  delItem,
-} from "@/app/actions";
-import { CheckoutButton, DeleteItem } from "@/app/components/SubmitButtons";
+import { delItem } from "@/app/actions";
+import { DeleteItem } from "@/app/components/SubmitButtons";
 import { Cart } from "@/app/lib/interfaces";
 import { redis } from "@/app/lib/redis";
 import { Button } from "@/components/ui/button";
 //
-import {
-  Loader2,
-  //  ShoppingBag,
-  ShoppingBasket,
-} from "lucide-react";
+import { ShoppingBasket } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
 
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { CountButton } from "@/app/components/storefront/CountButton";
-import { Router } from "next/router";
 
 export default async function BagRoute() {
   noStore();
@@ -39,9 +31,6 @@ export default async function BagRoute() {
     totalPrice += item.price * item.quantity;
   });
 
-  // const checkOut = () => {
-  //   redirect("/checkout");
-  // };
   return (
     <div className="max-w-2xl mx-auto mt-10 min-h-[55vh]">
       {!cart || (Array.isArray(cart.items) && cart.items.length === 0) ? (

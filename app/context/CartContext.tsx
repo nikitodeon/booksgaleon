@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 // Интерфейсы

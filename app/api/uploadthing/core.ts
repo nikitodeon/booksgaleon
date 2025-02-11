@@ -1,4 +1,4 @@
-// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+//
 import { auth } from "@/auth";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
