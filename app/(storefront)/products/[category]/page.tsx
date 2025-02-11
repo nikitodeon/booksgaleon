@@ -54,9 +54,10 @@ async function getData(categorySlug: string) {
 export default async function CategoriesPage({
   params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }) {
-  const categoryData = await getData(params.category);
+  const { category } = await params;
+  const categoryData = await getData(category);
 
   if (!categoryData) {
     return notFound();

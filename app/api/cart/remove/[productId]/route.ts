@@ -21,9 +21,9 @@ interface Cart {
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { productId: string } }
+  { params }: { params: Promise<{ productId: string }> }
 ) {
-  const { productId } = params;
+  const { productId } = await params;
 
   // Проверяем, есть ли сессия пользователя
   const session = await auth();
