@@ -70,7 +70,10 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
                     // `https://avatar.vercel.sh/${user.name}`  }
                   />
                 </div>
-                <Link href="/bag" className="group p-2 flex items-center mr-2">
+                <Link
+                  href="/bag"
+                  className="group p-2 flex items-center sm:mb-2 mr-2"
+                >
                   <Button
                     variant="outline"
                     size="icon"
