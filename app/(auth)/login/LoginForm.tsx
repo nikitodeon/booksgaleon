@@ -90,7 +90,7 @@ export default function LoginForm() {
               type="submit"
               disabled={!isValid}
             >
-              Login
+              Войти
             </Button>
             {/* <SocialLogin /> */}
             <div className="text-center">

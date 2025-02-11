@@ -52,7 +52,7 @@ export default function RegisterForm() {
     // console.log(data);
     const result = await registerUser(getValues());
     if (result.status === "success") {
-      router.push("/login");
+      router.push("/");
     } else {
       handleFormServerErrors(result, setError);
     }
@@ -119,7 +119,7 @@ export default function RegisterForm() {
               type="submit"
               disabled={!isValid}
             >
-              Login
+              Зарегистрироваться
             </Button>
             {/* <SocialLogin /> */}
             <div className="text-center">
