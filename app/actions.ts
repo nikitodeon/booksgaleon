@@ -19,6 +19,7 @@ import { Cart } from "./lib/interfaces";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { createPayment } from "./lib/create-payment";
+import { parse } from "path";
 // import { redis } from "./lib/redis";
 // import { Cart } from "./lib/interfaces";
 // import { revalidatePath } from "next/cache";
@@ -520,6 +521,33 @@ export async function createOrder(data: CheckoutFormValues) {
       0
     );
 
+    const VAT = 15;
+    const DELIVERY_PRICE = 8;
+    const vatPrice = ((totalAmount * VAT) / 100).toFixed(2);
+    const totalPrice = parseFloat(
+      (totalAmount + DELIVERY_PRICE + parseFloat(vatPrice)).toFixed(2)
+    );
+    ///////////////////////////////////////////
+
+    // const changeCurrency = async (totalPriceInByn: number) => {
+    const apiKey = process.env.CONVERTER_API_KEY;
+    const API_URL = `https://v6.exchangerate-api.com/v6/${apiKey}/pair/BYN/RUB`;
+    let totalPriceInRub = totalPrice;
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error("Network response was not ok");
+      const data = await response.json();
+      console.log(data.conversion_rate);
+      totalPriceInRub = parseFloat(
+        (totalPrice * data.conversion_rate).toFixed(2)
+      );
+    } catch (error) {
+      console.error(error);
+    }
+    // };
+
+    //////////////////////////////////////////
+
     //   price_data: {
     //     currency: "usd",
     //     unit_amount: ,
@@ -545,7 +573,7 @@ export async function createOrder(data: CheckoutFormValues) {
         phone: data.phone,
         address: data.address,
         comment: data.comment,
-        totalAmount: totalAmount,
+        totalAmount: totalPrice,
         status: OrderStatus.PENDING,
         items: JSON.stringify(cart.items),
       },
@@ -568,7 +596,7 @@ export async function createOrder(data: CheckoutFormValues) {
     // });
 
     const paymentData = await createPayment({
-      amount: totalAmount,
+      amount: totalPriceInRub,
       orderId: order.id,
       description: "Оплата заказа #" + order.id,
     });

@@ -15,6 +15,7 @@ interface Props {
 }
 
 export const CheckoutSidebar: React.FC<Props> = ({ loading, className }) => {
+  // const [totalPriceInRub, setTotalPriceInRub] = useState(0);
   const { totalAmount } = useCart();
 
   const vatPrice = ((totalAmount * VAT) / 100).toFixed(2);
