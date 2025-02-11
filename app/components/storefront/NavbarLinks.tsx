@@ -82,7 +82,7 @@ export function NavbarLinks() {
                 (item.name === "Все жанры" && location === "/")
                   ? "bg-[#B099D3] rounded-md"
                   : "hover:bg-[#DCD1EB] rounded-md hover:bg-opacity-75"
-              } group p-2 font-medium ms-cded-md 
+              } group p-2 font-light  sm:font-medium ms-cded-md 
              break-words whitespace-normal max-w-[120px] text-center`}
             >
               <span className="custom-navbar-text">{item.name}</span>

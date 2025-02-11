@@ -52,7 +52,7 @@ export default function RegisterForm() {
     // console.log(data);
     const result = await registerUser(getValues());
     if (result.status === "success") {
-      router.push("/");
+      router.push("/login");
     } else {
       handleFormServerErrors(result, setError);
     }

@@ -1,5 +1,5 @@
 "use client";
-
+/* eslint-disable */
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { NavbarLinks } from "./NavbarLinks";
@@ -28,19 +28,28 @@ interface NavbarProps {
 export function Navbar({ user, banners, cart }: NavbarProps) {
   const total = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
-  const { theme, resolvedTheme } = useTheme(); // Получаем текущую тему
-  const [themeLoaded, setThemeLoaded] = useState(false); // Состояние для отслеживания загрузки темы
-
+  const {
+    // theme,
+    resolvedTheme,
+  } = useTheme(); // Получаем текущую тему
+  // const [themeLoaded, setThemeLoaded] = useState(false); // Состояние для отслеживания загрузки темы
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    if (theme) {
-      setThemeLoaded(true); // Обновляем состояние, когда тема загружена
-    }
-  }, [theme]);
+    const preloadImages = ["/blacklogo.png", "/whitelogo.png"];
+    preloadImages.forEach((src) => {
+      const img = document.createElement("img");
+      img.src = src;
+    });
+  }, []);
+  //   if (theme) {
+  //     setThemeLoaded(true); // Обновляем состояние, когда тема загружена
+  //   }
+  // }, [theme]);
 
   // Если тема не загружена, показываем индикатор загрузки
-  if (!themeLoaded) {
-    return <div>Загрузка...</div>;
-  }
+  // if (!themeLoaded) {
+  //   return <div>Загрузка...</div>;
+  // }
 
   // Логика для смены логотипа в зависимости от темы
   const logoPath =
@@ -61,25 +70,36 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
               <div className=" ">
                 <ThemeToggle />
               </div>
-              <Link href="/bag" className="group p-2 flex items-center mr-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="bg-[#B099D3]   hover:bg-[#DCD1EB] text-black "
-                >
-                  <ShoppingBasket className="transform scale-150 mt-3 mb-2 ml-4   " />
-                  <span className=" text-sm mb-3 mr-4 font-medium ">
-                    {total}
-                  </span>
-                </Button>
-              </Link>
-
-              <UserDropdown
-                email={user.email ?? ""}
-                name={user.name ?? ""}
-                userImage={"/1476975-200.png"}
-                // `https://avatar.vercel.sh/${user.name}`  }
-              />
+              <div className="mt-[50px] flex flex-col sm:flex sm:flex-row sm:mt-0">
+                <div className=" ml-2 mt-2 sm:hidden  ">
+                  <UserDropdown
+                    email={user.email ?? ""}
+                    name={user.name ?? ""}
+                    userImage={"/1476975-200.png"}
+                    // `https://avatar.vercel.sh/${user.name}`  }
+                  />
+                </div>
+                <Link href="/bag" className="group p-2 flex items-center mr-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="bg-[#B099D3]   hover:bg-[#DCD1EB] text-black "
+                  >
+                    <ShoppingBasket className="transform scale-150 mt-3 mb-2 ml-4   " />
+                    <span className=" text-sm mb-3 mr-4 font-medium ">
+                      {total}
+                    </span>
+                  </Button>
+                </Link>
+              </div>
+              <div className="hidden sm:flex">
+                <UserDropdown
+                  email={user.email ?? ""}
+                  name={user.name ?? ""}
+                  userImage={"/1476975-200.png"}
+                  // `https://avatar.vercel.sh/${user.name}`  }
+                />
+              </div>
             </>
           ) : (
             <div className=" flex flex-1 items-center justify-end space-x-2 ">
@@ -110,6 +130,7 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
               width={250}
               height={250}
               className="mx-auto rounded-lg"
+              onLoad={() => setIsLoaded(true)}
             />
           </div>
         </div>
