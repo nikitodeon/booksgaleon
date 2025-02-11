@@ -85,7 +85,7 @@ export function NavbarLinks() {
               } group p-2 font-light  sm:font-medium ms-cded-md 
              break-words whitespace-normal max-w-[120px] text-center`}
             >
-              <span className="custom-navbar-text">{item.name}</span>
+              <span className="">{item.name}</span>
             </Link>
           </div>
         );

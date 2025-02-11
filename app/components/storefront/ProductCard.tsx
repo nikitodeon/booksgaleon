@@ -49,17 +49,17 @@ export function ProductCard({ item }: iAppProps | iAppPropsTwo) {
   //   }, 3000); // 3 секунды задержки
   // }, []);
   return (
-    <div className="rounded-lg">
-      <Carousel className="w-full mx-auto">
+    <div className="rounded-lg ">
+      <Carousel className="w-full  mx-auto h-[240px] sm:h-[330px]">
         <CarouselContent>
           {item.images.map((item, index) => (
             <CarouselItem key={index}>
-              <div className="relative h-[330px]">
+              <div className="relative h-[270px] sm:h-[330px]">
                 <Image
                   src={item}
                   alt="Product Image"
                   fill
-                  className="object-contain w-full h-full rounded-lg"
+                  className="object-contain w-full  rounded-lg"
                 />
               </div>
             </CarouselItem>
@@ -69,24 +69,26 @@ export function ProductCard({ item }: iAppProps | iAppPropsTwo) {
         <CarouselNext small className="mr-16" />
       </Carousel>
 
-      <div className="flex justify-between items-center mt-2">
-        <h1 className="font-semibold text-xl customline-clamp-3 custom">
+      <div className="flex justify-between items-center sm:mt-2 ">
+        <h1 className="font-semibold  text-xs sm:text-xl customline-clamp-2   sm:customline-clamp-3 custom">
           <Link href={`/product/${item.id}`}>{item.name}</Link>
         </h1>
-        <h3 className="inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/10">
+        <h3 className="inline-flex items-center rounded-md bg-primary/10 px-2 py-1 sm:text-xs text-xxs font-medium text-primary ring-1 ring-inset ring-primary/10">
           {item.price.toString()} BYN
         </h3>
       </div>
-      <p className="text-gray-600 text-sm mt-2 customline-clamp-2 custom-description">
+      <p className="text-gray-600      text-xxs sm:text-sm mt-2 customline-clamp-2 custom-description">
         <Link href={`/product/${item.id}`}>{item.description}</Link>
       </p>
 
       <Button
         asChild
-        className="w-full mt-5  bg-[#B099D3]   hover:bg-[#DCD1EB]  text-black"
+        className="w-full mt-5  bg-[#B099D3]   hover:bg-[#DCD1EB]  text-black "
       >
-        <Link className="custom-button " href={`/product/${item.id}`}>
-          Подробнее
+        <Link className="   " href={`/product/${item.id}`}>
+          <span className="small-custom-button sm:custom-button">
+            Подробнее
+          </span>
         </Link>
       </Button>
     </div>

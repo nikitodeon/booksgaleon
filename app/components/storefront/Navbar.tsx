@@ -1,5 +1,5 @@
 "use client";
-/* eslint-disable */
+
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { NavbarLinks } from "./NavbarLinks";
@@ -28,28 +28,19 @@ interface NavbarProps {
 export function Navbar({ user, banners, cart }: NavbarProps) {
   const total = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
-  const {
-    // theme,
-    resolvedTheme,
-  } = useTheme(); // Получаем текущую тему
-  // const [themeLoaded, setThemeLoaded] = useState(false); // Состояние для отслеживания загрузки темы
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { theme, resolvedTheme } = useTheme(); // Получаем текущую тему
+  const [themeLoaded, setThemeLoaded] = useState(false); // Состояние для отслеживания загрузки темы
+
   useEffect(() => {
-    const preloadImages = ["/blacklogo.png", "/whitelogo.png"];
-    preloadImages.forEach((src) => {
-      const img = document.createElement("img");
-      img.src = src;
-    });
-  }, []);
-  //   if (theme) {
-  //     setThemeLoaded(true); // Обновляем состояние, когда тема загружена
-  //   }
-  // }, [theme]);
+    if (theme) {
+      setThemeLoaded(true); // Обновляем состояние, когда тема загружена
+    }
+  }, [theme]);
 
   // Если тема не загружена, показываем индикатор загрузки
-  // if (!themeLoaded) {
-  //   return <div>Загрузка...</div>;
-  // }
+  if (!themeLoaded) {
+    return <div>Загрузка...</div>;
+  }
 
   // Логика для смены логотипа в зависимости от темы
   const logoPath =
@@ -70,7 +61,7 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
               <div className=" ">
                 <ThemeToggle />
               </div>
-              <div className="mt-[50px] flex flex-col sm:flex sm:flex-row sm:mt-0">
+              <div className="mt-[50px] flex flex-col sm:flex sm:flex-row sm:mt-0 ml-2 ">
                 <div className=" ml-2 mt-2 sm:hidden  ">
                   <UserDropdown
                     email={user.email ?? ""}
@@ -130,36 +121,49 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
               width={250}
               height={250}
               className="mx-auto rounded-lg"
-              onLoad={() => setIsLoaded(true)}
             />
           </div>
         </div>
         {/* Логотип */}
-        <div className="flex flex-col items-center w-1/2">
+        <div className="flex flex-col items-center w-1/2 ml-3">
           <Link href="/">
-            <Image
-              src={logoPath} // Логотип меняется в зависимости от темы
-              alt="Logo"
-              width={250}
-              height={250}
-              className="mx-auto"
-            />
+            <div className="relative w-[250px] h-[150px] flex items-center justify-center ">
+              {/* Светлая тема */}
+              <Image
+                src="/whitelogo.png"
+                alt="Logo"
+                width={250}
+                height={250}
+                className={`absolute transition-opacity duration-100 ${
+                  resolvedTheme === "dark" ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              {/* Темная тема */}
+              <Image
+                src="/blacklogo.png"
+                alt="Logo"
+                width={250}
+                height={250}
+                className={`absolute transition-opacity duration-100 ${
+                  resolvedTheme === "dark" ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            </div>
           </Link>
           {/* Описание */}
-          <div className="mt-4 text-center text-md text-gray-600  custom-logo-description">
+          <div className="text-center sm:text-lg  text-gray-600 pt-2 custom">
             Ветер в твоих парусах,
             <br /> открывай море историй!
           </div>
           {/* Поле поиска */}
-          {/* <div className="mt-4 w-full max-w-md"> */}
-          <div className="mx-auto w-full max-w-md  mt-4 hidden md:flex flex-col ">
+          <div className="mx-auto w-full max-w-md mt-4 hidden md:flex flex-col">
             <SearchBar />
           </div>
         </div>
         {/* Правый баннер */}
         {/* from-violet-500 to-[#B099D3] bg-gradient-to-r */}
         <div
-          className="sm:text-2xl text-center leading-tight text-transparent bg-clip-text  bg-black   text-md custom-top from-violet-500 to-[#B099D3] bg-gradient-to-r "
+          className=" ml-4 sm:text-2xl text-center leading-tight text-transparent bg-clip-text  bg-black   text-md custom-top from-violet-500 to-[#B099D3] bg-gradient-to-r "
           style={{
             letterSpacing: "-0.5px",
             lineHeight: "1.1",

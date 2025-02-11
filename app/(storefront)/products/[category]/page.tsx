@@ -69,7 +69,7 @@ export default async function CategoriesPage({
         {categoryData.title}
       </h1>
 
-      <div className=" grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
+      <div className=" grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-5 gap-x-2">
         {categoryData.data.map((item) => (
           <ProductCard item={item} key={item.id} />
         ))}

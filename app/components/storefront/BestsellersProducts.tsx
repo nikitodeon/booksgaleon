@@ -32,7 +32,7 @@ function LoadFeaturedProducts({ bestsellersData }: BestsellersProductsProps) {
   // Здесь твой запрос к базе данных или другой логики для загрузки продуктов
   // Для примера, ты передаешь bestsellersData как пропсы в компонент
   return (
-    <div className="mt-5 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
+    <div className="mt-5 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-5 gap-x-2">
       {bestsellersData.map((item) => (
         <ProductCard key={item.id} item={item} />
       ))}
