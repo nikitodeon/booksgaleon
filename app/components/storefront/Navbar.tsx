@@ -48,7 +48,7 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
 
   return (
     <div>
-      <nav className="w-full max-w-screen-3xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
+      <nav className="w-full max-w-screen-3xl mx-auto px-4 sm:px-6 lg:px-8 sm:py-5 flex items-center justify-between">
         <div className="flex items-center">
           {/* <div className="navbar-links"> */}
           <NavbarLinks />
@@ -61,8 +61,8 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
               <div className=" ">
                 <ThemeToggle />
               </div>
-              <div className="mt-[50px] flex flex-col sm:flex sm:flex-row sm:mt-0 ml-2 ">
-                <div className=" ml-2 mt-2 sm:hidden  ">
+              <div className="mt-[10px] flex flex-col sm:flex sm:flex-row  ml-2 ">
+                <div className=" ml-2 mt-0 sm:hidden  ">
                   <UserDropdown
                     email={user.email ?? ""}
                     name={user.name ?? ""}
@@ -107,14 +107,14 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
         </div>
       </nav>
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:py-5 flex items-center  justify-between">
         {/* Левый баннер */}
         {/* <div className="hidden md:flex w-1/4 h-64 bg-gray-100 items-center justify-center">
           <span className="text-gray-500">Левый баннер</span>
         </div> */}
 
         <div className="hidden md:flex w-1/4 min-h-41 ">
-          <div className=" object-contain w-[250px] h-[250px] ml-10 mt-6">
+          <div className=" object-contain w-[250px] h-[250px] ml-10 ">
             <Image
               src="/sale.jpg"
               alt="Logo"
