@@ -105,7 +105,7 @@ export function NavbarLinks() {
           <SelectContent>
             {categories.map((category) => (
               <SelectItem
-                className="custom-button"
+                className="custom-button "
                 key={category.id}
                 value={category.title}
               >

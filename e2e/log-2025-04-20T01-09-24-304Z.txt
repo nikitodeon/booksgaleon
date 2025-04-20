@@ -1,0 +1,4 @@
+Ошибка на попытке 1: locator.isEnabled: Test timeout of 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-testid="count-plus"]').first()[22m
+

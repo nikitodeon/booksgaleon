@@ -1,54 +1,83 @@
 import { ProductCard } from "@/app/components/storefront/ProductCard";
 import { prisma } from "@/app/utils/db";
 import { notFound, redirect } from "next/navigation";
+import { P } from "vitest/dist/chunks/environment.d.C8UItCbf.js";
 
-async function getData(categorySlug: string) {
+interface ProductData {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  images: string[];
+}
+
+interface CategoryPageData {
+  title: string;
+  products: ProductData[];
+}
+
+async function fetchCategoryProducts(
+  categorySlug: string
+): Promise<CategoryPageData> {
   if (categorySlug === "vse-zhanry") {
     redirect("/");
   }
+
   if (categorySlug === "bestsellery") {
-    const data = await prisma.product.findMany({
+    const products = await prisma.product.findMany({
       where: { status: "published", isFeatured: true },
       select: {
-        name: true,
-        images: true,
-        price: true,
         id: true,
+        name: true,
         description: true,
+        price: true,
+        images: true,
       },
     });
 
     return {
       title: "Бестселлеры",
-
-      data: data.map((item) => ({ ...item, price: item.price.toString() })),
+      products: products.map((p) => ({ ...p, price: p.price.toString() })),
     };
   }
 
   const category = await prisma.category.findUnique({
     where: { slug: categorySlug },
-
     select: { id: true, title: true },
   });
 
-  if (!category) return notFound();
+  if (!category) {
+    notFound();
+  }
 
-  const data = await prisma.product.findMany({
-    where: { status: "published", categoryId: category.id },
+  const products = await prisma.product.findMany({
+    where: {
+      status: "published",
+      categoryId: category.id,
+    },
     select: {
-      name: true,
-      images: true,
-      price: true,
       id: true,
+      name: true,
       description: true,
+      price: true,
+      images: true,
     },
   });
 
   return {
     title: category.title,
-
-    data: data.map((item) => ({ ...item, price: item.price.toString() })),
+    products: products.map((p) => ({ ...p, price: p.price.toString() })),
   };
+}
+
+function ProductsGrid({ products }: { products: ProductData[] }) {
+  return (
+    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-5 gap-x-2">
+      {products.map((product) => (
+        <ProductCard key={product.id} item={product} />
+      ))}
+    </div>
+  );
 }
 
 export default async function CategoriesPage({
@@ -57,23 +86,12 @@ export default async function CategoriesPage({
   params: Promise<{ category: string }>;
 }) {
   const { category } = await params;
-  const categoryData = await getData(category);
-
-  if (!categoryData) {
-    return notFound();
-  }
+  const { title, products } = await fetchCategoryProducts(category);
 
   return (
     <section>
-      <h1 className="font-semibold text-3xl my-5 custom">
-        {categoryData.title}
-      </h1>
-
-      <div className=" grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-5 gap-x-2">
-        {categoryData.data.map((item) => (
-          <ProductCard item={item} key={item.id} />
-        ))}
-      </div>
+      <h1 className="font-semibold text-3xl my-5 custom">{title}</h1>
+      <ProductsGrid products={products} />
     </section>
   );
 }

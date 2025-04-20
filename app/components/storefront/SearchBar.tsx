@@ -25,15 +25,15 @@ const SearchBar = () => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Escape") {
-      inputRef?.current?.blur(); // Потерять фокус при нажатии Escape
+      inputRef?.current?.blur();
     }
   };
 
   const handleSearchClick = () => {
-    if (!query.trim()) return; // Если запрос пустой, ничего не делать
+    if (!query.trim()) return;
 
     startTransition(() => {
-      router.push(`/search?query=${query}`); // Выполнение редиректа с query
+      router.push(`/search?query=${query}`);
     });
   };
   // const [placeholder, setPlaceholder] = useState(
@@ -59,8 +59,8 @@ const SearchBar = () => {
       <div className="relative h-14 z-10 rounded-md">
         <Input
           value={query}
-          onChange={(e) => setQuery(e.target.value)} // Обновление query при вводе
-          onKeyDown={handleKeyDown} // Обработчик для Escape
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
           ref={inputRef}
           className="absolute inset-0 h-full border-2 placeholder-custom "
           placeholder="Название, автор или описание книги..."
@@ -70,7 +70,7 @@ const SearchBar = () => {
           size="sm"
           variant="outline"
           onClick={handleSearchClick} // Запуск поиска по клику на лупу
-          className="absolute right-0 inset-y-0 h-full rounded-l-none text-black bg-[#B099D3] hover:bg-[#DCD1EB] "
+          className="absolute right-0 inset-y-0 h-full rounded-l-none text-black bg-[#B099D3] hover:bg-[#DCD1EB] hover:text-black "
         >
           {isSearching ? (
             <Loader2 className="h-6 w-6 animate-spin" />

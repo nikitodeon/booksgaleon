@@ -1,43 +1,55 @@
 import { Decimal } from "@prisma/client/runtime/library";
-import { ProductCard } from "../components/storefront/ProductCard";
-import { prisma } from "../utils/db";
+import { ProductCard } from "@/app/components/storefront/ProductCard";
+import { prisma } from "@/app/utils/db";
 
-async function getData() {
-  const data = await prisma.product.findMany({
+interface ProductData {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  images: string[];
+}
+
+interface PageData {
+  title: string;
+  products: ProductData[];
+}
+
+async function fetchAllProducts(): Promise<PageData> {
+  const products = await prisma.product.findMany({
+    where: { status: "published" },
     select: {
-      name: true,
-      images: true,
-      price: true,
       id: true,
+      name: true,
       description: true,
-    },
-    where: {
-      status: "published",
+      price: true,
+      images: true,
     },
   });
 
   return {
     title: "Все жанры",
-    data: data.map((product) => ({
-      ...product,
-      price:
-        product.price instanceof Decimal
-          ? product.price.toFixed(2)
-          : String(product.price),
-    })),
+    products: products.map((p) => ({ ...p, price: p.price.toString() })),
   };
 }
 
-export default async function IndexPage() {
-  const { data, title } = await getData();
+function ProductsGrid({ products }: { products: ProductData[] }) {
+  return (
+    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-5 gap-x-2">
+      {products.map((product) => (
+        <ProductCard key={product.id} item={product} />
+      ))}
+    </div>
+  );
+}
+
+export default async function AllProductsPage() {
+  const { title, products } = await fetchAllProducts();
+
   return (
     <section>
       <h1 className="font-semibold text-3xl my-5 custom">{title}</h1>
-      <div className="grid grid-cols-3  md:grid-cols-4 lg:grid-cols-6 gap-x-2 sm:gap-5 ">
-        {data.map((item) => (
-          <ProductCard item={item} key={item.id} />
-        ))}
-      </div>
+      <ProductsGrid products={products} />
     </section>
   );
 }

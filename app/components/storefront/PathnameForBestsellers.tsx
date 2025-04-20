@@ -1,5 +1,4 @@
-// app/components/storefront/ClientPathname.tsx
-"use client"; // Указываем, что это клиентский компонент
+"use client";
 
 import { usePathname } from "next/navigation"; // Хук для получения пути
 import { useState, useEffect } from "react"; // Для работы с состоянием

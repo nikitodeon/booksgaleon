@@ -230,7 +230,7 @@ const CarouselPrevious = React.forwardRef<
         variant={variant}
         size={size}
         className={cn(
-          "absolute   rounded-full bg-[#b099d394] border-none hover:bg-[#DCD1EB]",
+          "absolute   rounded-full  bg-transparent  border-none hover:bg-[#B099D3]",
           small ? "h-5 w-5" : "h-7 w-7 lg:h-8 lg:w-8",
           orientation === "horizontal"
             ? "-left-12 top-1/2 -translate-y-1/2"
@@ -269,7 +269,7 @@ const CarouselNext = React.forwardRef<
         variant={variant}
         size={size}
         className={cn(
-          "absolute border-none rounded-full hover:bg-[#DCD1EB] bg-[#b099d394]",
+          "absolute border-none rounded-full hover:bg-[#B099D3]  bg-transparent",
           small ? "h-5 w-5" : "h-7 w-7 lg:h-8 lg:w-8 ",
           orientation === "horizontal"
             ? "-right-12 top-1/2 -translate-y-1/2"

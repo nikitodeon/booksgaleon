@@ -3,77 +3,89 @@ import {
   ShoppingBagButton,
   ToCartButton,
 } from "@/app/components/SubmitButtons";
-
 import ImageSlider from "@/app/components/storefront/ImageSlider";
 import { prisma } from "@/app/utils/db";
-
 import { StarIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 
-async function getData(productId: string) {
-  const ProductData = await prisma.product.findUnique({
-    where: {
-      id: productId,
-    },
+interface ProductData {
+  id: string;
+  name: string;
+  price: string;
+  description: string;
+  images: string[];
+}
+
+interface ProductPageProps {
+  params: Promise<{ id: string }>;
+}
+
+async function fetchProduct(productId: string): Promise<ProductData> {
+  const product = await prisma.product.findUnique({
+    where: { id: productId },
     select: {
-      price: true,
-      images: true,
-      description: true,
-      name: true,
       id: true,
+      name: true,
+      price: true,
+      description: true,
+      images: true,
     },
   });
 
-  if (!ProductData) {
-    return notFound();
+  if (!product) {
+    notFound();
   }
 
   return {
-    ...ProductData,
-    price: ProductData.price.toString(),
+    ...product,
+    price: product.price.toString(),
   };
 }
 
-export default async function ProductIdRoute({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+function RatingStars() {
+  return (
+    <div className="mt-3 flex items-center gap-1" aria-label="Product rating">
+      {[...Array(5)].map((_, i) => (
+        <StarIcon key={i} className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+      ))}
+    </div>
+  );
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
-  const data = await getData(id);
-  const addProducttoShoppingCart = addItem.bind(null, data.id);
+  const product = await fetchProduct(id);
+
+  const addToCartAction = addItem.bind(null, product.id);
 
   return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start lg:gap-x-24 py-6">
-        <ImageSlider images={data.images} />
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">
-            {data.name}
-          </h1>
-          <p className="text-3xl mt-2 ">{data.price} BYN</p>
-          <div className="mt-3 flex items-center gap-1">
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-          </div>
-          <p className="text-xl mt-6 custom-big-description">
-            {data.description}
-          </p>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start lg:gap-x-24 py-6">
+      <ImageSlider images={product.images} />
 
-          <form action={addProducttoShoppingCart}>
+      <div>
+        <div className="space-y-2">
+          <h1 className="text-3xl font-extrabold tracking-tight">
+            {product.name}
+          </h1>
+          <p className="text-3xl">{product.price} BYN</p>
+          <RatingStars />
+        </div>
+
+        <p className="text-xl mt-6 custom-big-description">
+          {product.description}
+        </p>
+
+        <div className="mt-8 space-y-4">
+          <form action={addToCartAction}>
             <span className="custom-big-button">
               <ShoppingBagButton />
             </span>
           </form>
-
           <span className="custom-big-button">
             <ToCartButton />
           </span>
         </div>
       </div>
-    </>
+    </div>
   );
 }

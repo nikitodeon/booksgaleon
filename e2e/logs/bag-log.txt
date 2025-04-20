@@ -1,0 +1,80 @@
+[2025-04-20T02:15:56.943Z] Попытка №1
+[2025-04-20T02:15:58.953Z] Ошибка на попытке 1: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 2000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+
+[2025-04-20T02:15:59.603Z] Попытка №2
+[2025-04-20T02:16:01.607Z] Ошибка на попытке 2: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 2000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+
+[2025-04-20T02:16:02.258Z] Попытка №3
+[2025-04-20T02:16:04.260Z] Ошибка на попытке 3: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 2000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+
+[2025-04-20T02:16:04.908Z] Попытка №4
+[2025-04-20T02:16:06.874Z] Ошибка на попытке 4: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 2000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+
+[2025-04-20T02:17:02.348Z] Попытка №1
+[2025-04-20T02:17:13.046Z] Ошибка на попытке 1: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 20000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+
+[2025-04-20T03:09:45.906Z] Попытка №1
+[2025-04-20T03:09:56.481Z] Ошибка на попытке 1: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 20000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+
+[2025-04-20T03:13:01.349Z] Попытка №1
+[2025-04-20T03:13:12.060Z] Ошибка на попытке 1: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 20000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+
+[2025-04-20T03:16:54.465Z] Attempt #1
+[2025-04-20T03:17:04.710Z] Error on attempt 1: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 20000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+

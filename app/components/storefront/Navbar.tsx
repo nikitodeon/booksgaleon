@@ -79,8 +79,8 @@ export function Navbar({ user, banners, cart }: NavbarProps) {
                     size="icon"
                     className="bg-[#B099D3]   hover:bg-[#DCD1EB] text-black "
                   >
-                    <ShoppingBasket className="transform scale-150 mt-3 mb-2 ml-4   " />
-                    <span className=" text-sm mb-3 mr-4 font-medium ">
+                    <ShoppingBasket className="transform scale-150 mt-3 mb-2 ml-4  text-black  " />
+                    <span className=" text-sm mb-3 mr-4 text-black  font-medium ">
                       {total}
                     </span>
                   </Button>

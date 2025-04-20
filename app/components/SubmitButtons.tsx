@@ -1,12 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Loader2,
-  MoveRight,
-  //  ShoppingBag,
-  ShoppingBasket,
-} from "lucide-react";
+import { Loader2, MoveRight, ShoppingBasket } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";

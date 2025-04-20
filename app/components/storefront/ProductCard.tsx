@@ -13,9 +13,8 @@ import { Decimal } from "@prisma/client/runtime/library";
 
 import Image from "next/image";
 import Link from "next/link";
-// import { useEffect, useState } from "react";
 
-interface iAppProps {
+export interface iAppProps {
   item: {
     id: string;
     name: string;

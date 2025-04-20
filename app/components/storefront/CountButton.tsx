@@ -1,52 +1,57 @@
 "use client";
+
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState } from "react";
 import { CountIconButton } from "./CountIconButton";
 import { updateQuantity } from "@/app/actions";
 
 export interface CountButtonProps {
   value?: number;
   size?: "sm" | "lg";
-  //   onClick?: (type: "plus" | "minus") => void;
   className?: string;
   productId: string;
 }
 
-const onClickCountButton = (
-  id: string,
-  quantity: number,
-  type: "plus" | "minus"
-) => {
-  const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
-  updateQuantity(id, newQuantity);
-};
-
 export const CountButton: React.FC<CountButtonProps> = ({
   className,
-  //   onClick,
   productId,
   value = 1,
   size = "sm",
 }) => {
+  const [localValue, setLocalValue] = useState(value);
+
+  const handleClick = async (type: "plus" | "minus") => {
+    const newQuantity = type === "plus" ? localValue + 1 : localValue - 1;
+    await updateQuantity(productId, newQuantity);
+    setLocalValue(newQuantity);
+  };
+
   return (
     <div
+      data-testid="count-controls"
       className={cn(
         "inline-flex items-center justify-between gap-3",
         className
       )}
     >
       <CountIconButton
-        onClick={() => onClickCountButton(productId, value, "minus")}
-        // {() => onClick?.("minus")}
-        disabled={value === 1}
+        data-testid="count-minus"
+        onClick={() => handleClick("minus")}
+        disabled={localValue === 1}
         size={size}
         type="minus"
       />
 
-      <b className={size === "sm" ? "text-sm" : "text-md"}>{value}</b>
+      <b
+        className={size === "sm" ? "text-sm" : "text-md"}
+        data-testid="quantity-text"
+      >
+        {localValue}
+      </b>
 
       <CountIconButton
-        onClick={() => onClickCountButton(productId, value, "plus")}
+        data-testid="count-plus"
+        onClick={() => handleClick("plus")}
         size={size}
         type="plus"
       />

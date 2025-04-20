@@ -35,7 +35,7 @@ export function RegisterButton() {
   return (
     <Button
       onClick={handleSignUpRedirect}
-      className="custom-navbar bg-[#B099D3]   hover:bg-[#DCD1EB] text-black "
+      className="custom-navbar bg-[#B099D3]   hover:bg-[#DCD1EB] text-black  "
     >
       Вход
     </Button>

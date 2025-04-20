@@ -113,30 +113,25 @@
   -webkit-line-clamp: 2; /* Максимум 3 строки */
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: calc(
-    2 * 1.35em
-  ); /* Минимум 3 строки, 1.25em — высота строки, можно подрегулировать */
+  min-height: calc(2 * 1.35em);
 }
 .placeholder-custom::placeholder {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  font-weight: 500; /* Пример кастомного веса шрифта */
+  font-family: "Moon Dance";
+  font-weight: 500;
   font-size: 18px;
 
-  color: #555; /* Пример кастомного цвета */
+  color: #555;
 }
 .custom-gray {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  font-weight: 500; /* Пример кастомного веса шрифта */
+  font-family: "Moon Dance";
+  font-weight: 500;
   font-size: 20px;
 
-  color: #555; /* Пример кастомного цвета */
+  color: #555;
 }
 .custom-navbar {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  /* Пример кастомного веса шрифта */
+  font-family: "Moon Dance";
   font-size: 18px;
-
-  /* Пример кастомного цвета */
 }
 @media (max-width: 640px) {
   .custom-navbar {
@@ -144,69 +139,44 @@
   }
 }
 .custom {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  /* Пример кастомного веса шрифта */
-
-  /* Пример кастомного цвета */
+  font-family: "Moon Dance";
 }
 .custom-top {
   font-family: "Moon Dance"; /* Пример кастомного шрифта */
   font-style: italic;
   /* Добавляем курсив */
   transform: perspective(300px) rotateX(10deg); /* Эффект наклона */
-  /* text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4); */
 }
 
 .custom-maname {
   font-family: "Maname";
 }
 .custom-button {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  /* Пример кастомного веса шрифта */
+  font-family: "Moon Dance";
   font-size: 18px;
-
-  /* Пример кастомного цвета */
 }
 .small-custom-button {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  /* Пример кастомного веса шрифта */
+  font-family: "Moon Dance";
   font-size: 15px;
-
-  /* Пример кастомного цвета */
 }
 .custom-description {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  /* Пример кастомного веса шрифта */
+  font-family: "Moon Dance";
   font-size: 16px;
-
-  /* Пример кастомного цвета */
 }
 .custom-big-description {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  /* Пример кастомного веса шрифта */
+  font-family: "Moon Dance";
   font-size: 20px;
-
-  /* Пример кастомного цвета */
 }
 .custom-big-button {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  /* Пример кастомного веса шрифта */
-
-  /* Пример кастомного цвета */
+  font-family: "Moon Dance";
 }
 .custom-logo-description {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  /* Пример кастомного веса шрифта */
+  font-family: "Moon Dance";
   font-size: 18px;
-
-  /* Пример кастомного цвета */
 }
 .custom-medal {
-  font-family: "Moon Dance"; /* Пример кастомного шрифта */
-  /* Пример кастомного веса шрифта */
+  font-family: "Moon Dance";
   font-size: 32px;
-
-  /* Пример кастомного цвета */
 }
 .custom-cart-title {
   font-family: "Moon Dance";

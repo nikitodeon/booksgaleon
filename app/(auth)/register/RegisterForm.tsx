@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { toast } from "react-toastify";
 
 //
 
@@ -55,6 +56,7 @@ export default function RegisterForm() {
       router.push("/login");
     } else {
       handleFormServerErrors(result, setError);
+      toast.error(result.error as string);
     }
   };
 
@@ -101,7 +103,12 @@ export default function RegisterForm() {
               {...register("email", { required: "Email обязателен" })}
             />
             {errors.email && (
-              <p className="text-red-500">{errors.email?.message as string}</p>
+              <p className="text-red-500">
+                {
+                  // errors.email?.message as string
+                  "Некорректный email"
+                }
+              </p>
             )}
             <Input
               placeholder="Пароль"
