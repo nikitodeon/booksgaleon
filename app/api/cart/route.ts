@@ -1,12 +1,10 @@
-/* eslint-disable */
-
 import { Cart } from "@/app/lib/interfaces";
 import { redis } from "@/app/lib/redis";
 import { auth } from "@/auth";
 
 import { redirect } from "next/navigation";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const session = await auth();
 
@@ -16,7 +14,7 @@ export async function GET(req: Request) {
       return redirect("/");
     }
 
-    let cart: Cart | null = await redis.get(`cart-${user.id}`);
+    const cart: Cart | null = await redis.get(`cart-${user.id}`);
     console.log("Запрос к Redis для корзины пользователя:", user.id);
     // revalidatePath("/checkout");
 

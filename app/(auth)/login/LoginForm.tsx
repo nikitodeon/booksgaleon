@@ -1,12 +1,11 @@
 "use client";
-/* eslint-disable */
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { loginSchema } from "@/lib/schemas/LoginSchema";
+import { LoginSchema, loginSchema } from "@/lib/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInUser } from "@/app/actions/authActions";
 import { useRouter } from "next/navigation";
@@ -22,14 +21,14 @@ export default function LoginForm() {
     register,
     handleSubmit,
     formState: { isValid, errors },
-  } = useForm({
+  } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     mode: "onTouched",
   });
 
   const router = useRouter();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: LoginSchema) => {
     const result = await signInUser(data);
     if (result.status === "success") {
       router.push("/");

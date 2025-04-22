@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { auth } from "@/auth";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
@@ -20,7 +18,7 @@ export const ourFileRouter = {
     },
   })
     // Set permissions and file types for this FileRoute
-    .middleware(async ({ req }) => {
+    .middleware(async ({}) => {
       // This code runs on your server before upload
       //   const { getUser } = getKindeServerSession();
       const session = await auth();
@@ -45,7 +43,7 @@ export const ourFileRouter = {
     }),
   bannerImageRoute: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
     // Set permissions and file types for this FileRoute
-    .middleware(async ({ req }) => {
+    .middleware(async ({}) => {
       // const { getUser } = getKindeServerSession();
       const session = await auth();
 

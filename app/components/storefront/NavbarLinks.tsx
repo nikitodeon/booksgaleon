@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable */
 
 import { useState, useEffect } from "react";
 import { Category } from "@prisma/client";
@@ -29,7 +28,7 @@ export const navbarLinks = [
 
 export function NavbarLinks() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+
   const router = useRouter();
   const location = usePathname();
 
@@ -43,7 +42,7 @@ export function NavbarLinks() {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     }
 

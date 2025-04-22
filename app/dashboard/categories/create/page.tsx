@@ -55,11 +55,11 @@ export default function CategoryCreateRoute() {
 
   useEffect(() => {
     if (titleError) setTitleError(null);
-  }, [title]);
+  }, [title, titleError]);
 
   useEffect(() => {
     if (slugError) setSlugError(null);
-  }, [slug]);
+  }, [slug, slugError]);
 
   useEffect(() => {
     if (lastResult?.error?.title) {

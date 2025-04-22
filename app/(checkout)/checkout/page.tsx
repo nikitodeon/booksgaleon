@@ -7,17 +7,14 @@ import { CheckoutCart } from "@/app/components/storefront/checkout/CheckoutCart"
 import { CheckoutFormValues, checkoutFormSchema } from "@/app/lib/zodSchemas";
 import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { User } from "next-auth";
-import { Cart } from "@/app/lib/interfaces";
+
 import { CartProvider } from "@/app/context/CartContext";
 import { Button } from "@/components/ui/button";
 
 export default function CheckoutPage() {
-  const [submitting, setSubmitting] = useState(false);
-  const [items, setItems] = useState<string[]>([]);
-  const [totalAmount, setTotalAmount] = useState(0);
   const { data: session } = useSession();
 
   const form = useForm<CheckoutFormValues>({
@@ -54,28 +51,8 @@ export default function CheckoutPage() {
     }
   }, [session, form]);
 
-  useEffect(() => {
-    const fetchCartInfo = async () => {
-      try {
-        const response = await fetch("/api/cart");
-        if (!response.ok) throw new Error("Ошибка загрузки корзины");
-
-        const cart: Cart | null = await response.json();
-        const cartItems = cart?.items || [];
-
-        setItems(cartItems.map((item) => item.id));
-        setTotalAmount(cartItems.reduce((acc, item) => acc + item.price, 0));
-      } catch (error) {
-        console.error("Ошибка при загрузке корзины:", error);
-      }
-    };
-
-    fetchCartInfo();
-  }, []);
-
   const handleSubmit = async (data: CheckoutFormValues) => {
     try {
-      setSubmitting(true);
       const url = await createOrder(data);
 
       toast.success("Заказ успешно оформлен! 📝 Переход на оплату...", {
@@ -87,7 +64,7 @@ export default function CheckoutPage() {
       }
     } catch (err) {
       console.error("Ошибка при оформлении заказа:", err);
-      setSubmitting(false);
+
       toast.error("Не удалось создать заказ", { icon: "❌" });
     }
   };

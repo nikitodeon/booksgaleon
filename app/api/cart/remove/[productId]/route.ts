@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth"; // Путь до функции авторизации
 import { redis } from "@/app/lib/redis"; // Подключение Redis
@@ -34,8 +32,7 @@ export async function DELETE(
   }
 
   try {
-    // Получаем корзину пользователя из Redis
-    let cart = (await redis.get(`cart-${user.id}`)) as Cart | null;
+    const cart = (await redis.get(`cart-${user.id}`)) as Cart | null;
 
     if (cart && cart.items) {
       // Обновляем корзину, удаляя товар по productId

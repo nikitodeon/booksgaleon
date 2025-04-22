@@ -1,7 +1,6 @@
 import { ProductCard } from "@/app/components/storefront/ProductCard";
 import { prisma } from "@/app/utils/db";
 import { notFound, redirect } from "next/navigation";
-import { P } from "vitest/dist/chunks/environment.d.C8UItCbf.js";
 
 interface ProductData {
   id: string;

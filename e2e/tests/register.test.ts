@@ -82,7 +82,7 @@ test.describe("Регистрация", () => {
       )
     ).toBeVisible();
 
-    // Проверяем валидацию email (ваш кастомный текст)
+    // Проверяем валидацию email
     await page.fill('input[placeholder="Имя"]', "Вася");
     await page.fill('input[placeholder="Email"]', "invalid-email");
     await page.fill('input[placeholder="Пароль"]', "validpass");
@@ -91,7 +91,7 @@ test.describe("Регистрация", () => {
       page.locator("p.text-red-500 >> text=Некорректный email")
     ).toBeVisible();
 
-    // Проверяем валидацию пароля (6+ символов)
+    // Проверяем валидацию пароля
     await page.fill('input[placeholder="Имя"]', "Вася");
     await page.fill('input[placeholder="Email"]', "valid@test.com");
     await page.fill('input[placeholder="Пароль"]', "123");

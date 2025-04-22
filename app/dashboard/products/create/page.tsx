@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable */
 
 import { createProduct } from "@/app/actions";
 import { UploadDropzone } from "@/app/lib/uploadthing";
@@ -38,7 +37,7 @@ import { Category } from "@prisma/client";
 
 export default function ProductCreateRoute() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+
   const [images, setImages] = useState<string[]>([]);
   const [lastResult, action] = useActionState(createProduct, undefined);
   const [form, fields] = useForm({
@@ -61,7 +60,7 @@ export default function ProductCreateRoute() {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     }
 
@@ -186,7 +185,13 @@ export default function ProductCreateRoute() {
                 value={images}
                 key={fields.images.key}
                 name={fields.images.name}
-                defaultValue={fields.images.initialValue as any}
+                defaultValue={
+                  Array.isArray(fields.images.initialValue)
+                    ? fields.images.initialValue.filter(
+                        (i): i is string => typeof i === "string"
+                      )
+                    : []
+                }
               />
               {images.length > 0 ? (
                 <div className="flex gap-5">

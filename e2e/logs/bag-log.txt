@@ -78,3 +78,23 @@ Call log:
 [2m  - expect.toBeVisible with timeout 20000ms[22m
 [2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
 
+[2025-04-22T03:11:42.910Z] Attempt #1
+[2025-04-22T03:11:55.347Z] Error on attempt 1: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 20000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+
+[2025-04-22T03:12:14.802Z] Attempt #1
+[2025-04-22T03:12:15.029Z] Error on attempt 1: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+Locator: locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+[2m  - expect.toBeVisible with timeout 20000ms[22m
+[2m  - waiting for locator('[data-testid="count-controls"]').first().locator('[data-testid="count-plus"]')[22m
+

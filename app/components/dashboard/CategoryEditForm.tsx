@@ -56,11 +56,11 @@ export function EditForm({ data }: { data: CategoryData }) {
   // Очистка ошибок при изменении полей
   useEffect(() => {
     if (titleError) setTitleError(null);
-  }, [title]);
+  }, [title, titleError]);
 
   useEffect(() => {
     if (slugError) setSlugError(null);
-  }, [slug]);
+  }, [slug, slugError]);
 
   useEffect(() => {
     if (lastResult?.error?.title) {

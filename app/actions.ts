@@ -1,5 +1,4 @@
 "use server";
-/* eslint-disable */
 
 import { transliterate as tr, slugify } from "transliteration";
 
@@ -56,7 +55,10 @@ export async function createProduct(prevState: unknown, formData: FormData) {
   redirect("/dashboard/products");
 }
 
-export async function editProduct(prevState: any, formData: FormData) {
+export async function editProduct(
+  prevState: SubmissionResult<string[]> | undefined,
+  formData: FormData
+) {
   const session = await auth();
 
   if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
@@ -109,7 +111,10 @@ export async function deleteProduct(formData: FormData) {
   redirect("/dashboard/products");
 }
 
-export async function createBanner(prevState: any, formData: FormData) {
+export async function createBanner(
+  prevState: SubmissionResult<string[]> | undefined,
+  formData: FormData
+) {
   const session = await auth();
 
   if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
@@ -134,7 +139,10 @@ export async function createBanner(prevState: any, formData: FormData) {
   redirect("/dashboard/banner");
 }
 
-export async function editBanner(prevState: any, formData: FormData) {
+export async function editBanner(
+  prevState: SubmissionResult<string[]> | undefined,
+  formData: FormData
+) {
   const session = await auth();
 
   if (!session?.user || session.user.email !== process.env.ADMIN_EMAIL) {
@@ -343,7 +351,7 @@ export async function addItem(productId: string) {
     return redirect("/register");
   }
 
-  let cart: Cart | null = await redis.get(`cart-${user.id}`);
+  const cart: Cart | null = await redis.get(`cart-${user.id}`);
 
   const selectedProduct = await prisma.product.findUnique({
     select: {
@@ -414,7 +422,7 @@ export async function delItem(formData: FormData) {
 
   const productId = formData.get("productId");
 
-  let cart: Cart | null = await redis.get(`cart-${user.id}`);
+  const cart: Cart | null = await redis.get(`cart-${user.id}`);
 
   if (cart && cart.items) {
     const updateCart: Cart = {
@@ -437,7 +445,7 @@ export async function updateQuantity(itemId: string, newQuantity: number) {
     return redirect("/");
   }
 
-  let cart: Cart | null = await redis.get(`cart-${user.id}`);
+  const cart: Cart | null = await redis.get(`cart-${user.id}`);
 
   if (cart && cart.items) {
     const updateCart: Cart = {
@@ -469,7 +477,7 @@ export async function createOrder(data: CheckoutFormValues) {
       return redirect("/");
     }
 
-    let cart: Cart | null = await redis.get(`cart-${user.id}`);
+    const cart: Cart | null = await redis.get(`cart-${user.id}`);
     /* 
     /* Если корзина не найдена возращаем ошибку */
     if (!cart || !cart.items || cart.items.length === 0) {

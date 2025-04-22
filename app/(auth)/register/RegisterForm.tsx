@@ -1,20 +1,15 @@
 "use client";
-/* eslint-disable */
 
 import { registerUser } from "@/app/actions/authActions";
-import {
-  //
-  RegisterSchema,
-} from "@/lib/schemas/RegisterSchema";
+import { RegisterSchema } from "@/lib/schemas/RegisterSchema";
 import { handleFormServerErrors } from "@/lib/utils";
-//
+
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-//
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -22,10 +17,7 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { toast } from "react-toastify";
 
-//
-
 export default function RegisterForm() {
-  //
   const { theme, resolvedTheme } = useTheme(); // Получаем текущую тему
   const [themeLoaded, setThemeLoaded] = useState(false); // Состояние для отслеживания загрузки темы
 
@@ -49,19 +41,19 @@ export default function RegisterForm() {
 
   const router = useRouter();
 
-  const onSubmit = async (data: RegisterSchema) => {
-    // console.log(data);
-    const result = await registerUser(getValues());
-    if (result.status === "success") {
-      router.push("/login");
-    } else {
-      handleFormServerErrors(result, setError);
-      toast.error(result.error as string);
-    }
-  };
+  const onSubmit = async () =>
+    // data: RegisterSchema
+    {
+      // console.log(data);
+      const result = await registerUser(getValues());
+      if (result.status === "success") {
+        router.push("/login");
+      } else {
+        handleFormServerErrors(result, setError);
+        toast.error(result.error as string);
+      }
+    };
 
-  //
-  //
   useEffect(() => {
     if (theme) {
       setThemeLoaded(true); // Обновляем состояние, когда тема загружена

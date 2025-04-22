@@ -56,7 +56,6 @@ describe("CategoriesPage", () => {
     (prisma.category.findUnique as any).mockResolvedValue(mockCategory);
     (prisma.product.findMany as any).mockResolvedValue(mockProducts);
 
-    // Создаем параметры (теперь без Promise)
     const params = Promise.resolve({ category: "test-category" });
 
     // Рендерим компонент с правильными параметрами

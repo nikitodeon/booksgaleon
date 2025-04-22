@@ -1,8 +1,6 @@
-/* eslint-disable */
-
 import { prisma } from "@/app/utils/db";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const categories = await prisma.category.findMany();
 

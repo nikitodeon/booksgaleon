@@ -1,4 +1,3 @@
-import { Decimal } from "@prisma/client/runtime/library";
 import { ProductCard } from "@/app/components/storefront/ProductCard";
 import { prisma } from "@/app/utils/db";
 

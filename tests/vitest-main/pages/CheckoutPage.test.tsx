@@ -4,7 +4,7 @@ import CheckoutPage from "@/app/(checkout)/checkout/page";
 import { useSession } from "next-auth/react";
 import { createOrder } from "@/app/actions";
 import "@testing-library/jest-dom";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { Mock, vi } from "vitest";
 
 vi.mock("next-auth/react", () => ({

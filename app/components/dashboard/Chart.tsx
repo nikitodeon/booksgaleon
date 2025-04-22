@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 "use client";
 
 import {
@@ -13,22 +11,31 @@ import {
   Line,
 } from "recharts";
 
-interface iAppProps {
-  data: {
-    date: string;
-    revenue: number;
-  }[];
+interface DataItem {
+  date: string;
+  revenue: number;
 }
 
-const aggregateData = (data: any) => {
-  const aggregated = data.reduce((acc: any, curr: any) => {
-    if (acc[curr.date]) {
-      acc[curr.date] += curr.revenue;
-    } else {
-      acc[curr.date] = curr.revenue;
-    }
-    return acc;
-  }, {});
+interface ChartProps {
+  data: DataItem[];
+}
+
+interface AggregatedData {
+  [date: string]: number;
+}
+
+const aggregateData = (data: DataItem[]): DataItem[] => {
+  const aggregated: AggregatedData = data.reduce(
+    (acc: AggregatedData, curr: DataItem) => {
+      if (acc[curr.date]) {
+        acc[curr.date] += curr.revenue;
+      } else {
+        acc[curr.date] = curr.revenue;
+      }
+      return acc;
+    },
+    {}
+  );
 
   return Object.keys(aggregated).map((date) => ({
     date,
@@ -36,11 +43,12 @@ const aggregateData = (data: any) => {
   }));
 };
 
-export function Chart({ data }: iAppProps) {
-  const proccesedData = aggregateData(data);
+export function Chart({ data }: ChartProps) {
+  const processedData = aggregateData(data);
+
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <LineChart data={proccesedData}>
+      <LineChart data={processedData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
         <YAxis />

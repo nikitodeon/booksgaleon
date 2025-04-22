@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable */
 
 import { Button } from "@/components/ui/button";
 import {
@@ -93,7 +92,7 @@ export function EditForm({ data }: iAppProps) {
                 value={images}
                 key={fields.imageString.key}
                 name={fields.imageString.name}
-                defaultValue={fields.imageString.initialValue as any}
+                defaultValue={fields.imageString.initialValue}
               />
               {images.length > 0 ? (
                 <div className="flex gap-5">

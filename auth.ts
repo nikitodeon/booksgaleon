@@ -1,4 +1,3 @@
-// /* eslint-disable */
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import {
@@ -9,7 +8,7 @@ import {
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
-import type { NextAuthConfig } from "next-auth";
+
 import { loginSchema } from "./lib/schemas/LoginSchema";
 import { getUserByEmail } from "./app/actions/authActions";
 import { compare } from "bcryptjs";

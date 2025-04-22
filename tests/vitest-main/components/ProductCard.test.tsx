@@ -28,9 +28,20 @@ vi.mock("embla-carousel-react", () => ({
 // Мок для next/image
 vi.mock("next/image", () => ({
   __esModule: true,
-  default: (props: any) => <img {...props} />,
-}));
+  default: (props: any) => {
+    // Конвертируем булевы атрибуты в строки
+    const convertedProps = Object.keys(props).reduce((acc, key) => {
+      if (typeof props[key] === "boolean") {
+        acc[key] = props[key].toString();
+      } else {
+        acc[key] = props[key];
+      }
+      return acc;
+    }, {} as Record<string, any>);
 
+    return <img {...convertedProps} />;
+  },
+}));
 const mockItem = {
   id: "1",
   name: "Test Product",
