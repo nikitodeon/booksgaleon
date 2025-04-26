@@ -1,9 +1,0 @@
-# Указываем, что TSX/JSX - это TypeScript
-*.tsx linguist-language=TypeScript
-*.jsx linguist-language=TypeScript
-
-# Игнорируем сгенерированные файлы
-/.next/* linguist-vendored
-/out/* linguist-vendored
-/dist/* linguist-vendored
-/public/* linguist-vendored
